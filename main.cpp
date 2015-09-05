@@ -57,8 +57,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 	//init
 	Board* board = new Board();
-	Player* player1 = new Player(Character_Black_Texture, 0, 4);	/////
-	Player* player2 = new Player(Character_Brown_Texture, 8, 4);	/////
+	Player* player1 = new Player(Character_Black_Texture, 0, 4);
+	Player* player2 = new Player(Character_Brown_Texture, 8, 4);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -119,8 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_LBUTTONDOWN:
-		//mx    =    LOWORD(lParam);
-		//my    =    HIWORD(lParam);
+		//impl.
 
 		return 0;
 

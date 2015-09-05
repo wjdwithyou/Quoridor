@@ -4,6 +4,7 @@
 #include "common.h"
 #include "square.h"
 #include "api.h"
+
 class Board {
 private:
 	const int Width;
