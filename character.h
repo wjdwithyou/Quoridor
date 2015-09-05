@@ -15,8 +15,6 @@ public:
 	~Character();
 
 	void Draw(Location);
-
-	int CooToPxl(int, int);
 };
 
 #endif // __CHARACTER_H
