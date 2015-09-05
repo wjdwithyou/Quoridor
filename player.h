@@ -5,12 +5,17 @@
 
 class Player{
 private:
-	Character character;
+	Character* character;
 	int bar;
+
 public:
 	Player();
 	Player(IDirect3DTexture9*, int, int);
 	~Player();
+
+	void DrawRemainBar();
+
+	Character* get_character(){ return character; }
 };
 
 #endif // __PLAYER_H

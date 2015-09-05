@@ -56,9 +56,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	LoadTexture("Image/character_brown.png", &Character_Brown_Texture);
 
 	//init
-	Player* player1 = new Player(Character_Black_Texture, 0, 5);	/////
-	Player* player2 = new Player(Character_Brown_Texture, 8, 5);	/////
 	Board* board = new Board();
+	Player* player1 = new Player(Character_Black_Texture, 0, 4);	/////
+	Player* player2 = new Player(Character_Brown_Texture, 8, 4);	/////
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -76,7 +76,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				DrawTexture(Background_Texture, 0, 0, 1.0f, 0.0f); // 배경그림
 				board->DrawBoard();
 
-				RECT rc={0, -380, 800, 200};
+				player1->get_character()->Draw(board->get_loc());
+				player2->get_character()->Draw(board->get_loc());
+
+				//RECT rc={0, -380, 800, 200};
 				// 텍스트가 그려질 사각형의 좌표를 넣는다.
 				// 순서대로 left, top, right, bottom의 좌표
 				// {0, 0, 0, 0}의 기준 : 가장 최근에 draw한 그림
@@ -108,9 +111,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
+	static int mx, my;
+
 	switch(iMessage) {
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		return 0;
+
+	case WM_LBUTTONDOWN:
+		//mx    =    LOWORD(lParam);
+		//my    =    HIWORD(lParam);
+
+		return 0;
+
+	case WM_MOUSEMOVE:
+		mx = LOWORD(lParam);
+		my = HIWORD(lParam);
+
 		return 0;
 		
 	case WM_KEYDOWN:
@@ -159,25 +176,6 @@ void KeyInput() {
 
 void GameLoop() {
 	// impl.
-}
-
-float CalcFPS() {
-	static int cnt = 0;
-	static DWORD curr_time = 0, prev_time = 0, elapsed = 0;
-	static float fps = 0.0f;
-
-	prev_time = curr_time;
-	curr_time = timeGetTime();
-	cnt++;
-	elapsed += curr_time - prev_time;
-
-	if(elapsed >= 1000) {
-		 fps = cnt * 1000.0f / elapsed;
-		 elapsed = 0;
-		 cnt = 0;
-	}
-
-	return fps;
 }
 
 void Device_Release() {

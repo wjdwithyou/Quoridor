@@ -7,7 +7,7 @@ IDirect3DTexture9* Character_Brown_Texture;
 
 void ReleaseTexture(){
 	if (Background_Texture != NULL) {
-		Background_Texture -> Release();
+		Background_Texture->Release();
 		Background_Texture = NULL;
 	}
 	if (Board_Texture != NULL){

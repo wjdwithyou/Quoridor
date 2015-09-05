@@ -68,6 +68,8 @@
     <ClCompile Include="api.cpp" />
     <ClCompile Include="board.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="fps.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
@@ -78,10 +80,12 @@
     <ClInclude Include="api.h" />
     <ClInclude Include="board.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="fps.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="square.h" />
     <ClInclude Include="dxfunc.h" />
+    <ClInclude Include="common.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
