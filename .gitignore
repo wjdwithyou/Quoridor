@@ -1,2 +1,14 @@
+# Logs
+*.log
+*.tlog
+
+# Compiled Object files
+*.obj
+
+# Databases
+*.pdb
+*.idb
+
 # Debug
+/Debug
 Debug/
