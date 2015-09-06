@@ -7,6 +7,6 @@ typedef struct Location{
 }Location;
 
 int CooToPxl(int, int);
-int PxlToCoo(int);
+int PxlToCoo(int, float);
 
 #endif // __COMMON_H

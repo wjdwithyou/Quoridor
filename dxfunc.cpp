@@ -87,6 +87,8 @@ void LoadTexture(char* TextureFileName, IDirect3DTexture9** texture_) {
 	D3DXIMAGE_INFO ImageInfo;
 	D3DXGetImageInfoFromFile(TextureFileName, &ImageInfo);
 	D3DXCreateTextureFromFileEx(Device, TextureFileName, ImageInfo.Width, ImageInfo.Height, 1, D3DUSAGE_AUTOGENMIPMAP, ImageInfo.Format, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, 0, NULL, NULL, texture_);
+
+	return;
 }
 
 void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, float angle) {
@@ -103,6 +105,8 @@ void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, floa
 	Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
 	Sprite -> Draw(texture_, NULL, NULL, NULL, Color);
+
+	return;
 }
 
 void DrawC(IDirect3DTexture9* texture_, float x, float y, float size, float angle, float c) {
@@ -121,6 +125,8 @@ void DrawC(IDirect3DTexture9* texture_, float x, float y, float size, float angl
 
 	D3DXVECTOR3 center(c, c, 0);
 	Sprite -> Draw(texture_, NULL, &center, NULL, Color);
+
+	return;
 }
 /*
 void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float angle) {
@@ -137,5 +143,7 @@ void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float
 	Color = D3DCOLOR_RGBA(255, 255, 255, ending);
 
 	Sprite -> Draw(texture_, NULL, NULL, NULL, Color);
+
+	return;
 }
 */

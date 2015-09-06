@@ -1,8 +1,9 @@
 #include "api.h"
 #include "dxfunc.h"
 #include "image.h"
-#include "player.h"
+#include "mouse.h"
 #include "board.h"
+#include "player.h"
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -48,14 +49,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 	ShowWindow(hWnd, SW_NORMAL);
 	UpdateWindow(hWnd);
-	
+
+	LoadTextures();
+	/*
 	// 게임의 텍스쳐 로딩
 	LoadTexture("Image/background.png", &Background_Texture);
 	LoadTexture("Image/board.png", &Board_Texture);
 	LoadTexture("Image/character_black.png", &Character_Black_Texture);
 	LoadTexture("Image/character_brown.png", &Character_Brown_Texture);
-
+	LoadTexture("Image/square_over.png", &Square_Over_Texture);
+	LoadTexture("Image/square_over_black.png", &Square_Over_Black_Texture);
+	LoadTexture("Image/square_over_brown.png", &Square_Over_Brown_Texture);
+	*/
 	//init
+	//Mouse* mouse = new Mouse();
 	Board* board = new Board();
 	Player* player1 = new Player(Character_Black_Texture, 0, 4);
 	Player* player2 = new Player(Character_Brown_Texture, 8, 4);
@@ -78,6 +85,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 				player1->get_character()->Draw(board->get_loc());
 				player2->get_character()->Draw(board->get_loc());
+
+
+
+				Location tmp = mouse->CheckOnSquare(board->get_loc());
+
+				if (tmp.x != -1)
+					DrawTexture(Square_Over_Texture, CooToPxl(board->get_loc().x, tmp.x), CooToPxl(board->get_loc().y, tmp.y), 1.0f, 0.0f);
 
 				//RECT rc={0, -380, 800, 200};
 				// 텍스트가 그려질 사각형의 좌표를 넣는다.
@@ -104,15 +118,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		}
 	}
 	
-	ReleaseTexture();
+	ReleaseTextures();
 	Device_Release();
 
 	return true;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
-	static int mx, my;
-
 	switch(iMessage) {
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -124,8 +136,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_MOUSEMOVE:
-		mx = LOWORD(lParam);
-		my = HIWORD(lParam);
+		mouse->set_loc(LOWORD(lParam), HIWORD(lParam));
 
 		return 0;
 		

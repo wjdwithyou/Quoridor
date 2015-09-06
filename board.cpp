@@ -14,4 +14,5 @@ Board::~Board(){}
 
 void Board::DrawBoard(){
 	DrawC(Board_Texture, WindowWidth/2, WindowHeight/2, 1.0f, 0.0f, (float)Width/2);
+	return;
 }
