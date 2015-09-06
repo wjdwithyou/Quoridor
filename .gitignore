@@ -10,5 +10,12 @@
 *.idb
 
 # Debug
-/Debug
 Debug/
+
+# VCxProj
+*.vcxproj*
+
+# etc
+*.zip
+*.swp
+

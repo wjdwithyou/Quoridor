@@ -6,6 +6,7 @@
 
 extern HWND hWnd;
 extern MSG Message;
+
 extern Mouse* mouse;
 
 const int WindowWidth = 1024;

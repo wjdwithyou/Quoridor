@@ -91,7 +91,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				Location tmp = mouse->CheckOnSquare(board->get_loc());
 
 				if (tmp.x != -1)
-					DrawTexture(Square_Over_Texture, CooToPxl(board->get_loc().x, tmp.x), CooToPxl(board->get_loc().y, tmp.y), 1.0f, 0.0f);
+					DrawTexture(Square_Over_Texture, static_cast<float>(CooToPxl(board->get_loc().x, tmp.x)), static_cast<float>(CooToPxl(board->get_loc().y, tmp.y)), 1.0f, 0.0f);
 
 				//RECT rc={0, -380, 800, 200};
 				// 텍스트가 그려질 사각형의 좌표를 넣는다.

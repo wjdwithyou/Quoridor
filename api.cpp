@@ -2,4 +2,5 @@
 
 HWND hWnd;
 MSG Message;
+
 Mouse* mouse = new Mouse();

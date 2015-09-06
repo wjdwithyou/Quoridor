@@ -6,6 +6,7 @@
 class Mouse{
 private:
 	Location loc;
+	//IDirect3DTexture9* texture_;
 
 public:
 	Mouse();
