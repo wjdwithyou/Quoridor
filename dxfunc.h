@@ -3,6 +3,7 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
+#include "common.h"
 
 extern IDirect3DDevice9* Device;
 extern ID3DXSprite* Sprite;
@@ -17,6 +18,7 @@ extern D3DXMATRIX Scaling;
 void InitializeDevice();
 void LoadTexture(char*, IDirect3DTexture9**);
 void DrawTexture(IDirect3DTexture9*, float, float, float, float);
+void DrawTexture(IDirect3DTexture9*, Location, float, float);
 void DrawC(IDirect3DTexture9*, float, float, float, float, float);
 
 #endif // __DXFUNC_H

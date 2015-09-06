@@ -7,12 +7,14 @@ class Player{
 private:
 	Character* character;
 	int bar;
+	Player* next;
 
 public:
 	Player();
-	Player(IDirect3DTexture9*, int, int);
+	Player(int, IDirect3DTexture9*, IDirect3DTexture9*, int, int);
 	~Player();
 
+	void InitPlayer(Player**, Player**);
 	void DrawRemainBar();
 
 	Character* get_character(){ return character; }

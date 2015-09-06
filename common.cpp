@@ -1,17 +1,32 @@
 #include "common.h"
+#include "board.h"
 
-int CooToPxl(int point, int coo){
-	return coo * 65 + point;
+Location CooToPxl(Location coo){
+	Location tmp;
+
+	tmp.x = coo.x * 65 + Board::loc.x;
+	tmp.y = coo.y * 65 + Board::loc.y;
+	
+	return tmp;
 }
 
-int PxlToCoo(int point, float pxl){
-	int q = (pxl - point) / 65;
-	int r = static_cast<int>(pxl - point) % 65;
+Location PxlToCoo(Location pxl){
+	Location tmp;
 
-	if (q < 0 || q > 8)
-		return -1;
-	if (60 <= r && r <= 64)
-		return -1;
+	int rx = (pxl.x - Board::loc.x) % 65;
+	int ry = (pxl.x - Board::loc.y) % 65;
 
-	return q;
+	tmp.x = (pxl.x - Board::loc.x) / 65;
+	tmp.y = (pxl.y - Board::loc.y) / 65;
+
+	if (tmp.x < 0 || tmp.x > 8)
+		tmp.x = -1;
+	if (tmp.y < 0 || tmp.y > 8)
+		tmp.y = -1;
+	if (60 <= rx && rx <= 64)
+		tmp.x = -1;
+	if (60 <= ry && ry <= 64)
+		tmp.y = -1;
+
+	return tmp;
 }

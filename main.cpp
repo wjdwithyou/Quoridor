@@ -4,6 +4,7 @@
 #include "mouse.h"
 #include "board.h"
 #include "player.h"
+//#include "fps.h"
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -13,7 +14,6 @@
 
 void KeyInput();
 void GameLoop();
-float CalcFPS();
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void Device_Release();
 
@@ -50,22 +50,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	ShowWindow(hWnd, SW_NORMAL);
 	UpdateWindow(hWnd);
 
-	LoadTextures();
-	/*
 	// 게임의 텍스쳐 로딩
-	LoadTexture("Image/background.png", &Background_Texture);
-	LoadTexture("Image/board.png", &Board_Texture);
-	LoadTexture("Image/character_black.png", &Character_Black_Texture);
-	LoadTexture("Image/character_brown.png", &Character_Brown_Texture);
-	LoadTexture("Image/square_over.png", &Square_Over_Texture);
-	LoadTexture("Image/square_over_black.png", &Square_Over_Black_Texture);
-	LoadTexture("Image/square_over_brown.png", &Square_Over_Brown_Texture);
-	*/
-	//init
-	//Mouse* mouse = new Mouse();
+	LoadTextures();
+
 	Board* board = new Board();
-	Player* player1 = new Player(Character_Black_Texture, 0, 4);
-	Player* player2 = new Player(Character_Brown_Texture, 8, 4);
+
+	Player* player1 = NULL;
+	Player* player2 = NULL;
+	Player* turn = NULL;
+
+	Player().InitPlayer(&player1, &player2);
+	//Player* player1 = new Player(1, Character_Black_Texture, 0, 4);
+	//Player* player2 = new Player(2, Character_Brown_Texture, 8, 4);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -83,15 +79,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				DrawTexture(Background_Texture, 0, 0, 1.0f, 0.0f); // 배경그림
 				board->DrawBoard();
 
-				player1->get_character()->Draw(board->get_loc());
-				player2->get_character()->Draw(board->get_loc());
+				player1->get_character()->Draw();
+				player2->get_character()->Draw();
 
 
 
-				Location tmp = mouse->CheckOnSquare(board->get_loc());
+				Location tmp = mouse->CheckOnSquare();
 
-				if (tmp.x != -1)
-					DrawTexture(Square_Over_Texture, static_cast<float>(CooToPxl(board->get_loc().x, tmp.x)), static_cast<float>(CooToPxl(board->get_loc().y, tmp.y)), 1.0f, 0.0f);
+				if (tmp.x != -1){
+					IDirect3DTexture9* tx;
+
+					if (tmp.x == player1->get_character()->get_loc().x && tmp.y == player1->get_character()->get_loc().y)
+						tx = player1->get_character()->get_pSquareOverTexture();
+					else if (tmp.x == player2->get_character()->get_loc().x && tmp.y == player2->get_character()->get_loc().y)
+						tx = player2->get_character()->get_pSquareOverTexture();
+					else
+						tx = Square_Over_Texture;
+
+					DrawTexture(tx, CooToPxl(tmp), 1.0f, 0.0f);
+				}
 
 				//RECT rc={0, -380, 800, 200};
 				// 텍스트가 그려질 사각형의 좌표를 넣는다.
@@ -136,7 +142,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_MOUSEMOVE:
-		mouse->set_loc(LOWORD(lParam), HIWORD(lParam));
+		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
 
 		return 0;
 		

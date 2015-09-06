@@ -1,14 +1,27 @@
 #include "player.h"
+#include "image.h"
 
 Player::Player(){}
 
-Player::Player(IDirect3DTexture9* texture_, int x, int y)
-	: character(new Character(texture_, x, y)), bar(10){
+Player::Player(int n, IDirect3DTexture9* chara_texture, IDirect3DTexture9* square_over_texture, int x, int y)
+	: character(new Character(n, chara_texture, square_over_texture, x, y)), bar(10), next(NULL){
 
 }
 
 Player::~Player(){}
 
-void Player::DrawRemainBar(){
+void Player::InitPlayer(Player** player1, Player** player2){
+	*player1 = new Player(1, Character_Black_Texture, Square_Over_Black_Texture, 0, 4);
+	(*player1)->next = *player2;
 
+	*player2 = new Player(2, Character_Brown_Texture, Square_Over_Brown_Texture, 8, 4);
+	(*player2)->next = *player1;
+
+	return;
+}
+
+void Player::DrawRemainBar(){
+	//impl.
+
+	return;
 }

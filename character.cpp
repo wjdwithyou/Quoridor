@@ -4,8 +4,8 @@
 
 Character::Character(){}
 
-Character::Character(IDirect3DTexture9* texture_, int x, int y)
-	: pCharacterTexture(texture_)
+Character::Character(int n, IDirect3DTexture9* chara_texture, IDirect3DTexture9* square_over_texture, int x, int y)
+	: num(n), pCharacterTexture(chara_texture), pSquareOverTexture(square_over_texture)
 {
 	loc.x = x;
 	loc.y = y;
@@ -13,6 +13,7 @@ Character::Character(IDirect3DTexture9* texture_, int x, int y)
 
 Character::~Character(){}
 
-void Character::Draw(Location board_loc){
-	DrawTexture(pCharacterTexture, (float)CooToPxl(board_loc.x, loc.x), (float)CooToPxl(board_loc.y, loc.y), 1.0f, 0.0f);
+void Character::Draw(){
+	DrawTexture(pCharacterTexture, CooToPxl(loc), 1.0f, 0.0f);
+	return;
 }

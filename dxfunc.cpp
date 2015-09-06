@@ -109,6 +109,23 @@ void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, floa
 	return;
 }
 
+void DrawTexture(IDirect3DTexture9* texture_, Location loc, float size, float angle){
+	D3DXMatrixIdentity(&World);	
+	D3DXMatrixTranslation(&Translation, static_cast<float>(loc.x), static_cast<float>(loc.y), 0.0f);
+	D3DXMatrixRotationZ(&Rotation, angle);
+	D3DXMatrixScaling(&Scaling, size, size, 1.0f);
+
+	D3DXMatrixMultiply(&Scaling, &Scaling, &Rotation);
+	D3DXMatrixMultiply(&World, &Scaling, &Translation);
+	Sprite -> SetTransform(&World);
+
+	Color = D3DCOLOR_RGBA(255, 255, 255, 255);
+
+	Sprite -> Draw(texture_, NULL, NULL, NULL, Color);
+
+	return;
+}
+
 void DrawC(IDirect3DTexture9* texture_, float x, float y, float size, float angle, float c) {
 	// 센터 기준
 	// 임시. 수정 및 보완 필요

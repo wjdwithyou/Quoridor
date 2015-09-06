@@ -6,7 +6,7 @@ typedef struct Location{
 	int y;
 }Location;
 
-int CooToPxl(int, int);
-int PxlToCoo(int, float);
+Location CooToPxl(Location);
+Location PxlToCoo(Location);
 
 #endif // __COMMON_H
