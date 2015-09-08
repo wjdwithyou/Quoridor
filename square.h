@@ -11,6 +11,7 @@ public:
 	Square();
 	~Square();
 
+	Character* get_onthis(){ return onthis; }
 	void set_onthis(Character* c){ onthis = c; return; }
 };
 

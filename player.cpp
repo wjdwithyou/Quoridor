@@ -10,12 +10,15 @@ Player::Player(int n, IDirect3DTexture9* chara_texture, IDirect3DTexture9* squar
 
 Player::~Player(){}
 
-void Player::InitPlayer(Player** player1, Player** player2){
+void Player::InitPlayer(Player** player1, Player** player2, Player** turn){
 	*player1 = new Player(1, Character_Black_Texture, Square_Over_Black_Texture, 0, 4);
 	(*player1)->next = *player2;
 
 	*player2 = new Player(2, Character_Brown_Texture, Square_Over_Brown_Texture, 8, 4);
 	(*player2)->next = *player1;
+
+	// impl.
+	// *turn = rand()..
 
 	return;
 }

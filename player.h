@@ -14,7 +14,7 @@ public:
 	Player(int, IDirect3DTexture9*, IDirect3DTexture9*, int, int);
 	~Player();
 
-	void InitPlayer(Player**, Player**);
+	void InitPlayer(Player**, Player**, Player**);
 	void DrawRemainBar();
 
 	Character* get_character(){ return character; }

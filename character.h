@@ -18,6 +18,7 @@ public:
 
 	void Draw();
 
+	int get_num(){ return num; }
 	Location get_loc(){ return loc; }
 	//IDirect3DTexture9* get_pCharacterTexture(){ return pCharacterTexture; }
 	IDirect3DTexture9* get_pSquareOverTexture(){ return pSquareOverTexture; }

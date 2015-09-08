@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <time.h>
 #include "api.h"
 #include "dxfunc.h"
 #include "image.h"
@@ -30,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	WndClass.lpszMenuName = NULL;
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 
-	//srand((unsigned)time(NULL));
+	srand((unsigned)time(NULL));
 	
 	if (!RegisterClass(&WndClass)){
 		MessageBox(0, "RegisterClass() - FAILED", 0, 0);
@@ -58,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	Player* player2 = NULL;
 	Player* turn = NULL;
 
-	Player().InitPlayer(&player1, &player2);
+	Player().InitPlayer(&player1, &player2, &turn);	// TODO: 선 정하는거 구현
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -137,7 +139,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	switch(iMessage) {
 	case WM_LBUTTONDOWN:
 		if (mouse->CheckOnSquare().x != -1){
-
+			if (Board::board[mouse->CheckOnSquare().y][mouse->CheckOnSquare().x].get_onthis() != NULL){
+				Board::board[mouse->CheckOnSquare().y][mouse->CheckOnSquare().x].get_onthis()->get_num();
+			}
 		}
 
 		return 0;
