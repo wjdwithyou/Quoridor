@@ -1,4 +1,8 @@
 #include "square.h"
 
-Square::Square(){}
+Square::Square()
+	: onthis(NULL){
+
+}
+
 Square::~Square(){}

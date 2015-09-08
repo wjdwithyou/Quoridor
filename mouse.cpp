@@ -4,13 +4,14 @@ Mouse::Mouse(){}
 Mouse::~Mouse(){}
 
 Location Mouse::CheckOnSquare(){
-	Location tmp = PxlToCoo(pxloc);
+	Location out = {-1, -1};
 
-	if (tmp.x == -1 || tmp.y == -1)
-		tmp.x = tmp.y = -1;
-
-	return tmp;
+	if (locoo.x == -1 || locoo.y == -1)
+		return out;
+	
+	return locoo;
 }
+
 /*
 Location Mouse::CheckOnCharacter(Location point, Location chara_loc){
 	Location tmp;

@@ -164,3 +164,18 @@ void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float
 	return;
 }
 */
+
+void ReleaseDevice() {
+	if (Sprite != NULL){
+		Sprite->Release();
+		Sprite = NULL;
+	}
+	if (Device != NULL){
+		Device->Release();
+		Device = NULL;
+	}
+	if (Font != NULL){
+		Font->Release();
+		Font = NULL;
+	}
+}

@@ -6,7 +6,7 @@ Location CooToPxl(Location coo){
 
 	tmp.x = coo.x * 65 + Board::loc.x;
 	tmp.y = coo.y * 65 + Board::loc.y;
-	
+
 	return tmp;
 }
 

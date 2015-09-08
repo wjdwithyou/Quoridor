@@ -9,6 +9,8 @@ Character::Character(int n, IDirect3DTexture9* chara_texture, IDirect3DTexture9*
 {
 	loc.x = x;
 	loc.y = y;
+
+	Board::board[loc.y][loc.x].set_onthis(this);
 }
 
 Character::~Character(){}

@@ -6,18 +6,20 @@
 
 class Board {
 private:
+	const int Size;
 	const int Width;
 	const int Height;
 
 public:
 	static Location loc;
-	static Square board[9][9];
+	static Square** board;
 
 public:
 	Board();
 	~Board();
 
-	void DrawBoard();
+	void Init();
+	void Draw();
 };
 
 #endif // __BOARD_H

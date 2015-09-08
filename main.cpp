@@ -15,7 +15,6 @@
 void KeyInput();
 void GameLoop();
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-void Device_Release();
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, int nCmdShow){
 	WNDCLASS WndClass;
@@ -53,15 +52,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	// 게임의 텍스쳐 로딩
 	LoadTextures();
 
-	Board* board = new Board();
+	Board* _board = new Board();
 
 	Player* player1 = NULL;
 	Player* player2 = NULL;
 	Player* turn = NULL;
 
 	Player().InitPlayer(&player1, &player2);
-	//Player* player1 = new Player(1, Character_Black_Texture, 0, 4);
-	//Player* player2 = new Player(2, Character_Brown_Texture, 8, 4);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -75,9 +72,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 			if (SUCCEEDED(Device->BeginScene())){
 				Sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-				// 텍스쳐, x, y, 사이즈, 각도.
+				// 텍스쳐, x, y, 사이즈, 각도
 				DrawTexture(Background_Texture, 0, 0, 1.0f, 0.0f); // 배경그림
-				board->DrawBoard();
+				_board->Draw();
 
 				player1->get_character()->Draw();
 				player2->get_character()->Draw();
@@ -124,36 +121,49 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		}
 	}
 	
+	// TO DELETE LIST
+	// Board::board[9][9]
+	// _board
+	// character 1, 2
+	// player 1, 2
+
 	ReleaseTextures();
-	Device_Release();
+	ReleaseDevice();
 
 	return true;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch(iMessage) {
-	case WM_DESTROY:
-		PostQuitMessage(0);
+	case WM_LBUTTONDOWN:
+		if (mouse->CheckOnSquare().x != -1){
+
+		}
+
 		return 0;
 
-	case WM_LBUTTONDOWN:
-		//impl.
-
+	case WM_LBUTTONUP:
 		return 0;
 
 	case WM_MOUSEMOVE:
 		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
-
 		return 0;
 		
 	case WM_KEYDOWN:
+		/*
 		if(wParam == VK_ESCAPE) {
 			DestroyWindow(hWnd);
 			return 0;
 		}
+		*/
 		if(wParam == 'P') {
 			// pause?
+			return 0;
 		}
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
 	}
 
 	return (DefWindowProc(hWnd, iMessage, wParam, lParam));
@@ -192,19 +202,4 @@ void KeyInput() {
 
 void GameLoop() {
 	// impl.
-}
-
-void Device_Release() {
-	if(Sprite != NULL) {
-		Sprite -> Release();
-		Sprite = NULL;
-	}
-	if(Device != NULL) {
-		Device -> Release();
-		Device = NULL;
-	}
-	if(Font != NULL) {
-		Font -> Release();
-		Font = NULL;
-	}
 }
