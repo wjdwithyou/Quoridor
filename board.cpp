@@ -12,14 +12,32 @@ Board::Board()
 Board::~Board(){}
 
 Location Board::loc = {(WindowWidth - Board().Width) / 2, (WindowHeight - Board().Height) / 2};
-
-Square** Board::board = NULL;
+/*
+//init_old
+Square** Board::board = NULL;	// »ïÁßÆ÷ÀÎÅÍ ù±é©ùÚÊ¦?
 
 void Board::Init(){
 	board = new Square*[Size];
 
 	for (int i = 0; i < Size; ++i){
 		board[i] = new Square[Size];
+	}
+
+	return;
+}
+*/
+
+Square*** Board::board = NULL;
+
+void Board::Init(){
+	board = new Square**[Size];
+
+	for (int i = 0; i < Size; ++i){
+		board[i] = new Square*[Size];
+
+		for (int j = 0; j <Size; ++j){
+			board[i][j] = new Square(j, i);
+		}
 	}
 
 	return;

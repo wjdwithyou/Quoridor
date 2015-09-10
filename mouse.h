@@ -2,6 +2,8 @@
 #define __MOUSE_H
 
 #include "common.h"
+#include "square.h"
+#include "character.h"
 
 enum Status{ ready, clk_chara, clk_bar };
 
@@ -16,8 +18,11 @@ public:
 	Mouse();
 	~Mouse();
 
-	Location CheckOnSquare();
-	Location CheckOnCharacter();
+	//Location CheckOnSquare();
+	Square* CheckOnSquare();
+
+	//Location CheckOnCharacter();
+	Character* CheckOnCharacter();
 	//Location CheckOnCharacter(Location, Location);
 
 	void __set_loc(int, int);

@@ -3,12 +3,15 @@
 #include "character.h"
 
 Mouse::Mouse()
-	: status(ready){
-
+	: status(ready)
+{
+	pxloc.x = pxloc.y = 0;
+	locoo.x = locoo.y = -1;
 }
 
 Mouse::~Mouse(){}
 
+/*
 Location Mouse::CheckOnSquare(){	// checkOnSquare가 square를 리턴하고 checkOnCharacter가 character를 리턴?
 	Location out = {-1, -1};			// 어차피 Location은 둘 다 가지고 (square에는 추가해야함) 
 
@@ -17,18 +20,31 @@ Location Mouse::CheckOnSquare(){	// checkOnSquare가 square를 리턴하고 checkOnCha
 	
 	return locoo;
 }
+*/
 
+Square* Mouse::CheckOnSquare(){
+	if (locoo.x == -1 || locoo.y == -1)
+		return NULL;
+
+	return Board::board[locoo.y][locoo.x];
+}
+
+/*
 Location Mouse::CheckOnCharacter(){
 	Location tmp = CheckOnSquare();
-	Character* c = Board::board[tmp.y][tmp.x].get_onthis();
+	Character* c = Board::board[tmp.y][tmp.x]->get_onthis();
 
 	if (tmp.x == -1)
 		return tmp;
 
 	if (c == NULL)
 		return tmp;
+}
+*/
 
+Character* Mouse::CheckOnCharacter(){
 
+	return NULL;
 }
 
 /*

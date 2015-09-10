@@ -9,8 +9,13 @@ Character::Character(int n, IDirect3DTexture9* chara_texture, IDirect3DTexture9*
 {
 	loc.x = x;
 	loc.y = y;
+	
+	// test start
+	Board::board[loc.y][loc.x]->get_loc();	// square가 init되지 않아서??
 
-	Board::board[loc.y][loc.x].set_onthis(this);
+	// test end
+
+	Board::board[loc.y][loc.x]->set_onthis(this);
 }
 
 Character::~Character(){}

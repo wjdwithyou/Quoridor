@@ -82,8 +82,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				player2->get_character()->Draw();
 
 
+				// 임시 테스트
+				Location tmp;
 
-				Location tmp = mouse->CheckOnSquare();
+				if (mouse->CheckOnSquare() != NULL)
+					tmp = mouse->CheckOnSquare()->get_loc();
+				else{
+					tmp.x = -1;
+					tmp.y = -1;
+				}
 
 				if (tmp.x != -1){
 					IDirect3DTexture9* tx;
@@ -138,9 +145,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch(iMessage) {
 	case WM_LBUTTONDOWN:
-		if (mouse->CheckOnSquare().x != -1){
-			if (Board::board[mouse->CheckOnSquare().y][mouse->CheckOnSquare().x].get_onthis() != NULL){
-				Board::board[mouse->CheckOnSquare().y][mouse->CheckOnSquare().x].get_onthis()->get_num();
+		if (mouse->CheckOnSquare()->get_loc().x != -1){
+			if (Board::board[mouse->CheckOnSquare()->get_loc().y][mouse->CheckOnSquare()->get_loc().x]->get_onthis() != NULL){
+				Board::board[mouse->CheckOnSquare()->get_loc().y][mouse->CheckOnSquare()->get_loc().x]->get_onthis()->get_num();
 			}
 		}
 
