@@ -1,6 +1,10 @@
 #include "fps.h"
 #include <Windows.h>
 
+const int FPS_SPACE = 20;
+
+char sz_fps[16];
+
 float CalcFPS(){
 	static int cnt = 0;
 	static DWORD curr_time = 0, prev_time = 0, elapsed = 0;

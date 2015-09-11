@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "api.h"
@@ -6,7 +7,7 @@
 #include "mouse.h"
 #include "board.h"
 #include "player.h"
-//#include "fps.h"
+#include "fps.h"
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -14,7 +15,7 @@
 #pragma comment (lib, "dxguid")
 #pragma comment (lib, "dinput8")
 
-void KeyInput();
+//void KeyInput();
 void GameLoop();
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -60,7 +61,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	Player* player2 = NULL;
 	Player* turn = NULL;
 
-	Player().InitPlayer(&player1, &player2, &turn);	// TODO: 선 정하는거 구현
+	Player().InitPlayer(&player1, &player2, &turn);	// TODO: who's first?
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -68,49 +69,35 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 			DispatchMessage(&Message);
 		}
 
+		sprintf_s(sz_fps, "%02.2fFPS", CalcFPS()); // 프레임을 문자열로 만들어서 sz_fps에 저장
+
+		//KeyInput(); // 여기서 먼저 키입력을 받고
+		//GameLoop(); // 프레임당 처리는 여기서 한다.
+
 		if (Device){
 			Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0,0,0,0), 1.0f, 0);
 	
 			if (SUCCEEDED(Device->BeginScene())){
 				Sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-				// 텍스쳐, x, y, 사이즈, 각도
-				DrawTexture(Background_Texture, 0, 0, 1.0f, 0.0f); // 배경그림
-				_board->Draw();
-
-				player1->get_character()->Draw();
-				player2->get_character()->Draw();
+				// texture, x, y, size, angle
+				DrawTexture(Background_Texture, 0, 0, 1.0f, 0.0f); // background
 
 
-				// 임시 테스트
-				Location tmp;
+				
 
-				if (mouse->CheckOnSquare() != NULL)
-					tmp = mouse->CheckOnSquare()->get_loc();
-				else{
-					tmp.x = -1;
-					tmp.y = -1;
-				}
+				
 
-				if (tmp.x != -1){
-					IDirect3DTexture9* tx;
-
-					if (tmp.x == player1->get_character()->get_loc().x && tmp.y == player1->get_character()->get_loc().y)
-						tx = player1->get_character()->get_pSquareOverTexture();
-					else if (tmp.x == player2->get_character()->get_loc().x && tmp.y == player2->get_character()->get_loc().y)
-						tx = player2->get_character()->get_pSquareOverTexture();
-					else
-						tx = Square_Over_Texture;
-
-					DrawTexture(tx, CooToPxl(tmp), 1.0f, 0.0f);
-				}
-
-				//RECT rc={0, -380, 800, 200};
 				// 텍스트가 그려질 사각형의 좌표를 넣는다.
 				// 순서대로 left, top, right, bottom의 좌표
 				// {0, 0, 0, 0}의 기준 : 가장 최근에 draw한 그림
+				RECT rc = {0, FPS_SPACE, WindowWidth - FPS_SPACE, 200};
 
+				Font->DrawTextA(Sprite, sz_fps, -1, &rc, DT_RIGHT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(0, 0, 0));
 
+				rc.top += 2;
+				rc.right -= 2;
+			 	Font->DrawTextA(Sprite, sz_fps, -1, &rc, DT_RIGHT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 255, 0));
 
 				//여기서 폰트를 출력한다.
 				//첫번째인자: 스프라이트 디바이스를 넣는곳. NULL을 넣어도 출력은 되긴 되더라
@@ -119,7 +106,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				//네번째인자: 텍스트의 포맷을 설정한다. 여기선 왼쪽정렬, 한줄만그리기, 잘리지않기 옵션임. 자세한 설명은 클럽에 올림
 				//다섯번째인자: 텍스트 컬러
 
-				//Font->DrawTextA(Sprite, FPS_str, -1, &rc, DT_RIGHT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 255, 0));
+
+
+				_board->Draw();
+
+				player1->get_character()->Draw();
+				player2->get_character()->Draw();
+
+				if (mouse->CheckOnSquare() != NULL){
+					Location tmp;
+					Character* cmp;
+					IDirect3DTexture9* tx;
+
+					tmp = mouse->CheckOnSquare()->get_loc();
+					cmp = mouse->CheckOnCharacter();
+
+					tx = (cmp != NULL)? cmp->get_pSquareOverTexture(): Square_Over_Texture;
+
+					DrawTexture(tx, CooToPxl(tmp), 1.0f, 0.0f);
+				}
 				
 				Sprite->End();
 	
@@ -135,6 +140,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	// _board
 	// character 1, 2
 	// player 1, 2
+	// ...
 
 	ReleaseTextures();
 	ReleaseDevice();
@@ -145,11 +151,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch(iMessage) {
 	case WM_LBUTTONDOWN:
-		if (mouse->CheckOnSquare()->get_loc().x != -1){
-			if (Board::board[mouse->CheckOnSquare()->get_loc().y][mouse->CheckOnSquare()->get_loc().x]->get_onthis() != NULL){
-				Board::board[mouse->CheckOnSquare()->get_loc().y][mouse->CheckOnSquare()->get_loc().x]->get_onthis()->get_num();
-			}
+		if (mouse->CheckOnCharacter() != NULL){
+			mouse->CheckOnCharacter()->get_num();
+			// impl.
 		}
+		// impl.
 
 		return 0;
 
@@ -180,6 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	return (DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
 
+/*
 void KeyInput() {
 	//키입력을 받고 받은 키입력에 따라 처리를 결정하는 함수
 	//여기서 간단한 winapi에서 쓰기 쉬운 함수인 GetAsyncKeyState를 씀
@@ -210,6 +217,7 @@ void KeyInput() {
 	if(GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 	}
 }
+*/
 
 void GameLoop() {
 	// impl.

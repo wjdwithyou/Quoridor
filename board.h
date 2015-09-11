@@ -12,7 +12,6 @@ private:
 
 public:
 	static Location loc;
-	//static Square** board;
 	static Square*** board;
 
 public:

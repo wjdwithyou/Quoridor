@@ -19,14 +19,9 @@ void InitializeDevice() {
 	
 	D3DCAPS9 caps;
 
-	d3d9 -> GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps);
+	d3d9->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps);
 
-	int vp = 0;
-	
-	if(caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
-		vp = D3DCREATE_HARDWARE_VERTEXPROCESSING;
-	else
-		vp = D3DCREATE_SOFTWARE_VERTEXPROCESSING; 
+	int vp = (caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)? D3DCREATE_HARDWARE_VERTEXPROCESSING: D3DCREATE_SOFTWARE_VERTEXPROCESSING;
 
 	D3DPRESENT_PARAMETERS PresentParameters; 
 	
@@ -44,33 +39,36 @@ void InitializeDevice() {
 	PresentParameters.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	PresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 	
-	hr = d3d9 -> CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &PresentParameters, &Device);
+	hr = d3d9->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &PresentParameters, &Device);
 	
-	if(FAILED(hr)) {
+	if (FAILED(hr)) {
 		PresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
 		
-		hr = d3d9 -> CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &PresentParameters, &Device);
+		hr = d3d9->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &PresentParameters, &Device);
 
-		if(FAILED(hr)) {
-			d3d9 -> Release();
+		if (FAILED(hr)) {
+			d3d9->Release();
+
 			MessageBox(0, "CreateDevice() - FAILED", 0, 0);
 			
 			return;
 		}
 	}
 	
-	d3d9 -> Release();
+	d3d9->Release();
 
 	D3DXCreateSprite(Device, &Sprite);
 
 	D3DXFONT_DESC fontDesc;
 
 	ZeroMemory(&fontDesc, sizeof(fontDesc));
+
 	fontDesc.Height = 20;
 	fontDesc.Width = 10;
 	fontDesc.Weight = 1000;
 	fontDesc.Italic = false;
 	fontDesc.CharSet = DEFAULT_CHARSET;
+
 	strcpy_s(fontDesc.FaceName, "바탕");
 
 	D3DXCreateFontIndirect(Device, &fontDesc, &Font); //폰트를 만든다.

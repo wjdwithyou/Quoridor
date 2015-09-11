@@ -18,12 +18,8 @@ public:
 	Mouse();
 	~Mouse();
 
-	//Location CheckOnSquare();
 	Square* CheckOnSquare();
-
-	//Location CheckOnCharacter();
 	Character* CheckOnCharacter();
-	//Location CheckOnCharacter(Location, Location);
 
 	void __set_loc(int, int);
 };
