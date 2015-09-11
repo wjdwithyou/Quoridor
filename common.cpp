@@ -1,6 +1,9 @@
 #include "common.h"
 #include "board.h"
 
+Image* image = new Image();
+Debug* debug = new Debug();
+
 Location CooToPxl(Location coo){
 	Location tmp;
 

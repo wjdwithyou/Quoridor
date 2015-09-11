@@ -1,24 +1,37 @@
 #include "player.h"
-#include "image.h"
 
 Player::Player(){}
 
+Player::Player(int n, IDirect3DTexture9** texturePack, Location loc)
+	: character(new Character(n, texturePack, loc)), bar(10), next(NULL){
+
+}
+/*
 Player::Player(int n, IDirect3DTexture9* chara_texture, IDirect3DTexture9* square_over_texture, int x, int y)
 	: character(new Character(n, chara_texture, square_over_texture, x, y)), bar(10), next(NULL){
 
 }
+*/
 
 Player::~Player(){}
 
-void Player::InitPlayer(Player** player1, Player** player2, Player** turn){
-	*player1 = new Player(1, Character_Black_Texture, Square_Over_Black_Texture, 0, 4);
-	(*player1)->next = *player2;
+int Player::numPlayer = 2;
 
-	*player2 = new Player(2, Character_Brown_Texture, Square_Over_Brown_Texture, 8, 4);
-	(*player2)->next = *player1;
+void Player::InitPlayer(Player*** playerList, Player** turn){
+	Location* tmp;
+	Location p2[2] = { {0, 4}, {8, 4} };
+	Location p4[4] = { {4, 8}, {8, 4}, {4, 0}, {0, 4} };
 
-	// impl.
-	// *turn = rand()..
+	tmp = (numPlayer==2)? p2: p4;
+
+	*playerList = new Player*[numPlayer];
+
+	for (int i = 0; i < numPlayer; ++i){
+		(*playerList)[i] = new Player(i, image->Character_Texture_Pack[i], tmp[i]);
+		(*playerList)[i]->next = (*playerList)[(i+1)%numPlayer];
+	}
+
+	*turn = (*playerList)[0];
 
 	return;
 }

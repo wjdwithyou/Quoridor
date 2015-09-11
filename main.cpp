@@ -3,11 +3,9 @@
 #include <time.h>
 #include "api.h"
 #include "dxfunc.h"
-#include "image.h"
 #include "mouse.h"
 #include "board.h"
 #include "player.h"
-#include "fps.h"
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -53,15 +51,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	UpdateWindow(hWnd);
 
 	// 게임의 텍스쳐 로딩
-	LoadTextures();
+	image->LoadTextures();
 
-	Board* _board = new Board();
+	Board* _board = new Board(image->Board_Texture);
 
-	Player* player1 = NULL;
-	Player* player2 = NULL;
-	Player* turn = NULL;
+	Player** playerList;
+	Player* turn;
 
-	Player().InitPlayer(&player1, &player2, &turn);	// TODO: who's first?
+	Player().InitPlayer(&playerList, &turn);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -69,7 +66,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 			DispatchMessage(&Message);
 		}
 
-		sprintf_s(sz_fps, "%02.2fFPS", CalcFPS()); // 프레임을 문자열로 만들어서 sz_fps에 저장
+
+
+		///////////////////////////////////////////
+		// convert for debug
+		sprintf_s(debug->sz_fps, "%02.2fFPS", debug->CalcFPS()); // 프레임을 문자열로 만들어서 sz_fps에 저장
+
+		sprintf_s(debug->sz_cturn, "%d player", turn->get_character()->get_num() + 1);
+		sprintf_s(debug->sz_pxl_x, "pxl.x: %4d", mouse->get_pxloc().x);
+		sprintf_s(debug->sz_pxl_y, "pxl.y: %4d", mouse->get_pxloc().y);
+		sprintf_s(debug->sz_loc_x, "loc.x: %4d", mouse->get_locoo().x);
+		sprintf_s(debug->sz_loc_y, "loc.y: %4d", mouse->get_locoo().y);
+		sprintf_s(debug->sz_mstat, "mstat: %4d", mouse->get_status());
+
+		// convert end
+		///////////////////////////////////////////
+
+
 
 		//KeyInput(); // 여기서 먼저 키입력을 받고
 		//GameLoop(); // 프레임당 처리는 여기서 한다.
@@ -81,7 +94,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				Sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
 				// texture, x, y, size, angle
-				DrawTexture(Background_Texture, 0, 0, 1.0f, 0.0f); // background
+				DrawTexture(image->Background_Texture, 0, 0, 1.0f, 0.0f); // background
 
 
 				
@@ -89,15 +102,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				
 
 				// 텍스트가 그려질 사각형의 좌표를 넣는다.
-				// 순서대로 left, top, right, bottom의 좌표
+				// left, top, right, bottom
 				// {0, 0, 0, 0}의 기준 : 가장 최근에 draw한 그림
-				RECT rc = {0, FPS_SPACE, WindowWidth - FPS_SPACE, 200};
+				
+				RECT rc = {0, 0, WindowWidth, WindowHeight};
 
-				Font->DrawTextA(Sprite, sz_fps, -1, &rc, DT_RIGHT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(0, 0, 0));
-
-				rc.top += 2;
-				rc.right -= 2;
-			 	Font->DrawTextA(Sprite, sz_fps, -1, &rc, DT_RIGHT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 255, 0));
+				debug->PrintFPS(rc);
+				debug->PrintValue(rc);
 
 				//여기서 폰트를 출력한다.
 				//첫번째인자: 스프라이트 디바이스를 넣는곳. NULL을 넣어도 출력은 되긴 되더라
@@ -110,20 +121,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 				_board->Draw();
 
-				player1->get_character()->Draw();
-				player2->get_character()->Draw();
+				for (int i = 0; i < Player().get_numPlayer(); ++i)
+					playerList[i]->get_character()->Draw();
 
 				if (mouse->CheckOnSquare() != NULL){
-					Location tmp;
-					Character* cmp;
-					IDirect3DTexture9* tx;
+					Location tmp = mouse->CheckOnSquare()->get_loc();
+					Character* cmp = mouse->CheckOnCharacter();
 
-					tmp = mouse->CheckOnSquare()->get_loc();
-					cmp = mouse->CheckOnCharacter();
-
-					tx = (cmp != NULL)? cmp->get_pSquareOverTexture(): Square_Over_Texture;
+					IDirect3DTexture9* tx = (cmp != NULL)? cmp->get_pSquareOverTexture(): image->Square_Over_Texture;
 
 					DrawTexture(tx, CooToPxl(tmp), 1.0f, 0.0f);
+				}
+
+				if (mouse->get_status() == clk_chara){
+					Character* cmp = turn->get_character();
+
+					//DrawTexture();
 				}
 				
 				Sprite->End();
@@ -140,9 +153,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	// _board
 	// character 1, 2
 	// player 1, 2
-	// ...
+	// IDirect3DTexture***
 
-	ReleaseTextures();
+	image->ReleaseTextures();
 	ReleaseDevice();
 
 	return true;
@@ -151,11 +164,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch(iMessage) {
 	case WM_LBUTTONDOWN:
+		mouse->Click();
+		/*
 		if (mouse->CheckOnCharacter() != NULL){
+			mouse->set_status(clk_chara);
 			mouse->CheckOnCharacter()->get_num();
 			// impl.
 		}
 		// impl.
+		*/
 
 		return 0;
 

@@ -10,6 +10,18 @@ Mouse::Mouse()
 
 Mouse::~Mouse(){}
 
+void Mouse::Click(){
+	if (CheckOnCharacter() != NULL){	// if character
+		status = clk_chara;
+										// TODO: (if character) -> (if MY character)
+		//impl.
+	}
+
+	// TODO: if bar
+
+	return;
+}
+
 Square* Mouse::CheckOnSquare(){
 	if (locoo.x == -1 || locoo.y == -1)
 		return NULL;

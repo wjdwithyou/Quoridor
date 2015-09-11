@@ -5,18 +5,21 @@
 
 class Player{
 private:
+	static int numPlayer;
+
 	Character* character;
 	int bar;
 	Player* next;
 
 public:
 	Player();
-	Player(int, IDirect3DTexture9*, IDirect3DTexture9*, int, int);
+	Player(int, IDirect3DTexture9**, Location);
 	~Player();
 
-	void InitPlayer(Player**, Player**, Player**);
+	void InitPlayer(Player***, Player**);
 	void DrawRemainBar();
 
+	int get_numPlayer(){ return numPlayer; }
 	Character* get_character(){ return character; }
 };
 

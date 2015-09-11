@@ -1,7 +1,6 @@
 #ifndef __BOARD_H
 #define __BOARD_H
 
-#include "square.h"
 #include "api.h"
 
 class Board {
@@ -10,12 +9,15 @@ private:
 	const int Width;
 	const int Height;
 
+	IDirect3DTexture9* pBoardTexture;
+
 public:
 	static Location loc;
 	static Square*** board;
 
 public:
 	Board();
+	Board(IDirect3DTexture9*);
 	~Board();
 
 	void Init();

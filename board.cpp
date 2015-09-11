@@ -1,10 +1,13 @@
 #include "board.h"
-#include "api.h"
 #include "dxfunc.h"
-#include "image.h"	/////
 
 Board::Board()
-	: Size(9), Width(580), Height(580)
+	: Size(9), Width(580), Height(580){
+
+}
+
+Board::Board(IDirect3DTexture9* texture_)
+	: Size(9), Width(580), Height(580), pBoardTexture(texture_)
 {
 	Init();
 }
@@ -30,6 +33,6 @@ void Board::Init(){
 }
 
 void Board::Draw(){
-	DrawC(Board_Texture, WindowWidth/2, WindowHeight/2, 1.0f, 0.0f, (float)Width/2);	/////
+	DrawC(pBoardTexture, WindowWidth/2, WindowHeight/2, 1.0f, 0.0f, (float)Width/2);	/////
 	return;
 }

@@ -1,7 +1,6 @@
 #ifndef __SQUARE_H
 #define __SQUARE_H
 
-#include "common.h"
 #include "character.h"
 
 class Square{

@@ -3,16 +3,30 @@
 
 #include <d3d9.h>
 
-extern IDirect3DTexture9* Background_Texture;
-extern IDirect3DTexture9* Board_Texture;
-extern IDirect3DTexture9* Character_Black_Texture;
-extern IDirect3DTexture9* Character_Brown_Texture;
-extern IDirect3DTexture9* Square_Over_Texture;
-extern IDirect3DTexture9* Square_Over_Black_Texture;
-extern IDirect3DTexture9* Square_Over_Brown_Texture;
+enum Istat{ base, sq_over, clicked };
 
-void LoadTextures();
-void ReleaseTexture(IDirect3DTexture9*);
-void ReleaseTextures();
+class Image{
+private:
+	const int MAX_ISTAT;
+
+public:
+	IDirect3DTexture9*** Character_Texture_Pack;
+
+	IDirect3DTexture9* Background_Texture;
+	IDirect3DTexture9* Board_Texture;
+	IDirect3DTexture9* Square_Over_Texture;
+	IDirect3DTexture9* Square_Moveable_Texture;
+
+public:
+	Image();
+	~Image();
+
+	void InitPack();
+	void LoadTextures();
+	void MakePack();
+	void ReleaseTexture(IDirect3DTexture9*);
+	void ReleaseTexture(IDirect3DTexture9***);
+	void ReleaseTextures();
+};
 
 #endif // __IMAGE_H
