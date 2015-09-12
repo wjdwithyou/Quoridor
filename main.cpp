@@ -5,7 +5,9 @@
 #include "dxfunc.h"
 #include "mouse.h"
 #include "board.h"
+#include "square.h"
 #include "player.h"
+#include "debug.h"
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -56,7 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	Board* _board = new Board(image->Board_Texture);
 
 	Player** playerList;
-	Player* turn;
+	//Player* turn;
 
 	Player().InitPlayer(&playerList, &turn);
 
@@ -122,7 +124,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				_board->Draw();
 
 				for (int i = 0; i < Player().get_numPlayer(); ++i)
-					playerList[i]->get_character()->Draw();
+					playerList[i]->get_character()->Draw(base);
 
 				if (mouse->CheckOnSquare() != NULL){
 					Location tmp = mouse->CheckOnSquare()->get_loc();
@@ -136,7 +138,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				if (mouse->get_status() == clk_chara){
 					Character* cmp = turn->get_character();
 
-					//DrawTexture();
+					cmp->Draw(clicked);
+
+					for (int i = 0; i < cmp->get_numMoveable(); ++i)
+						DrawTexture(image->Square_Moveable_Texture, CooToPxl(cmp->get_moveableList()[i]), 1.0f, 0.0f);
 				}
 				
 				Sprite->End();
@@ -148,11 +153,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		}
 	}
 	
-	// TO DELETE LIST
+	// TO DELETE/Free/Release LIST
 	// Board::board[9][9]
 	// _board
-	// character 1, 2
-	// player 1, 2
+	// characters	+	vector moveableList
+	// players
 	// IDirect3DTexture***
 
 	image->ReleaseTextures();
@@ -162,9 +167,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
-	switch(iMessage) {
+	switch (iMessage){
 	case WM_LBUTTONDOWN:
-		mouse->Click();
+		mouse->Click(turn);
 		/*
 		if (mouse->CheckOnCharacter() != NULL){
 			mouse->set_status(clk_chara);

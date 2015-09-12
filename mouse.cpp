@@ -1,5 +1,7 @@
 #include "mouse.h"
 #include "board.h"
+#include "square.h"
+#include "player.h"
 
 Mouse::Mouse()
 	: status(ready)
@@ -8,12 +10,20 @@ Mouse::Mouse()
 	locoo.x = locoo.y = -1;
 }
 
+Mouse::Mouse(Location loc)
+	: status(clk_chara), locoo(loc)
+{
+	pxloc.x = pxloc.y = 0;	/////
+}
+
 Mouse::~Mouse(){}
 
-void Mouse::Click(){
-	if (CheckOnCharacter() != NULL){	// if character
+void Mouse::Click(Player* turn){
+	if (CheckOnCharacter() == turn->get_character()){
 		status = clk_chara;
-										// TODO: (if character) -> (if MY character)
+
+		turn->get_character()->SearchMoveable();
+
 		//impl.
 	}
 

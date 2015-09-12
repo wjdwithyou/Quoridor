@@ -13,6 +13,8 @@ public:
 	Square(int, int);
 	~Square();
 
+	void Draw();
+
 	Location get_loc(){ return loc; }
 	Character* get_onthis(){ return onthis; }
 	void set_onthis(Character* c){ onthis = c; return; }

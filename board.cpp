@@ -1,5 +1,7 @@
 #include "board.h"
+#include "api.h"
 #include "dxfunc.h"
+#include "square.h"
 
 Board::Board()
 	: Size(9), Width(580), Height(580){

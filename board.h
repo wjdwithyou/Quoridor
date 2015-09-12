@@ -1,7 +1,10 @@
 #ifndef __BOARD_H
 #define __BOARD_H
 
-#include "api.h"
+#include <d3d9.h>
+#include "common.h"
+
+class Square;
 
 class Board {
 private:
@@ -22,6 +25,7 @@ public:
 
 	void Init();
 	void Draw();
+	//Square** SearchMoveable();
 };
 
 #endif // __BOARD_H

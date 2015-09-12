@@ -1,11 +1,14 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
-#include "image.h"
-#include "debug.h"
+class Image;
+class Player;
+class Debug;
 
 extern Image* image;
 extern Debug* debug;
+
+extern Player* turn;
 
 typedef struct Location{
 	int x;
@@ -14,5 +17,6 @@ typedef struct Location{
 
 Location CooToPxl(Location);
 Location PxlToCoo(Location);
+bool CheckCooRange(Location);
 
 #endif // __COMMON_H

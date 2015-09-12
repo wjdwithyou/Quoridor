@@ -1,7 +1,11 @@
 #ifndef __MOUSE_H
 #define __MOUSE_H
 
-#include "square.h"
+#include "common.h"
+
+class Square;
+class Player;
+class Character;
 
 enum Mstat{ ready, clk_chara, clk_bar };
 
@@ -14,9 +18,10 @@ private:
 
 public:
 	Mouse();
+	Mouse(Location);	/////
 	~Mouse();
 
-	void Click();
+	void Click(Player*);
 	Square* CheckOnSquare();
 	Character* CheckOnCharacter();
 
