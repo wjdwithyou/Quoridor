@@ -15,6 +15,8 @@ typedef struct Location{
 	int y;
 }Location;
 
+// TODO: for Location, need operator overloading (==)
+
 Location CooToPxl(Location);
 Location PxlToCoo(Location);
 bool CheckCooRange(Location);

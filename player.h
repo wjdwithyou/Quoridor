@@ -13,7 +13,7 @@ private:
 
 public:
 	Player();
-	Player(int, Location, IDirect3DTexture9**);
+	Player(int, Location, IDirect3DTexture9*);
 	~Player();
 
 	void InitPlayer(Player***, Player**);

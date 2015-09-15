@@ -1,5 +1,6 @@
 #include "image.h"
 #include "dxfunc.h"
+#include "square.h"
 #include "player.h"
 
 Image::Image()
@@ -13,10 +14,8 @@ Image::~Image(){}
 void Image::InitPack(){
 	int np = Player().get_numPlayer();
 
-	Character_Texture_Pack = new IDirect3DTexture9**[np];
-
-	for (int i = 0; i < np; ++i)
-		Character_Texture_Pack[i] = new IDirect3DTexture9*[MAX_ISTAT];
+	Square_Texture = new IDirect3DTexture9*[Square::MAX_QSTAT];
+	Character_Texture = new IDirect3DTexture9*[np];
 
 	return;
 }
@@ -24,9 +23,17 @@ void Image::InitPack(){
 void Image::LoadTextures(){
 	LoadTexture("Image/background.png", &Background_Texture);
 	LoadTexture("Image/board.png", &Board_Texture);
-	LoadTexture("Image/square_over.png", &Square_Over_Texture);
-	LoadTexture("Image/square_moveable.png", &Square_Moveable_Texture);
+	LoadTexture("Image/effect.png", &Effect_Texture);
 
+	LoadTexture("Image/square_base.png", &Square_Texture[q_base]);
+	LoadTexture("Image/square_clicked.png", &Square_Texture[q_clicked]);
+	LoadTexture("Image/square_moveable.png", &Square_Texture[q_moveable]);
+
+	LoadTexture("Image/character1.png", &Character_Texture[0]);
+	LoadTexture("Image/character2.png", &Character_Texture[1]);
+
+
+	/*
 	// character1
 	LoadTexture("Image/character1.png", &Character_Texture_Pack[0][base]);
 	LoadTexture("Image/square_over_character1.png", &Character_Texture_Pack[0][sq_over]);
@@ -36,6 +43,7 @@ void Image::LoadTextures(){
 	LoadTexture("Image/character2.png", &Character_Texture_Pack[1][base]);
 	LoadTexture("Image/square_over_character2.png", &Character_Texture_Pack[1][sq_over]);
 	LoadTexture("Image/clicked_character2.png", &Character_Texture_Pack[1][clicked]);
+	*/
 
 	return;
 }
@@ -49,11 +57,9 @@ void Image::ReleaseTexture(IDirect3DTexture9* texture_){
 	return;
 }
 
-void Image::ReleaseTexture(IDirect3DTexture9*** texturePack){
-	for (int i = 0; i < Player().get_numPlayer(); ++i){
-		for (int j = 0; j < MAX_ISTAT; ++j)
-			ReleaseTexture(texturePack[i][j]);
-	}
+void Image::ReleaseTexture(IDirect3DTexture9** texture_, int n){
+	for (int i = 0; i < n; ++i)
+		ReleaseTexture(texture_[i]);
 
 	return;
 }
@@ -61,10 +67,10 @@ void Image::ReleaseTexture(IDirect3DTexture9*** texturePack){
 void Image::ReleaseTextures(){
 	ReleaseTexture(Background_Texture);
 	ReleaseTexture(Board_Texture);
-	ReleaseTexture(Square_Over_Texture);
-	ReleaseTexture(Square_Moveable_Texture);
+	ReleaseTexture(Effect_Texture);
 
-	ReleaseTexture(Character_Texture_Pack);
+	ReleaseTexture(Square_Texture, Square::MAX_QSTAT);
+	ReleaseTexture(Character_Texture, Player().get_numPlayer());
 
 	return;
 }

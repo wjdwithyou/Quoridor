@@ -6,8 +6,8 @@
 
 Character::Character(){}
 
-Character::Character(int n, Location loc, IDirect3DTexture9** texturePack)
-	: num(n), loc(loc), TexturePack(texturePack), numMoveable(0)
+Character::Character(int n, Location loc, IDirect3DTexture9* texture_)
+	: num(n), loc(loc), texture_(texture_), numMoveable(0)
 {
 	Board::board[loc.y][loc.x]->set_onthis(this);
 }
@@ -15,7 +15,7 @@ Character::Character(int n, Location loc, IDirect3DTexture9** texturePack)
 Character::~Character(){}
 
 void Character::Draw(Istat stat){
-	DrawTexture(TexturePack[stat], CooToPxl(loc), 1.0f, 0.0f);
+	DrawTexture(texture_, CooToPxl(loc), 1.0f, 0.0f);
 	return;
 }
 
@@ -57,7 +57,12 @@ void Character::SearchMoveable(){
 	return;
 }
 
-void Character::Move(){
+void Character::Move(Location _loc){
+	loc.x = _loc.x;
+	loc.y = _loc.y;
+
+	// reset moveableList and numMoveable
+
 
 	return;
 }

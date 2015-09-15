@@ -2,10 +2,17 @@
 
 Player::Player(){}
 
+Player::Player(int n, Location loc, IDirect3DTexture9* texture_)
+	: character(new Character(n, loc, texture_)), bar(10), next(NULL){
+
+}
+
+/*
 Player::Player(int n, Location loc, IDirect3DTexture9** texturePack)
 	: character(new Character(n, loc, texturePack)), bar(10), next(NULL){
 
 }
+*/
 
 Player::~Player(){}
 
@@ -21,7 +28,7 @@ void Player::InitPlayer(Player*** playerList, Player** turn){
 	*playerList = new Player*[numPlayer];
 
 	for (int i = 0; i < numPlayer; ++i){
-		(*playerList)[i] = new Player(i, tmp[i], image->Character_Texture_Pack[i]);
+		(*playerList)[i] = new Player(i, tmp[i], image->Character_Texture[i]);
 		(*playerList)[i]->next = (*playerList)[(i+1)%numPlayer];
 	}
 

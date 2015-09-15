@@ -25,7 +25,6 @@ public:
 
 	void Init();
 	void Draw();
-	//Square** SearchMoveable();
 };
 
 #endif // __BOARD_H
