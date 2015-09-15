@@ -35,6 +35,17 @@ void Board::Init(){
 }
 
 void Board::Draw(){
+	for (int i = 0; i < Size; ++i){
+		for (int j = 0; j < Size; ++j)
+			board[i][j]->Draw();
+	}
+
+	return;
+}
+
+/*
+void Board::Draw(){
 	DrawC(pBoardTexture, WindowWidth/2, WindowHeight/2, 1.0f, 0.0f, (float)Width/2);	/////
 	return;
 }
+*/

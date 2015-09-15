@@ -126,11 +126,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				for (int i = 0; i < Player().get_numPlayer(); ++i)
 					playerList[i]->get_character()->Draw(base);
 
+				// temp!!
 				if (mouse->CheckOnSquare() != NULL){
 					Location tmp = mouse->CheckOnSquare()->get_loc();
 					Character* cmp = mouse->CheckOnCharacter();
 
-					IDirect3DTexture9* tx = (cmp != NULL)? cmp->get_pSquareOverTexture(): image->Square_Over_Texture;
+					IDirect3DTexture9* tx = image->Effect_Texture;
+					//IDirect3DTexture9* tx = (cmp != NULL)? cmp->get_pSquareOverTexture(): image->Square_Over_Texture;
 
 					DrawTexture(tx, CooToPxl(tmp), 1.0f, 0.0f);
 				}
@@ -141,7 +143,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 					cmp->Draw(clicked);
 
 					for (int i = 0; i < cmp->get_numMoveable(); ++i)
-						DrawTexture(image->Square_Moveable_Texture, CooToPxl(cmp->get_moveableList()[i]), 1.0f, 0.0f);
+						DrawTexture(image->Square_Texture[q_moveable], CooToPxl(cmp->get_moveableList()[i]), 1.0f, 0.0f);
 				}
 				
 				Sprite->End();

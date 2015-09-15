@@ -19,15 +19,41 @@ Mouse::Mouse(Location loc)
 Mouse::~Mouse(){}
 
 void Mouse::Click(Player* turn){
-	if (CheckOnCharacter() == turn->get_character()){
-		status = clk_chara;
+	Character* cmp = turn->get_character();
 
-		turn->get_character()->SearchMoveable();
+	switch (status){
+	case base:
+		if (cmp == CheckOnCharacter()){
+			status = clk_chara;
 
-		//impl.
+			cmp->SearchMoveable();
+
+			//impl.
+		}
+
+		break;
+	case clk_chara:
+		// TODO: for Location, need operator overloading (==)
+
+		for (int i = 0; i < cmp->get_numMoveable(); ++i){
+			if (locoo.x == cmp->get_moveableList()[i].x &&
+				locoo.y == cmp->get_moveableList()[i].y){
+					cmp->Move(cmp->get_moveableList()[i]);
+					
+					// impl.
+
+					break;
+			}
+		}
+
+		break;
+
+	case clk_bar:
+		break;
+
+	default:
+		break;
 	}
-
-	// TODO: if bar
 
 	return;
 }
