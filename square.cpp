@@ -5,7 +5,7 @@
 Square::Square(){}
 
 Square::Square(int x, int y)
-	: status(q_base), onthis(NULL), texture_(image->Square_Texture[q_base])
+	: status(q_base), onthis(NULL), texture_pack(image->Square_Texture)
 {
 	loc.x = x;
 	loc.y = y;
@@ -13,7 +13,7 @@ Square::Square(int x, int y)
 
 Square::~Square(){}
 
-void Square::Draw(){
-	DrawTexture(texture_, CooToPxl(loc), 1.0f, 0.0f);
+void Square::Draw() const{
+	DrawTexture(texture_pack[status], CooToPxl(loc), 1.0f, 0.0f);
 	return;
 }

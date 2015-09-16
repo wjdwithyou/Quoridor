@@ -1,20 +1,21 @@
 #ifndef __MOUSE_H
 #define __MOUSE_H
 
+#include <d3d9.h>
 #include "common.h"
 
 class Square;
 class Player;
 class Character;
 
-enum Mstat{ ready, clk_chara, clk_bar };
+enum Mstat{ m_ready, m_clk_chara, m_clk_bar };
 
 class Mouse{
 private:
 	Mstat status;
 	Location pxloc;	// int로 형 변환된 mxy-pixel이 들어온다 from callback
 	Location locoo;	// (-1, a), (b, -1), ...
-	//IDirect3DTexture9* texture_;
+	IDirect3DTexture9* effect_;
 
 public:
 	Mouse();
@@ -22,16 +23,17 @@ public:
 	~Mouse();
 
 	void Click(Player*);
-	Square* CheckOnSquare();
-	Character* CheckOnCharacter();
+	void DrawEffect() const;
+	Square* CheckOnSquare() const;
+	Character* CheckOnCharacter() const;
 
 	void __set_loc(int, int);
 
-	Mstat get_status(){ return status; }
+	Mstat get_status() const{ return status; }
 	
 	// for test
-	Location get_pxloc(){ return pxloc; }
-	Location get_locoo(){ return locoo; }
+	Location get_pxloc() const{ return pxloc; }
+	Location get_locoo() const{ return locoo; }
 	//
 
 	void set_status(Mstat stat){ status = stat; return; }

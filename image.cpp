@@ -7,15 +7,14 @@ Image::Image()
 	: MAX_ISTAT(3)
 {
 	InitPack();
+	//LoadTextures();
 }
 
 Image::~Image(){}
 
 void Image::InitPack(){
-	int np = Player().get_numPlayer();
-
 	Square_Texture = new IDirect3DTexture9*[Square::MAX_QSTAT];
-	Character_Texture = new IDirect3DTexture9*[np];
+	Character_Texture = new IDirect3DTexture9*[Player().get_numPlayer()];
 
 	return;
 }

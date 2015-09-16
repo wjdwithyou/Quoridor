@@ -14,8 +14,18 @@ Character::Character(int n, Location loc, IDirect3DTexture9* texture_)
 
 Character::~Character(){}
 
-void Character::Draw(Istat stat){
+void Character::Draw() const{
 	DrawTexture(texture_, CooToPxl(loc), 1.0f, 0.0f);
+	return;
+}
+
+void Character::Move(Square* square){
+	Board::board[loc.y][loc.x]->set_onthis(NULL);
+
+	loc = square->get_loc();
+
+	square->set_onthis(this);
+
 	return;
 }
 
@@ -57,12 +67,25 @@ void Character::SearchMoveable(){
 	return;
 }
 
-void Character::Move(Location _loc){
-	loc.x = _loc.x;
-	loc.y = _loc.y;
+void Character::RevealMoveable(){
+	for (int i = 0; i < numMoveable; ++i)
+		Board::board[moveableList[i].y][moveableList[i].x]->set_status(q_moveable);
 
-	// reset moveableList and numMoveable
+	return;
+}
 
+void Character::HideMoveable(){
+	for (int i = 0; i < numMoveable; ++i)
+		Board::board[moveableList[i].y][moveableList[i].x]->set_status(q_base);
+
+	return;
+}
+
+void Character::ResetMoveable(){
+	for (int i = 0; i < numMoveable; ++i)
+		moveableList.pop_back();
+
+	numMoveable = 0;
 
 	return;
 }

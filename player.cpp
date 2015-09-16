@@ -7,13 +7,6 @@ Player::Player(int n, Location loc, IDirect3DTexture9* texture_)
 
 }
 
-/*
-Player::Player(int n, Location loc, IDirect3DTexture9** texturePack)
-	: character(new Character(n, loc, texturePack)), bar(10), next(NULL){
-
-}
-*/
-
 Player::~Player(){}
 
 int Player::numPlayer = 2;
@@ -37,7 +30,7 @@ void Player::InitPlayer(Player*** playerList, Player** turn){
 	return;
 }
 
-void Player::DrawRemainBar(){
+void Player::DrawRemainBar() const{
 	//impl.
 
 	return;

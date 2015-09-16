@@ -17,10 +17,10 @@ public:
 	~Player();
 
 	void InitPlayer(Player***, Player**);
-	void DrawRemainBar();
+	void DrawRemainBar() const;
 
-	int get_numPlayer(){ return numPlayer; }
-	Character* get_character(){ return character; }
+	int get_numPlayer() const{ return numPlayer; }
+	Character* get_character() const{ return character; }
 };
 
 #endif // __PLAYER_H
