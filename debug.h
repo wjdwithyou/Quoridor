@@ -21,9 +21,9 @@ public:
 	Debug();
 	~Debug();
 
-	float CalcFPS();
-	void PrintFPS(RECT);
-	void PrintValue(RECT);
+	float CalcFPS() const;
+	void PrintFPS(RECT) const;
+	void PrintValue(RECT) const;
 };
 
 #endif // __DEBUG_H

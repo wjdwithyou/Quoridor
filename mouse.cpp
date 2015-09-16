@@ -1,17 +1,19 @@
 #include "mouse.h"
+#include "dxfunc.h"
+#include "image.h"
 #include "board.h"
 #include "square.h"
 #include "player.h"
 
 Mouse::Mouse()
-	: status(ready)
+	: status(m_ready), effect_(image->Effect_Texture)
 {
 	pxloc.x = pxloc.y = 0;
 	locoo.x = locoo.y = -1;
 }
 
 Mouse::Mouse(Location loc)
-	: status(clk_chara), locoo(loc)
+	: status(m_clk_chara), locoo(loc), effect_(image->Effect_Texture)
 {
 	pxloc.x = pxloc.y = 0;	/////
 }
@@ -22,33 +24,44 @@ void Mouse::Click(Player* turn){
 	Character* cmp = turn->get_character();
 
 	switch (status){
-	case base:
-		if (cmp == CheckOnCharacter()){
-			status = clk_chara;
+	case m_ready:
+		if (CheckOnCharacter() == cmp){
+			status = m_clk_chara;
+
+			Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_clicked);
 
 			cmp->SearchMoveable();
+			cmp->RevealMoveable();
 
 			//impl.
 		}
 
 		break;
-	case clk_chara:
-		// TODO: for Location, need operator overloading (==)
 
-		for (int i = 0; i < cmp->get_numMoveable(); ++i){
-			if (locoo.x == cmp->get_moveableList()[i].x &&
-				locoo.y == cmp->get_moveableList()[i].y){
-					cmp->Move(cmp->get_moveableList()[i]);
-					
-					// impl.
+	case m_clk_chara:
+		if (CheckOnSquare() != NULL){
+			switch (CheckOnSquare()->get_status()){
+			case q_moveable:
+			case q_clicked:
+				Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_base);
 
-					break;
+				if (q_moveable)
+					cmp->Move(CheckOnSquare());
+
+				cmp->HideMoveable();
+				cmp->ResetMoveable();
+
+				status = m_ready;
+			case q_base:
+			default:
+				break;
 			}
 		}
 
 		break;
 
-	case clk_bar:
+	case m_clk_bar:
+		// impl.
 		break;
 
 	default:
@@ -58,14 +71,20 @@ void Mouse::Click(Player* turn){
 	return;
 }
 
-Square* Mouse::CheckOnSquare(){
+void Mouse::DrawEffect() const{
+	//DrawTexture(effect_, CooToPxl(locoo), 1.0f, 0.0f);				// Why it doesn't work???
+	DrawTexture(image->Effect_Texture, CooToPxl(locoo), 1.0f, 0.0f);
+	return;
+}
+
+Square* Mouse::CheckOnSquare() const{
 	if (locoo.x == -1 || locoo.y == -1)
 		return NULL;
 
 	return Board::board[locoo.y][locoo.x];
 }
 
-Character* Mouse::CheckOnCharacter(){
+Character* Mouse::CheckOnCharacter() const{
 	if (CheckOnSquare() == NULL)
 		return NULL;
 

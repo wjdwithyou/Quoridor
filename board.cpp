@@ -1,5 +1,4 @@
 #include "board.h"
-#include "api.h"
 #include "dxfunc.h"
 #include "square.h"
 
@@ -34,7 +33,7 @@ void Board::Init(){
 	return;
 }
 
-void Board::Draw(){
+void Board::Draw() const{
 	for (int i = 0; i < Size; ++i){
 		for (int j = 0; j < Size; ++j)
 			board[i][j]->Draw();

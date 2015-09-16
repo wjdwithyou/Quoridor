@@ -6,6 +6,8 @@
 #include "common.h"
 #include "image.h"
 
+class Square;
+
 using namespace std;
 
 class Character{
@@ -13,7 +15,6 @@ private:
 	int num;
 	Location loc;
 	IDirect3DTexture9* texture_;
-	//IDirect3DTexture9** TexturePack;
 	vector<Location> moveableList;
 	int numMoveable;
 
@@ -22,14 +23,17 @@ public:
 	Character(int, Location, IDirect3DTexture9*);
 	~Character();
 
-	void Draw(Istat);
+	void Draw() const;
+	void Move(Square*);
 	void SearchMoveable();
-	void Move(Location);
+	void RevealMoveable();
+	void HideMoveable();
+	void ResetMoveable();
 
-	int get_num(){ return num; }
-	Location get_loc(){ return loc; }
-	Location* get_moveableList(){ return &moveableList[0]; }
-	int get_numMoveable(){ return numMoveable; }
+	int get_num() const{ return num; }
+	Location get_loc() const{ return loc; }
+	Location* get_moveableList() { return &moveableList[0]; }
+	int get_numMoveable() const{ return numMoveable; }
 };
 
 #endif // __CHARACTER_H

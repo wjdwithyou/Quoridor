@@ -1,5 +1,4 @@
 #include "dxfunc.h"
-#include "api.h"
 
 IDirect3DDevice9* Device;
 ID3DXSprite* Sprite;

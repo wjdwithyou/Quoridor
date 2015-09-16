@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "api.h"
 #include "dxfunc.h"
 #include "mouse.h"
 #include "board.h"
@@ -119,32 +118,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				//네번째인자: 텍스트의 포맷을 설정한다. 여기선 왼쪽정렬, 한줄만그리기, 잘리지않기 옵션임. 자세한 설명은 클럽에 올림
 				//다섯번째인자: 텍스트 컬러
 
+				_board->Draw();		// square
+				
+				if (mouse->CheckOnSquare() != NULL)		// mouse
+					mouse->DrawEffect();
+					
 
-
-				_board->Draw();
-
-				for (int i = 0; i < Player().get_numPlayer(); ++i)
-					playerList[i]->get_character()->Draw(base);
-
-				// temp!!
-				if (mouse->CheckOnSquare() != NULL){
-					Location tmp = mouse->CheckOnSquare()->get_loc();
-					Character* cmp = mouse->CheckOnCharacter();
-
-					IDirect3DTexture9* tx = image->Effect_Texture;
-					//IDirect3DTexture9* tx = (cmp != NULL)? cmp->get_pSquareOverTexture(): image->Square_Over_Texture;
-
-					DrawTexture(tx, CooToPxl(tmp), 1.0f, 0.0f);
-				}
-
-				if (mouse->get_status() == clk_chara){
-					Character* cmp = turn->get_character();
-
-					cmp->Draw(clicked);
-
-					for (int i = 0; i < cmp->get_numMoveable(); ++i)
-						DrawTexture(image->Square_Texture[q_moveable], CooToPxl(cmp->get_moveableList()[i]), 1.0f, 0.0f);
-				}
+				for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
+					playerList[i]->get_character()->Draw();
 				
 				Sprite->End();
 	
@@ -172,23 +153,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	switch (iMessage){
 	case WM_LBUTTONDOWN:
 		mouse->Click(turn);
-		/*
-		if (mouse->CheckOnCharacter() != NULL){
-			mouse->set_status(clk_chara);
-			mouse->CheckOnCharacter()->get_num();
-			// impl.
-		}
-		// impl.
-		*/
-
-		return 0;
+		break;
 
 	case WM_LBUTTONUP:
-		return 0;
+		break;
 
 	case WM_MOUSEMOVE:
 		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
-		return 0;
+		break;
 		
 	case WM_KEYDOWN:
 		/*
@@ -199,12 +171,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		*/
 		if(wParam == 'P') {
 			// pause?
-			return 0;
+			break;
 		}
+		break;
 
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		return 0;
+		break;
+	default:
+		break;
 	}
 
 	return (DefWindowProc(hWnd, iMessage, wParam, lParam));

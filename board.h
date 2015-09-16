@@ -24,7 +24,7 @@ public:
 	~Board();
 
 	void Init();
-	void Draw();
+	void Draw() const;
 };
 
 #endif // __BOARD_H

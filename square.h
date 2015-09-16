@@ -13,7 +13,7 @@ private:
 	Qstat status;
 	Location loc;
 	Character* onthis;
-	IDirect3DTexture9* texture_;
+	IDirect3DTexture9** texture_pack;
 
 public:
 	const static int MAX_QSTAT = 3;
@@ -23,10 +23,13 @@ public:
 	Square(int, int);
 	~Square();
 
-	void Draw();
+	void Draw() const;
 
-	Location get_loc(){ return loc; }
-	Character* get_onthis(){ return onthis; }
+	Qstat get_status() const{ return status; }
+	Location get_loc() const{ return loc; }
+	Character* get_onthis() const{ return onthis; }
+
+	void set_status(Qstat s){ status = s; return; }
 	void set_onthis(Character* c){ onthis = c; return; }
 };
 

@@ -1,9 +1,14 @@
 #include "common.h"
 #include "image.h"
+#include "mouse.h"
 #include "board.h"
 #include "debug.h"
 
+HWND hWnd;
+MSG Message;
+
 Image* image = new Image();
+Mouse* mouse = new Mouse();
 Debug* debug = new Debug();
 
 Player* turn;

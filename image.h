@@ -3,8 +3,6 @@
 
 #include <d3d9.h>
 
-enum Istat{ base, sq_over, clicked };
-
 class Image{
 private:
 	const int MAX_ISTAT;

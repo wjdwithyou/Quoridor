@@ -8,7 +8,7 @@ Debug::Debug()
 
 Debug::~Debug(){}
 
-float Debug::CalcFPS(){
+float Debug::CalcFPS() const{
 	static int cnt = 0;
 	static DWORD curr_time = 0, prev_time = 0, elapsed = 0;
 	static float fps = 0.0f;
@@ -27,7 +27,7 @@ float Debug::CalcFPS(){
 	return fps;
 }
 
-void Debug::PrintFPS(RECT rc){
+void Debug::PrintFPS(RECT rc) const{
 	rc.top += FPS_SPACE;
 	rc.right -= FPS_SPACE;
 	Font->DrawTextA(Sprite, sz_fps, -1, &rc, DT_RIGHT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(0, 0, 0));
@@ -39,7 +39,7 @@ void Debug::PrintFPS(RECT rc){
 	return;
 }
 
-void Debug::PrintValue(RECT rc){
+void Debug::PrintValue(RECT rc) const{
 	rc.top += 200;
 	Font->DrawTextA(Sprite, sz_cturn, -1, &rc, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 0, 0));
 
