@@ -22,7 +22,7 @@ public:
 	Mouse(Location);	/////
 	~Mouse();
 
-	void Click(Player*);
+	void Click(Player**);
 	void DrawEffect() const;
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;

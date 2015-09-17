@@ -21,6 +21,7 @@ public:
 
 	int get_numPlayer() const{ return numPlayer; }
 	Character* get_character() const{ return character; }
+	Player* get_next() const{ return next; }
 };
 
 #endif // __PLAYER_H

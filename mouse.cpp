@@ -20,8 +20,8 @@ Mouse::Mouse(Location loc)
 
 Mouse::~Mouse(){}
 
-void Mouse::Click(Player* turn){
-	Character* cmp = turn->get_character();
+void Mouse::Click(Player** turn){
+	Character* cmp = (*turn)->get_character();
 
 	switch (status){
 	case m_ready:
@@ -41,18 +41,30 @@ void Mouse::Click(Player* turn){
 	case m_clk_chara:
 		if (CheckOnSquare() != NULL){
 			switch (CheckOnSquare()->get_status()){
-			case q_moveable:
+			case q_base:
+				break;
 			case q_clicked:
 				Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_base);
-
-				if (q_moveable)
-					cmp->Move(CheckOnSquare());
 
 				cmp->HideMoveable();
 				cmp->ResetMoveable();
 
 				status = m_ready;
-			case q_base:
+
+				break;
+			case q_moveable:
+				Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_base);
+
+				cmp->Move(CheckOnSquare());
+
+				cmp->HideMoveable();
+				cmp->ResetMoveable();
+
+				*turn = (*turn)->get_next();
+
+				status = m_ready;
+
+				break;
 			default:
 				break;
 			}

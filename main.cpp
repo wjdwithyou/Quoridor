@@ -122,8 +122,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				
 				if (mouse->CheckOnSquare() != NULL)		// mouse
 					mouse->DrawEffect();
-					
-
+				
 				for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
 					playerList[i]->get_character()->Draw();
 				
@@ -141,7 +140,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	// _board
 	// characters	+	vector moveableList
 	// players
-	// IDirect3DTexture***
+	// IDirect3DTexture** square, character
 
 	image->ReleaseTextures();
 	ReleaseDevice();
@@ -152,7 +151,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch (iMessage){
 	case WM_LBUTTONDOWN:
-		mouse->Click(turn);
+		mouse->Click(&turn);
 		break;
 
 	case WM_LBUTTONUP:

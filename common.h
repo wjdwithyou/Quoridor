@@ -20,7 +20,6 @@ extern Player* turn;
 const int WindowWidth = 1024;
 const int WindowHeight = 768;
 
-// TODO: for Location, need operator overloading (==)
 typedef struct Location{
 	int x;
 	int y;
@@ -29,5 +28,7 @@ typedef struct Location{
 Location CooToPxl(Location);
 Location PxlToCoo(Location);
 bool CheckCooRange(Location);
+
+//bool operator==(Location&, Location&);
 
 #endif // __COMMON_H

@@ -23,14 +23,15 @@ void Image::LoadTextures(){
 	LoadTexture("Image/background.png", &Background_Texture);
 	LoadTexture("Image/board.png", &Board_Texture);
 	LoadTexture("Image/effect.png", &Effect_Texture);
+	LoadTexture("Image/bar.png", &Bar_Texture);
 
 	LoadTexture("Image/square_base.png", &Square_Texture[q_base]);
 	LoadTexture("Image/square_clicked.png", &Square_Texture[q_clicked]);
 	LoadTexture("Image/square_moveable.png", &Square_Texture[q_moveable]);
 
+	// TODO: auto numbering
 	LoadTexture("Image/character1.png", &Character_Texture[0]);
 	LoadTexture("Image/character2.png", &Character_Texture[1]);
-
 
 	/*
 	// character1
@@ -67,6 +68,7 @@ void Image::ReleaseTextures(){
 	ReleaseTexture(Background_Texture);
 	ReleaseTexture(Board_Texture);
 	ReleaseTexture(Effect_Texture);
+	ReleaseTexture(Bar_Texture);
 
 	ReleaseTexture(Square_Texture, Square::MAX_QSTAT);
 	ReleaseTexture(Character_Texture, Player().get_numPlayer());
