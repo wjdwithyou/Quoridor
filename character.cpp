@@ -4,10 +4,13 @@
 #include "board.h"
 #include "square.h"
 
-Character::Character(){}
+Character::Character()
+	: dest(){
 
-Character::Character(int n, Location loc, IDirect3DTexture9* texture_)
-	: num(n), loc(loc), texture_(texture_), numMoveable(0)
+}
+
+Character::Character(int n, Location dloc, Location sloc, IDirect3DTexture9* texture_)
+	: dest(dloc), num(n), loc(sloc), texture_(texture_), numMoveable(0)
 {
 	Board::board[loc.y][loc.x]->set_onthis(this);
 }
@@ -25,6 +28,11 @@ void Character::Move(Square* square){
 	loc = square->get_loc();
 
 	square->set_onthis(this);
+
+	return;
+}
+
+void Character::Check() const{
 
 	return;
 }

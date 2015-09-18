@@ -12,19 +12,24 @@ using namespace std;
 
 class Character{
 private:
+	const Location dest;
+
 	int num;
 	Location loc;
 	IDirect3DTexture9* texture_;
+
 	vector<Location> moveableList;
 	int numMoveable;
 
 public:
 	Character();
-	Character(int, Location, IDirect3DTexture9*);
+	Character(int, Location, Location, IDirect3DTexture9*);
 	~Character();
 
 	void Draw() const;
 	void Move(Square*);
+	void Check() const;
+
 	void SearchMoveable();
 	void RevealMoveable();
 	void HideMoveable();
