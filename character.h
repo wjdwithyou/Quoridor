@@ -28,11 +28,11 @@ public:
 
 	void Draw() const;
 	void Move(Square*);
-	void Check() const;
+	bool Check() const;
 
 	void SearchMoveable();
-	void RevealMoveable();
-	void HideMoveable();
+	void RevealMoveable() const;
+	void HideMoveable() const;
 	void ResetMoveable();
 
 	int get_num() const{ return num; }

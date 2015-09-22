@@ -3,10 +3,14 @@
 #include <time.h>
 #include "dxfunc.h"
 #include "mouse.h"
+#include "image.h"
 #include "board.h"
 #include "square.h"
 #include "player.h"
+#include "character.h"
 #include "debug.h"
+
+#include "bar.h"	/////
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -125,6 +129,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				
 				for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
 					playerList[i]->get_character()->Draw();
+
+				// for test
+				for (int i = 0; i < Player().get_numPlayer(); ++i){		// bar
+					for (int j = 0; j < playerList[i]->get_numBar(); ++j)
+						playerList[i]->get_barList()[j]->DrawBar();
+				}
+
+				Bar().DrawBar();	// bar
+				// test end
 				
 				Sprite->End();
 	
@@ -139,8 +152,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	// Board::board[9][9]
 	// _board
 	// characters	+	vector moveableList
-	// players
+	// players	+ barList
 	// IDirect3DTexture** square, character
+	// etc.
 
 	image->ReleaseTextures();
 	ReleaseDevice();

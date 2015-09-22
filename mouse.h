@@ -8,7 +8,7 @@ class Square;
 class Player;
 class Character;
 
-enum Mstat{ m_ready, m_clk_chara, m_clk_bar };
+enum Mstat{ m_ready, m_clk_chara, m_clk_bar, m_etc };
 
 class Mouse{
 private:
@@ -26,6 +26,7 @@ public:
 	void DrawEffect() const;
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
+	void CheckOnBar() const;
 
 	void __set_loc(int, int);
 

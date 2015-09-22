@@ -4,6 +4,7 @@
 #include "board.h"
 #include "square.h"
 #include "player.h"
+#include "character.h"
 
 Mouse::Mouse()
 	: status(m_ready), effect_(image->Effect_Texture)
@@ -60,9 +61,15 @@ void Mouse::Click(Player** turn){
 				cmp->HideMoveable();
 				cmp->ResetMoveable();
 
-				*turn = (*turn)->get_next();
-
-				status = m_ready;
+				if (cmp->Check()){
+					Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_win);
+					// impl.
+					status = m_etc;
+				}
+				else{
+					*turn = (*turn)->get_next();
+					status = m_ready;
+				}
 
 				break;
 			default:
@@ -74,6 +81,11 @@ void Mouse::Click(Player** turn){
 
 	case m_clk_bar:
 		// impl.
+		break;
+
+	case m_etc:
+		// impl.
+
 		break;
 
 	default:
@@ -101,6 +113,11 @@ Character* Mouse::CheckOnCharacter() const{
 		return NULL;
 
 	return CheckOnSquare()->get_onthis();
+}
+
+void Mouse::CheckOnBar() const{
+	// impl.
+	return;
 }
 
 void Mouse::__set_loc(int x, int y){

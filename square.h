@@ -6,7 +6,7 @@
 
 class Character;
 
-enum Qstat{ q_base, q_clicked, q_moveable };
+enum Qstat{ q_base, q_clicked, q_moveable, q_win };
 
 class Square{
 private:
@@ -16,7 +16,7 @@ private:
 	IDirect3DTexture9** texture_pack;
 
 public:
-	const static int MAX_QSTAT = 3;
+	const static int MAX_QSTAT = 4;
 
 public:
 	Square();

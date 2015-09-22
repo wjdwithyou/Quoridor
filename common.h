@@ -20,6 +20,8 @@ extern Player* turn;
 const int WindowWidth = 1024;
 const int WindowHeight = 768;
 
+const float PI = 3.141592f;
+
 typedef struct Location{
 	int x;
 	int y;

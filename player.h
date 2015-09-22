@@ -1,19 +1,24 @@
 #ifndef __PLAYER_H
 #define __PLAYER_H
 
-#include "character.h"
+#include <d3d9.h>
+#include "common.h"
+
+class Character;
+class Bar;
 
 class Player{
 private:
 	static int numPlayer;
 
 	Character* character;
-	int bar;
+	Bar** barList;
+	int numBar;
 	Player* next;
 
 public:
 	Player();
-	Player(int, Location, Location, IDirect3DTexture9*);
+	Player(int, Location, Location, Location, Location, IDirect3DTexture9*);
 	~Player();
 
 	void InitPlayer(Player***, Player**);
@@ -21,6 +26,8 @@ public:
 
 	int get_numPlayer() const{ return numPlayer; }
 	Character* get_character() const{ return character; }
+	Bar** get_barList() const{ return barList; }
+	int get_numBar() const { return numBar; }
 	Player* get_next() const{ return next; }
 };
 

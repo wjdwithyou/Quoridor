@@ -32,9 +32,17 @@ void Character::Move(Square* square){
 	return;
 }
 
-void Character::Check() const{
+bool Character::Check() const{
+	if (dest.y == -1){
+		if (dest.x != loc.x)
+			return false;
+	}
+	else{
+		if (dest.y != loc.y)
+			return false;
+	}
 
-	return;
+	return true;
 }
 
 void Character::SearchMoveable(){
@@ -75,14 +83,14 @@ void Character::SearchMoveable(){
 	return;
 }
 
-void Character::RevealMoveable(){
+void Character::RevealMoveable() const{
 	for (int i = 0; i < numMoveable; ++i)
 		Board::board[moveableList[i].y][moveableList[i].x]->set_status(q_moveable);
 
 	return;
 }
 
-void Character::HideMoveable(){
+void Character::HideMoveable() const{
 	for (int i = 0; i < numMoveable; ++i)
 		Board::board[moveableList[i].y][moveableList[i].x]->set_status(q_base);
 
