@@ -4,6 +4,7 @@
 #include <d3d9.h>
 #include "common.h"
 
+class Board;
 class Character;
 class Bar;
 
@@ -11,6 +12,7 @@ class Player{
 private:
 	static int numPlayer;
 
+	int num;
 	Character* character;
 	Bar** barList;
 	int numBar;
@@ -21,13 +23,14 @@ public:
 	Player(int, Location, Location, Location, Location, IDirect3DTexture9*);
 	~Player();
 
-	void InitPlayer(Player***, Player**);
-	void DrawRemainBar() const;
+	void InitPlayer(Player***, Board*, Player**);
+
+	Location __get_barInitLoc(Board*, int) const;
 
 	int get_numPlayer() const{ return numPlayer; }
 	Character* get_character() const{ return character; }
 	Bar** get_barList() const{ return barList; }
-	int get_numBar() const { return numBar; }
+	int get_numBar() const{ return numBar; }
 	Player* get_next() const{ return next; }
 };
 

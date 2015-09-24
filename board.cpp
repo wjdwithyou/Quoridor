@@ -48,3 +48,12 @@ void Board::Draw(){
 	return;
 }
 */
+
+Location Board::__get_centerLoc() const{
+	Location temp;
+
+	temp.x = loc.x + (Width>>1);
+	temp.y = loc.y + (Height>>1);
+
+	return temp;
+}

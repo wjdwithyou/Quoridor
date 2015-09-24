@@ -30,6 +30,7 @@ typedef struct Location{
 Location CooToPxl(Location);
 Location PxlToCoo(Location);
 bool CheckCooRange(Location);
+bool CheckCooRangeAdditional(Location);
 
 //bool operator==(Location&, Location&);
 

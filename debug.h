@@ -17,6 +17,11 @@ public:
 	char sz_loc_y[16];
 	char sz_mstat[16];
 
+	char sz_temp1[16];
+	char sz_temp2[16];
+	char sz_temp3[16];
+	char sz_temp4[16];
+
 public:
 	Debug();
 	~Debug();

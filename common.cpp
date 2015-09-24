@@ -24,24 +24,29 @@ Location CooToPxl(Location coo){
 
 Location PxlToCoo(Location pxl){
 	Location tmp;
-
-	int rx = (pxl.x - Board::loc.x) % 65;
-	int ry = (pxl.x - Board::loc.y) % 65;
+	Location r;
 
 	tmp.x = (pxl.x - Board::loc.x) / 65;
 	tmp.y = (pxl.y - Board::loc.y) / 65;
 
+	r.x = (pxl.x - Board::loc.x) % 65;
+	r.y = (pxl.y - Board::loc.y) % 65;
+
 	if (!CheckCooRange(tmp))
 		tmp.x = tmp.y = -1;
+
+	if (!CheckCooRangeAdditional(r))
+		tmp.x = tmp.y = -1;
+
 	/*
 	if (tmp.x < 0 || tmp.x > 8)
 		tmp.x = -1;
 	if (tmp.y < 0 || tmp.y > 8)
 		tmp.y = -1;
 	*/
-	if (60 <= rx && rx <= 64)
+	if (60 <= r.x && r.x <= 64)
 		tmp.x = -1;
-	if (60 <= ry && ry <= 64)
+	if (60 <= r.y && r.y <= 64)
 		tmp.y = -1;
 
 	return tmp;
@@ -56,6 +61,14 @@ bool CheckCooRange(Location coo){
 
 	return true;
 }
+
+bool CheckCooRangeAdditional(Location coo){
+	if (coo.x < 0 || coo.y < 0)
+		return false;
+
+	return true;
+}
+
 /*
 bool operator==(Location &loc1, Location &loc2){
 	if (loc1.x == loc2.x && loc2.y == loc2.y)

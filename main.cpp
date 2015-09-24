@@ -63,7 +63,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	Player** playerList;
 	//Player* turn;
 
-	Player().InitPlayer(&playerList, &turn);
+	Player().InitPlayer(&playerList, _board, &turn);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -83,6 +83,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		sprintf_s(debug->sz_loc_x, "loc.x: %4d", mouse->get_locoo().x);
 		sprintf_s(debug->sz_loc_y, "loc.y: %4d", mouse->get_locoo().y);
 		sprintf_s(debug->sz_mstat, "mstat: %4d", mouse->get_status());
+
+		sprintf_s(debug->sz_temp1, "%d", turn->get_barList()[0]->get_loc().x);
+		sprintf_s(debug->sz_temp2, "%d", turn->get_barList()[0]->get_loc().y);
 
 		// convert end
 		///////////////////////////////////////////
@@ -121,7 +124,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				//세번째인자: 출력할 문자열 내의 문자의 수. NULL로 끝나는 문자열은 -1을 넣으면 된다.
 				//네번째인자: 텍스트의 포맷을 설정한다. 여기선 왼쪽정렬, 한줄만그리기, 잘리지않기 옵션임. 자세한 설명은 클럽에 올림
 				//다섯번째인자: 텍스트 컬러
-
+				
 				_board->Draw();		// square
 				
 				if (mouse->CheckOnSquare() != NULL)		// mouse
@@ -138,7 +141,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 				Bar().DrawBar();	// bar
 				// test end
-				
+
 				Sprite->End();
 	
 				Device->EndScene();

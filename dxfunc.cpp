@@ -10,7 +10,7 @@ D3DXMATRIX Translation;
 D3DXMATRIX Rotation;
 D3DXMATRIX Scaling;
 
-void InitializeDevice() {
+void InitializeDevice(){
 	HRESULT hr;
 	IDirect3D9* d3d9;
 	
@@ -80,7 +80,7 @@ void InitializeDevice() {
 	Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 }
 
-void LoadTexture(char* TextureFileName, IDirect3DTexture9** texture_) {
+void LoadTexture(char* TextureFileName, IDirect3DTexture9** texture_){
 	D3DXIMAGE_INFO ImageInfo;
 	D3DXGetImageInfoFromFile(TextureFileName, &ImageInfo);
 	D3DXCreateTextureFromFileEx(Device, TextureFileName, ImageInfo.Width, ImageInfo.Height, 1, D3DUSAGE_AUTOGENMIPMAP, ImageInfo.Format, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, 0, NULL, NULL, texture_);
@@ -88,44 +88,7 @@ void LoadTexture(char* TextureFileName, IDirect3DTexture9** texture_) {
 	return;
 }
 
-void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, float angle) {
-	// 좌상단 기준
-	D3DXMatrixIdentity(&World);	
-	D3DXMatrixTranslation(&Translation, x, y, 0.0f);
-	D3DXMatrixRotationZ(&Rotation, angle);
-	D3DXMatrixScaling(&Scaling, size, size, 1.0f);
-
-	D3DXMatrixMultiply(&Scaling, &Scaling, &Rotation);
-	D3DXMatrixMultiply(&World, &Scaling, &Translation);
-	Sprite -> SetTransform(&World);
-
-	Color = D3DCOLOR_RGBA(255, 255, 255, 255);
-
-	Sprite -> Draw(texture_, NULL, NULL, NULL, Color);
-
-	return;
-}
-
-void DrawTexture(IDirect3DTexture9* texture_, Location loc, float size, float angle){
-	D3DXMatrixIdentity(&World);	
-	D3DXMatrixTranslation(&Translation, static_cast<float>(loc.x), static_cast<float>(loc.y), 0.0f);
-	D3DXMatrixRotationZ(&Rotation, angle);
-	D3DXMatrixScaling(&Scaling, size, size, 1.0f);
-
-	D3DXMatrixMultiply(&Scaling, &Scaling, &Rotation);
-	D3DXMatrixMultiply(&World, &Scaling, &Translation);
-	Sprite -> SetTransform(&World);
-
-	Color = D3DCOLOR_RGBA(255, 255, 255, 255);
-
-	Sprite -> Draw(texture_, NULL, NULL, NULL, Color);
-
-	return;
-}
-
-void DrawC(IDirect3DTexture9* texture_, float x, float y, float size, float angle, float c) {
-	// 센터 기준
-	// 임시. 수정 및 보완 필요
+void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, float angle, float cx, float cy){
 	D3DXMatrixIdentity(&World);
 	D3DXMatrixTranslation(&Translation, x, y, 0.0f);
 	D3DXMatrixRotationZ(&Rotation, angle);
@@ -137,13 +100,37 @@ void DrawC(IDirect3DTexture9* texture_, float x, float y, float size, float angl
 
 	Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-	D3DXVECTOR3 center(c, c, 0);
+	D3DXVECTOR3 center(cx, cy, 0);
 	Sprite -> Draw(texture_, NULL, &center, NULL, Color);
+}
 
+void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, float angle, float c){
+	DrawTexture(texture_, x, y, size, angle, c, c);
 	return;
 }
+
+void DrawTexture(IDirect3DTexture9* texture_, float x, float y, float size, float angle){
+	DrawTexture(texture_, x, y, size, angle, 0.0f, 0.0f);
+	return;
+}
+
+void DrawTexture(IDirect3DTexture9* texture_, Location loc, float size, float angle, float cx, float cy){
+	DrawTexture(texture_, static_cast<float>(loc.x), static_cast<float>(loc.y), size, angle, cx, cy);
+	return;
+}
+
+void DrawTexture(IDirect3DTexture9* texture_, Location loc, float size, float angle, float c){
+	DrawTexture(texture_, static_cast<float>(loc.x), static_cast<float>(loc.y), size, angle, c, c);
+	return;
+}
+
+void DrawTexture(IDirect3DTexture9* texture_, Location loc, float size, float angle){
+	DrawTexture(texture_, static_cast<float>(loc.x), static_cast<float>(loc.y), size, angle, 0.0f, 0.0f);
+	return;
+}
+
 /*
-void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float angle) {
+void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float angle){
 	// for overlap
 	D3DXMatrixIdentity(&World);	
 	D3DXMatrixTranslation(&Translation, x, y, 0.0f);
@@ -162,7 +149,7 @@ void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float
 }
 */
 
-void ReleaseDevice() {
+void ReleaseDevice(){
 	if (Sprite != NULL){
 		Sprite->Release();
 		Sprite = NULL;

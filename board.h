@@ -25,6 +25,12 @@ public:
 
 	void Init();
 	void Draw() const;
+
+	Location __get_centerLoc() const;
+
+	int get_Size() const{ return Size; }
+	int get_Width() const{ return Width; }
+	int get_Height() const{ return Height; }
 };
 
 #endif // __BOARD_H
