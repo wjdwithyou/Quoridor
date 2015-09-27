@@ -7,6 +7,7 @@
 class Square;
 class Player;
 class Character;
+class Bar;
 
 enum Mstat{ m_ready, m_clk_chara, m_clk_bar, m_etc };
 
@@ -15,7 +16,7 @@ private:
 	Mstat status;
 	Location pxloc;	// int로 형 변환된 mxy-pixel이 들어온다 from callback
 	Location locoo;	// (-1, a), (b, -1), ...
-	IDirect3DTexture9* effect_;
+	IDirect3DTexture9* effect_square;
 
 public:
 	Mouse();
@@ -26,7 +27,8 @@ public:
 	void DrawEffect() const;
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
-	void CheckOnBar() const;
+	Bar* CheckOnBar(Player*) const;
+	bool CheckRoundRange(Bar*) const;
 
 	void __set_loc(int, int);
 

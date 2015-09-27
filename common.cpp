@@ -69,6 +69,10 @@ bool CheckCooRangeAdditional(Location coo){
 	return true;
 }
 
+int __get_IntSquare(int n){
+	return n * n;
+}
+
 /*
 bool operator==(Location &loc1, Location &loc2){
 	if (loc1.x == loc2.x && loc2.y == loc2.y)

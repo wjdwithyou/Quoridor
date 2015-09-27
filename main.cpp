@@ -126,21 +126,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				//다섯번째인자: 텍스트 컬러
 				
 				_board->Draw();		// square
-				
-				if (mouse->CheckOnSquare() != NULL)		// mouse
-					mouse->DrawEffect();
-				
+
+				mouse->DrawEffect();	// mouse
+
 				for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
 					playerList[i]->get_character()->Draw();
 
-				// for test
 				for (int i = 0; i < Player().get_numPlayer(); ++i){		// bar
 					for (int j = 0; j < playerList[i]->get_numBar(); ++j)
 						playerList[i]->get_barList()[j]->DrawBar();
 				}
-
-				Bar().DrawBar();	// bar
-				// test end
 
 				Sprite->End();
 	
@@ -176,6 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 
 	case WM_MOUSEMOVE:
 		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
+		mouse->CheckOnBar(turn);
 		break;
 		
 	case WM_KEYDOWN:

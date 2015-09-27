@@ -18,7 +18,8 @@ Player::Player(int n, Location dloc, Location sloc, Location iemp, Location bdt,
 	barList = new Bar*[numBar];
 
 	for (int i = 0; i < numBar; ++i){
-		stat = (i == numBar - 1)? b_up: b_down;
+		stat = b_over;
+		//stat = (i == numBar - 1)? b_up: b_down;
 
 		barList[i] = new Bar(stat, pltmp);
 
@@ -84,4 +85,8 @@ Location Player::__get_barInitLoc(Board* _board, int pn) const{
 	iemp = (numPlayer == 2)? p2bil: p4bil;
 
 	return iemp[pn];
+}
+
+Bar* Player::__get_lastBar() const{
+	return barList[numBar - 1];
 }

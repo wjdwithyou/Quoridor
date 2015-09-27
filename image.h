@@ -8,10 +8,10 @@ public:
 	IDirect3DTexture9* Background_Texture;
 	IDirect3DTexture9* Board_Texture;
 	IDirect3DTexture9* Effect_Texture;
-	IDirect3DTexture9* Bar_Texture;
 
 	IDirect3DTexture9** Square_Texture_Pack;
 	IDirect3DTexture9** Character_Texture_Pack;
+	IDirect3DTexture9** Bar_Texture_Pack;
 
 public:
 	Image();

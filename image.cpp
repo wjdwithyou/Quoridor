@@ -2,6 +2,9 @@
 #include "dxfunc.h"
 #include "square.h"
 #include "player.h"
+#include "bar.h"
+
+#define NUM_BAR_IMAGE 2		// temp
 
 Image::Image(){
 	InitPack();
@@ -12,6 +15,7 @@ Image::~Image(){}
 void Image::InitPack(){
 	Square_Texture_Pack = new IDirect3DTexture9*[Square::MAX_QSTAT];
 	Character_Texture_Pack = new IDirect3DTexture9*[Player().get_numPlayer()];
+	Bar_Texture_Pack = new IDirect3DTexture9*[NUM_BAR_IMAGE];
 
 	return;
 }
@@ -20,18 +24,20 @@ void Image::LoadTextures(){
 	LoadTexture("Image/background.png", &Background_Texture);
 	LoadTexture("Image/board.png", &Board_Texture);
 	LoadTexture("Image/effect.png", &Effect_Texture);
-	LoadTexture("Image/bar.png", &Bar_Texture);
 
+	// TODO: auto numbering
 	LoadTexture("Image/square_base.png", &Square_Texture_Pack[q_base]);
 	LoadTexture("Image/square_clicked.png", &Square_Texture_Pack[q_clicked]);
 	LoadTexture("Image/square_moveable.png", &Square_Texture_Pack[q_moveable]);
 	LoadTexture("Image/square_win.png", &Square_Texture_Pack[q_win]);
 
-	// TODO: auto numbering
 	LoadTexture("Image/character1.png", &Character_Texture_Pack[0]);
 	LoadTexture("Image/character2.png", &Character_Texture_Pack[1]);
 	LoadTexture("Image/character1.png", &Character_Texture_Pack[2]);	// temp
 	LoadTexture("Image/character2.png", &Character_Texture_Pack[3]);	// temp
+
+	LoadTexture("Image/bar.png", &Bar_Texture_Pack[b_over]);
+	LoadTexture("Image/bar_onmouse.png", &Bar_Texture_Pack[b_on]);
 
 	return;
 }
@@ -56,10 +62,10 @@ void Image::ReleaseTextures(){
 	ReleaseTexture(Background_Texture);
 	ReleaseTexture(Board_Texture);
 	ReleaseTexture(Effect_Texture);
-	ReleaseTexture(Bar_Texture);
 
 	ReleaseTexture(Square_Texture_Pack, Square::MAX_QSTAT);
 	ReleaseTexture(Character_Texture_Pack, Player().get_numPlayer());
+	ReleaseTexture(Bar_Texture_Pack, NUM_BAR_IMAGE);	// temp
 
 	return;
 }

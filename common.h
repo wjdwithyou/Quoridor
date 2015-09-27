@@ -32,6 +32,8 @@ Location PxlToCoo(Location);
 bool CheckCooRange(Location);
 bool CheckCooRangeAdditional(Location);
 
+int __get_IntSquare(int);
+
 //bool operator==(Location&, Location&);
 
 #endif // __COMMON_H

@@ -4,7 +4,7 @@
 #include <d3d9.h>
 #include "common.h"
 
-enum Bstat{ b_down, b_up, b_clicked };
+enum Bstat{ b_over, b_on, b_clicked };
 
 class Bar{
 private:
@@ -12,7 +12,8 @@ private:
 
 	Bstat status;
 	Location loc;
-	IDirect3DTexture9* texture_;
+	float mag;
+	IDirect3DTexture9** texture_pack;
 
 public:
 	const static int _BOARD = 50;	// board-bar
@@ -25,7 +26,11 @@ public:
 
 	void DrawBar() const;
 
+	Location get_size() const{ return size; }
 	Location get_loc() const{ return loc; }		// for debug!
+	float get_mag() const{ return mag; }
+
+	void set_status(Bstat s){ status = s; return; }
 };
 
 #endif // __BAR_H

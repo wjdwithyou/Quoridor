@@ -3,12 +3,12 @@
 #include "image.h"
 
 Bar::Bar()
-	: texture_(image->Bar_Texture){
+	: texture_pack(image->Bar_Texture_Pack){
 
 }
 
 Bar::Bar(Bstat s, Location _loc)
-	: status(s), loc(_loc), texture_(image->Bar_Texture){
+	: status(s), loc(_loc), mag(0.75), texture_pack(image->Bar_Texture_Pack){
 		
 }
 
@@ -17,6 +17,6 @@ Bar::~Bar(){}
 Location Bar::size = {60, 125};
 
 void Bar::DrawBar() const{
-	DrawTexture(texture_, loc, 0.75f, 60.0f / 180 * PI, static_cast<float>(size.x >> 1),  static_cast<float>(size.y >> 1));
+	DrawTexture(texture_pack[status], loc, mag, 60.0f / 180 * PI, static_cast<float>(size.x >> 1),  static_cast<float>(size.y >> 1));
 	return;
 }

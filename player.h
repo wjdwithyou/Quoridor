@@ -26,6 +26,7 @@ public:
 	void InitPlayer(Player***, Board*, Player**);
 
 	Location __get_barInitLoc(Board*, int) const;
+	Bar* __get_lastBar() const;
 
 	int get_numPlayer() const{ return numPlayer; }
 	Character* get_character() const{ return character; }

@@ -1,20 +1,22 @@
 #include "mouse.h"
+#include <math.h>
 #include "dxfunc.h"
 #include "image.h"
 #include "board.h"
 #include "square.h"
 #include "player.h"
 #include "character.h"
+#include "bar.h"
 
 Mouse::Mouse()
-	: status(m_ready), effect_(image->Effect_Texture)
+	: status(m_ready), effect_square(image->Effect_Texture)
 {
 	pxloc.x = pxloc.y = 0;
 	locoo.x = locoo.y = -1;
 }
 
 Mouse::Mouse(Location loc)
-	: status(m_clk_chara), locoo(loc), effect_(image->Effect_Texture)
+	: status(m_clk_chara), locoo(loc), effect_square(image->Effect_Texture)
 {
 	pxloc.x = pxloc.y = 0;	/////
 }
@@ -23,6 +25,7 @@ Mouse::~Mouse(){}
 
 void Mouse::Click(Player** turn){
 	Character* cmp = (*turn)->get_character();
+	Bar* bmp = (*turn)->__get_lastBar();
 
 	switch (status){
 	case m_ready:
@@ -36,6 +39,13 @@ void Mouse::Click(Player** turn){
 
 			//impl.
 		}
+
+		if (CheckOnBar(*turn)){
+			status = m_clk_bar;
+			// impl.
+		}
+
+		// impl.
 
 		break;
 
@@ -96,8 +106,10 @@ void Mouse::Click(Player** turn){
 }
 
 void Mouse::DrawEffect() const{
-	//DrawTexture(effect_, CooToPxl(locoo), 1.0f, 0.0f);				// Why it doesn't work???
-	DrawTexture(image->Effect_Texture, CooToPxl(locoo), 1.0f, 0.0f);
+	if (CheckOnSquare() != NULL)
+		//DrawTexture(effect_square, CooToPxl(locoo), 1.0f, 0.0f);				// Why it doesn't work???
+		DrawTexture(image->Effect_Texture, CooToPxl(locoo), 1.0f, 0.0f);
+
 	return;
 }
 
@@ -115,9 +127,25 @@ Character* Mouse::CheckOnCharacter() const{
 	return CheckOnSquare()->get_onthis();
 }
 
-void Mouse::CheckOnBar() const{
-	// impl.
-	return;
+Bar* Mouse::CheckOnBar(Player* turn) const{
+	Bar* temp = turn->__get_lastBar();
+
+	if (!CheckRoundRange(temp)){
+		temp->set_status(b_over);
+		return NULL;
+	}
+
+	temp->set_status(b_on);
+
+	return temp;
+}
+
+bool Mouse::CheckRoundRange(Bar* b) const{
+	if (pow(static_cast<float>(pxloc.x - b->get_loc().x), 2) + pow(static_cast<float>(pxloc.y - b->get_loc().y), 2)\
+		<= pow(static_cast<float>(0.75 * ((b->get_size().x <= b->get_size().y)? b->get_size().x: b->get_size().y)), 2))
+		return true;
+
+	return false;
 }
 
 void Mouse::__set_loc(int x, int y){
