@@ -17,6 +17,7 @@ private:
 	Location pxloc;	// int로 형 변환된 mxy-pixel이 들어온다 from callback
 	Location locoo;	// (-1, a), (b, -1), ...
 	IDirect3DTexture9* effect_square;
+	Bar* pick;
 
 public:
 	Mouse();
@@ -24,10 +25,12 @@ public:
 	~Mouse();
 
 	void Click(Player**);
+	void R_Click();
+	void Wheel(bool) const;
 	void DrawEffect() const;
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
-	Bar* CheckOnBar(Player*) const;
+	Bar* CheckOnBar(Bar*) const;
 	bool CheckRoundRange(Bar*) const;
 
 	void __set_loc(int, int);
@@ -38,6 +41,8 @@ public:
 	Location get_pxloc() const{ return pxloc; }
 	Location get_locoo() const{ return locoo; }
 	//
+
+	Bar* get_pick() const{ return pick; }
 
 	void set_status(Mstat stat){ status = stat; return; }
 };

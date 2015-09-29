@@ -13,6 +13,7 @@ private:
 	Bstat status;
 	Location loc;
 	float mag;
+	float angle;
 	IDirect3DTexture9** texture_pack;
 
 public:
@@ -24,11 +25,18 @@ public:
 	Bar(Bstat, Location);
 	~Bar();
 
-	void DrawBar() const;
+	void Draw(Location) const;
 
+	void __set_pickedBar();
+	void __set_releasedBar();
+
+	void __set_angle(float);
+
+	Bstat get_status() const{ return status; }
 	Location get_size() const{ return size; }
 	Location get_loc() const{ return loc; }		// for debug!
 	float get_mag() const{ return mag; }
+	float get_angle() const{ return angle; }
 
 	void set_status(Bstat s){ status = s; return; }
 };

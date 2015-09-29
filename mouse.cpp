@@ -9,14 +9,14 @@
 #include "bar.h"
 
 Mouse::Mouse()
-	: status(m_ready), effect_square(image->Effect_Texture)
+	: status(m_ready), effect_square(image->Effect_Texture), pick(NULL)
 {
 	pxloc.x = pxloc.y = 0;
 	locoo.x = locoo.y = -1;
 }
 
 Mouse::Mouse(Location loc)
-	: status(m_clk_chara), locoo(loc), effect_square(image->Effect_Texture)
+	: status(m_clk_chara), locoo(loc), effect_square(image->Effect_Texture), pick(NULL)
 {
 	pxloc.x = pxloc.y = 0;	/////
 }
@@ -37,11 +37,14 @@ void Mouse::Click(Player** turn){
 			cmp->SearchMoveable();
 			cmp->RevealMoveable();
 
-			//impl.
+			// impl.
 		}
 
-		if (CheckOnBar(*turn)){
+		if (CheckOnBar(bmp)){
 			status = m_clk_bar;
+			pick = bmp;
+
+			pick->__set_pickedBar();
 			// impl.
 		}
 
@@ -105,10 +108,50 @@ void Mouse::Click(Player** turn){
 	return;
 }
 
+void Mouse::R_Click(){
+	switch (status){
+	case m_ready:
+		// impl.
+		break;
+
+	case m_clk_chara:
+		// impl.
+		break;
+
+	case m_clk_bar:
+		pick->__set_releasedBar();
+		pick = NULL;
+
+		status = m_ready;
+
+		break;
+
+	case m_etc:
+		break;
+
+	default:
+		break;
+	}
+
+	return;
+}
+
+void Mouse::Wheel(bool b) const{
+	float delta = (b)? -90.0f: 90.0f;
+
+	pick->__set_angle(delta);
+
+	return;
+}
+
 void Mouse::DrawEffect() const{
-	if (CheckOnSquare() != NULL)
+	if (CheckOnSquare() != NULL){
+		if (status == m_clk_bar)
+			return;
+
 		//DrawTexture(effect_square, CooToPxl(locoo), 1.0f, 0.0f);				// Why it doesn't work???
 		DrawTexture(image->Effect_Texture, CooToPxl(locoo), 1.0f, 0.0f);
+	}
 
 	return;
 }
@@ -127,22 +170,23 @@ Character* Mouse::CheckOnCharacter() const{
 	return CheckOnSquare()->get_onthis();
 }
 
-Bar* Mouse::CheckOnBar(Player* turn) const{
-	Bar* temp = turn->__get_lastBar();
+Bar* Mouse::CheckOnBar(Bar* b) const{
+	if (status != m_ready)	// test
+		return NULL;
 
-	if (!CheckRoundRange(temp)){
-		temp->set_status(b_over);
+	if (!CheckRoundRange(b)){
+		b->set_status(b_over);
 		return NULL;
 	}
 
-	temp->set_status(b_on);
+	b->set_status(b_on);
 
-	return temp;
+	return b;
 }
 
 bool Mouse::CheckRoundRange(Bar* b) const{
 	if (pow(static_cast<float>(pxloc.x - b->get_loc().x), 2) + pow(static_cast<float>(pxloc.y - b->get_loc().y), 2)\
-		<= pow(static_cast<float>(0.75 * ((b->get_size().x <= b->get_size().y)? b->get_size().x: b->get_size().y)), 2))
+		<= pow(static_cast<float>(0.75 * ((b->get_size().x <= b->get_size().y)? b->get_size().x: b->get_size().y))/* >> 1*/, 2))
 		return true;
 
 	return false;

@@ -132,10 +132,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
 					playerList[i]->get_character()->Draw();
 
+
+
+				///// bar draw test /////
+				// TODO: rearrange dirty codes :(
+
 				for (int i = 0; i < Player().get_numPlayer(); ++i){		// bar
-					for (int j = 0; j < playerList[i]->get_numBar(); ++j)
-						playerList[i]->get_barList()[j]->DrawBar();
+					for (int j = 0; j < playerList[i]->get_numBar(); ++j){
+						if (playerList[i]->get_barList()[j] != mouse->get_pick())
+							playerList[i]->get_barList()[j]->Draw(mouse->get_pxloc());
+					}
 				}
+
+				if (mouse->get_pick() != NULL)
+					mouse->get_pick()->Draw(mouse->get_pxloc());
+
+				///// bar draw test end /////
+
+
 
 				Sprite->End();
 	
@@ -169,9 +183,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONUP:
 		break;
 
+	case WM_RBUTTONDOWN:
+		mouse->R_Click();
+		break;
+
 	case WM_MOUSEMOVE:
 		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
-		mouse->CheckOnBar(turn);
+		mouse->CheckOnBar(turn->__get_lastBar());
+		break;
+
+	case WM_MOUSEWHEEL:
+		mouse->Wheel(((SHORT)HIWORD(wParam) > 0)? true: false);	// up(+), down(-)
 		break;
 		
 	case WM_KEYDOWN:
