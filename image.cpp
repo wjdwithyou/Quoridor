@@ -4,7 +4,7 @@
 #include "player.h"
 #include "bar.h"
 
-#define NUM_BAR_IMAGE 3		// temp
+#define NUM_BAR_IMAGE 6		// temp
 
 Image::Image(){
 	InitPack();
@@ -39,6 +39,9 @@ void Image::LoadTextures(){
 	LoadTexture("Image/bar.png", &Bar_Texture_Pack[b_over]);
 	LoadTexture("Image/bar_onmouse.png", &Bar_Texture_Pack[b_on]);
 	LoadTexture("Image/bar.png", &Bar_Texture_Pack[b_clicked]);		// temp
+	LoadTexture("Image/bar_can.png", &Bar_Texture_Pack[b_can]);
+	LoadTexture("Image/bar_cannot.png", &Bar_Texture_Pack[b_cannot]);
+	LoadTexture("Image/bar_used.png", &Bar_Texture_Pack[b_used]);
 
 	return;
 }

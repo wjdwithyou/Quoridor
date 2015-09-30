@@ -4,11 +4,13 @@
 #include <d3d9.h>
 #include "common.h"
 
-enum Bstat{ b_over, b_on, b_clicked };
+enum Bstat{ b_over, b_on, b_clicked, b_can, b_cannot, b_used };
+enum Bdir{ d_none, d_vtc, d_hrz };
 
 class Bar{
 private:
 	static Location size;
+	static Location size_used;
 
 	Bstat status;
 	Location loc;
@@ -17,19 +19,21 @@ private:
 	IDirect3DTexture9** texture_pack;
 
 public:
+	//const static int ACCESS_EFFECT = 4;
 	const static int _BOARD = 50;	// board-bar
 	const static int _BAR = 15;		// bar-bar
 
 public:
 	Bar();
-	Bar(Bstat, Location);
+	Bar(Location);
 	~Bar();
 
-	void Draw(Location) const;
+	void Draw() const;
+	Bdir CheckOrthogonal() const;
 
 	void __set_pickedBar();
+	void __set_usedBar(Location);
 	void __set_releasedBar();
-
 	void __set_angle(float);
 
 	Bstat get_status() const{ return status; }

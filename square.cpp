@@ -1,6 +1,7 @@
 #include "square.h"
 #include "dxfunc.h"
 #include "image.h"
+#include "board.h"
 
 Square::Square(){}
 
@@ -14,6 +15,6 @@ Square::Square(int x, int y)
 Square::~Square(){}
 
 void Square::Draw() const{
-	DrawTexture(texture_pack[status], CooToPxl(loc), 1.0f, 0.0f);
+	DrawTexture(texture_pack[status], CooToPxl(loc, Board::SIZE), 1.0f, 0.0f);
 	return;
 }

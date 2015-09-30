@@ -18,7 +18,7 @@ Character::Character(int n, Location dloc, Location sloc, IDirect3DTexture9* tex
 Character::~Character(){}
 
 void Character::Draw() const{
-	DrawTexture(texture_, CooToPxl(loc), 1.0f, 0.0f);
+	DrawTexture(texture_, CooToPxl(loc, Board::SIZE), 1.0f, 0.0f);
 	return;
 }
 

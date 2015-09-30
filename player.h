@@ -16,6 +16,7 @@ private:
 	Character* character;
 	Bar** barList;
 	int numBar;
+	int maxBar;
 	Player* next;
 
 public:
@@ -23,15 +24,17 @@ public:
 	Player(int, Location, Location, Location, Location, IDirect3DTexture9*);
 	~Player();
 
-	void InitPlayer(Player***, Board*, Player**);
+	void InitPlayer(Player***, Player**);
 
-	Location __get_barInitLoc(Board*, int) const;
+	Location __get_barInitLoc(int) const;
 	Bar* __get_lastBar() const;
+	
+	void __set_numBar(int);
 
 	int get_numPlayer() const{ return numPlayer; }
 	Character* get_character() const{ return character; }
 	Bar** get_barList() const{ return barList; }
-	int get_numBar() const{ return numBar; }
+	int get_maxBar() const{ return maxBar; }
 	Player* get_next() const{ return next; }
 };
 

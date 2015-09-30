@@ -33,19 +33,16 @@ public:
 
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
-	Bar* CheckOnBar(Bar*) const;
+	Bar* CheckOnBar() const;
 	bool CheckRoundRange(Bar*) const;
 	Point* CheckAroundPoint() const;
 
 	void __set_loc(int, int);
 
 	Mstat get_status() const{ return status; }
-	
-	// for test
 	Location get_pxloc() const{ return pxloc; }
 	Location get_locoo() const{ return locoo; }
-	//
-
+	Location get_locooits() const{ return locooits; }
 	Bar* get_pick() const{ return pick; }
 
 	void set_status(Mstat stat){ status = stat; return; }

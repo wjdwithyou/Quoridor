@@ -18,8 +18,8 @@ Location Board::loc = {(WindowWidth - WIDTH) >> 1, (WindowHeight - HEIGHT) >> 1}
 Location Board::itsloc = {loc.x + Square::SIZE + 2, loc.y + Square::SIZE + 2};
 
 Square*** Board::board = NULL;
-Rectj*** Board::vtc = NULL;
-Rectj*** Board::hrz = NULL;
+//Rectj*** Board::vtc = NULL;
+//Rectj*** Board::hrz = NULL;
 Point*** Board::its = NULL;
 
 void Board::Init(){
@@ -32,6 +32,7 @@ void Board::Init(){
 			board[i][j] = new Square(j, i);
 	}
 
+	/*
 	vtc = new Rectj**[SIZE];
 
 	for (int i = 0; i < SIZE; ++i){
@@ -49,6 +50,7 @@ void Board::Init(){
 		for (int j = 0; j < SIZE; ++j)
 			hrz[i][j] = new Rectj();
 	}
+	*/
 
 	its = new Point**[SIZE - 1];
 
@@ -56,7 +58,7 @@ void Board::Init(){
 		its[i] = new Point*[SIZE - 1];
 
 		for (int j = 0; j < SIZE - 1; ++j)
-			its[i][j] = new Point();
+			its[i][j] = new Point(j, i);
 	}
 
 	return;

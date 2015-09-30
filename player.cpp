@@ -7,10 +7,9 @@
 Player::Player(){}
 
 Player::Player(int n, Location dloc, Location sloc, Location iemp, Location bdt, IDirect3DTexture9* texture_)
-	: num(n), character(new Character(n, dloc, sloc, texture_)), barList(), numBar(20/numPlayer), next(NULL)
+	: num(n), character(new Character(n, dloc, sloc, texture_)), barList(NULL), numBar(20/numPlayer), maxBar(numBar), next(NULL)
 {
-	Bstat stat;
-	Location pltmp = CooToPxl(sloc);
+	Location pltmp = CooToPxl(sloc, Board::SIZE);
 
 	pltmp.x += iemp.x;
 	pltmp.y += iemp.y;
@@ -18,10 +17,7 @@ Player::Player(int n, Location dloc, Location sloc, Location iemp, Location bdt,
 	barList = new Bar*[numBar];
 
 	for (int i = 0; i < numBar; ++i){
-		stat = b_over;
-		//stat = (i == numBar - 1)? b_up: b_down;
-
-		barList[i] = new Bar(stat, pltmp);
+		barList[i] = new Bar(pltmp);
 
 		pltmp.x += bdt.x;
 		pltmp.y += bdt.y;
@@ -32,7 +28,7 @@ Player::~Player(){}
 
 int Player::numPlayer = 4;	// only '2' and '4' players are allowed.
 
-void Player::InitPlayer(Player*** playerList, Board* _board, Player** turn){
+void Player::InitPlayer(Player*** playerList, Player** turn){
 	// TODO: REARRANGE
 	int b = Board::SIZE - 1;
 	//int b = _board->get_Size() - 1;
@@ -58,7 +54,7 @@ void Player::InitPlayer(Player*** playerList, Board* _board, Player** turn){
 	*playerList = new Player*[numPlayer];
 	
 	for (int i = 0; i < numPlayer; ++i){
-		iemp = __get_barInitLoc(_board, i);
+		iemp = __get_barInitLoc(i);
 		(*playerList)[i] = new Player(i, demp[i], semp[i], iemp, b2emp[i], image->Character_Texture_Pack[i]);
 	}
 
@@ -78,7 +74,7 @@ void Player::InitPlayer(Player*** playerList, Board* _board, Player** turn){
 	return;
 }
 
-Location Player::__get_barInitLoc(Board* _board, int pn) const{
+Location Player::__get_barInitLoc(int pn) const{
 	Location* iemp;
 	Location p2bil[2] = {{-Bar::_BOARD, 0}, {Bar::_BOARD + Square::SIZE, 0}};
 	Location p4bil[4] = {{0, Bar::_BOARD + Square::SIZE}, {Bar::_BOARD + Square::SIZE, 0}, {0, -Bar::_BOARD}, {-Bar::_BOARD, 0}};
@@ -90,4 +86,9 @@ Location Player::__get_barInitLoc(Board* _board, int pn) const{
 
 Bar* Player::__get_lastBar() const{
 	return barList[numBar - 1];
+}
+
+void Player::__set_numBar(int delta){
+	numBar += delta;
+	return;
 }

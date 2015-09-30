@@ -27,14 +27,11 @@ typedef struct Location{
 	int y;
 }Location;
 
-Location CooToPxl(Location);
+Location CooToPxl(int, int, int);
+Location CooToPxl(Location, int);
 Location PxlToCoo(Location, int);
-//Location PxlToCoo(Location);
 bool CheckCooRange(Location, int);
-//bool CheckCooRange(Location);
 bool CheckCooRangeAdditional(Location);
-
-Location PxlToCooIts(Location);
 
 //bool operator==(Location&, Location&);
 

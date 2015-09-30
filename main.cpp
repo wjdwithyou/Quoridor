@@ -61,9 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	Board* _board = new Board(image->Board_Texture);
 
 	Player** playerList;
-	//Player* turn;
 
-	Player().InitPlayer(&playerList, _board, &turn);
+	Player().InitPlayer(&playerList, &turn);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -84,8 +83,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		sprintf_s(debug->sz_loc_y, "loc.y: %4d", mouse->get_locoo().y);
 		sprintf_s(debug->sz_mstat, "mstat: %4d", mouse->get_status());
 
-		sprintf_s(debug->sz_temp1, "%d", turn->get_barList()[0]->get_loc().x);
-		sprintf_s(debug->sz_temp2, "%d", turn->get_barList()[0]->get_loc().y);
+		sprintf_s(debug->sz_temp1, "%x", mouse->get_pick());
+		//sprintf_s(debug->sz_temp2, "%d", turn->get_barList()[0]->get_loc().y);
 
 		// convert end
 		///////////////////////////////////////////
@@ -138,14 +137,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 				// TODO: rearrange dirty codes :(
 
 				for (int i = 0; i < Player().get_numPlayer(); ++i){		// bar
-					for (int j = 0; j < playerList[i]->get_numBar(); ++j){
+					for (int j = 0; j < playerList[i]->get_maxBar(); ++j){		// 전부 그려야하기 때문에 numBar가 아닌 maxBar
 						if (playerList[i]->get_barList()[j] != mouse->get_pick())
-							playerList[i]->get_barList()[j]->Draw(mouse->get_pxloc());
+							playerList[i]->get_barList()[j]->Draw();
 					}
 				}
 
-				if (mouse->get_pick() != NULL)
-					mouse->get_pick()->Draw(mouse->get_pxloc());
+				if (mouse->get_pick() != NULL)		// bar(picked)
+					mouse->get_pick()->Draw();
 
 				///// bar draw test end /////
 
@@ -179,17 +178,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONDOWN:
 		mouse->Click();
 		break;
-
+	/*
 	case WM_LBUTTONUP:
 		break;
-
+	*/
 	case WM_RBUTTONDOWN:
 		mouse->R_Click();
 		break;
 
 	case WM_MOUSEMOVE:
 		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
-		mouse->CheckOnBar(turn->__get_lastBar());
+		mouse->CheckOnBar();
+		mouse->CheckAroundPoint();
 		break;
 
 	case WM_MOUSEWHEEL:

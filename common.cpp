@@ -2,6 +2,7 @@
 #include "image.h"
 #include "mouse.h"
 #include "board.h"
+#include "square.h"
 #include "debug.h"
 
 HWND hWnd;
@@ -13,18 +14,31 @@ Debug* debug = new Debug();
 
 Player* turn;
 
-Location CooToPxl(Location coo){
-	Location tmp;
+Location CooToPxl(int x, int y, int s){
+	Location tmp, stdd;
 
-	tmp.x = coo.x * 65 + Board::loc.x;
-	tmp.y = coo.y * 65 + Board::loc.y;
+	if (s == Board::SIZE)
+		stdd = Board::loc;
+	else{
+		stdd.x = Board::itsloc.x + (Square::SIZE >> 1);
+		stdd.y = Board::itsloc.y + (Square::SIZE >> 1);
+	}
+
+	tmp.x = x * 65 + stdd.x;
+	tmp.y = y * 65 + stdd.y;
+
+	//tmp.x = coo.x * 65 + Board::loc.x;
+	//tmp.y = coo.y * 65 + Board::loc.y;
 
 	return tmp;
 }
 
+Location CooToPxl(Location coo, int s){
+	return CooToPxl(coo.x, coo.y, s);
+}
+
 Location PxlToCoo(Location pxl, int s){
 	Location q, r;
-
 	Location stdd = (s == Board::SIZE)? Board::loc: Board::itsloc;
 
 	q.x = (pxl.x - stdd.x) / 65;
@@ -76,19 +90,6 @@ bool CheckCooRangeAdditional(Location coo){
 		return false;
 
 	return true;
-}
-
-Location PxlToCooIts(Location pxl){
-	Location tmp;
-	Location r;
-
-	tmp.x = (pxl.x - Board::itsloc.x) / 65;
-	tmp.y = (pxl.y - Board::itsloc.y) / 65;
-
-	r.x = (pxl.x - Board::itsloc.x) % 65;
-	r.y = (pxl.y - Board::itsloc.y) % 65;
-
-	return tmp;	/////
 }
 
 /*

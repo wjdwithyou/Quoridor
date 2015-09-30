@@ -4,6 +4,7 @@
 #include "image.h"
 #include "board.h"
 #include "square.h"
+#include "point.h"
 #include "player.h"
 #include "character.h"
 #include "bar.h"
@@ -28,6 +29,7 @@ Mouse::~Mouse(){}
 void Mouse::Click(){
 	Character* cmp = turn->get_character();
 	Bar* bmp = turn->__get_lastBar();
+	Point* pmp;
 
 	switch (status){
 	case m_ready:
@@ -42,7 +44,7 @@ void Mouse::Click(){
 			// impl.
 		}
 
-		if (CheckOnBar(bmp)){
+		if (CheckOnBar() != NULL){
 			status = m_clk_bar;
 			pick = bmp;
 
@@ -95,8 +97,17 @@ void Mouse::Click(){
 		break;
 
 	case m_clk_bar:
-		if (CheckAroundPoint() != NULL){
-			// impl.
+		if ((pmp = CheckAroundPoint()) != NULL){
+			if (pmp->get_onBarStatus() == d_none){
+				pick->__set_usedBar(pmp->get_pxloc());
+				pick = NULL;
+
+				turn->__set_numBar(-1);
+
+				turn = turn->get_next();
+				status = m_ready;
+			}
+			else; // beep sound?
 		}
 
 		break;
@@ -142,9 +153,15 @@ void Mouse::R_Click(){
 }
 
 void Mouse::Wheel(bool b) const{
+	if (pick == NULL)
+		return;
+
 	float delta = (b)? -45.0f: 45.0f;
 
 	pick->__set_angle(delta);
+
+	if (pick->CheckOrthogonal() == d_none)
+		pick->set_status(b_clicked);
 
 	return;
 }
@@ -155,7 +172,7 @@ void Mouse::DrawEffect() const{
 			return;
 
 		//DrawTexture(effect_square, CooToPxl(locoo), 1.0f, 0.0f);				// Why it doesn't work???
-		DrawTexture(image->Effect_Texture, CooToPxl(locoo), 1.0f, 0.0f);
+		DrawTexture(image->Effect_Texture, CooToPxl(locoo, Board::SIZE), 1.0f, 0.0f);
 	}
 
 	return;
@@ -175,7 +192,9 @@ Character* Mouse::CheckOnCharacter() const{
 	return CheckOnSquare()->get_onthis();
 }
 
-Bar* Mouse::CheckOnBar(Bar* b) const{
+Bar* Mouse::CheckOnBar() const{
+	Bar* b = turn->__get_lastBar();
+
 	if (status != m_ready)	// test
 		return NULL;
 
@@ -198,10 +217,22 @@ bool Mouse::CheckRoundRange(Bar* b) const{
 }
 
 Point* Mouse::CheckAroundPoint() const{
-	if (locooits.x == -1 || locooits.y == -1)
+	if (status != m_clk_bar)
 		return NULL;
 
-	return Board::its[locooits.y][locooits.x];
+	if (locooits.x == -1 || locooits.y == -1){
+		pick->set_status(b_clicked);
+		return NULL;
+	}
+
+	if (pick->CheckOrthogonal() == d_none)
+		return NULL;
+
+	Point* temp = Board::its[locooits.y][locooits.x];
+
+	pick->set_status((temp->get_onBarStatus() == d_none)? b_can: b_cannot);
+
+	return temp;
 }
 
 void Mouse::__set_loc(int x, int y){

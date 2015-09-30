@@ -21,8 +21,8 @@ public:
 	static Location itsloc;	// 해상도에 따라 변경될 수 있으니 const X
 
 	static Square*** board;
-	static Rectj*** vtc;
-	static Rectj*** hrz;
+	//static Rectj*** vtc;
+	//static Rectj*** hrz;
 	static Point*** its;
 
 public:
