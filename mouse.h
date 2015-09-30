@@ -5,6 +5,7 @@
 #include "common.h"
 
 class Square;
+class Point;
 class Player;
 class Character;
 class Bar;
@@ -16,6 +17,7 @@ private:
 	Mstat status;
 	Location pxloc;	// int로 형 변환된 mxy-pixel이 들어온다 from callback
 	Location locoo;	// (-1, a), (b, -1), ...
+	Location locooits;
 	IDirect3DTexture9* effect_square;
 	Bar* pick;
 
@@ -24,14 +26,16 @@ public:
 	Mouse(Location);	/////
 	~Mouse();
 
-	void Click(Player**);
+	void Click();
 	void R_Click();
 	void Wheel(bool) const;
 	void DrawEffect() const;
+
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
 	Bar* CheckOnBar(Bar*) const;
 	bool CheckRoundRange(Bar*) const;
+	Point* CheckAroundPoint() const;
 
 	void __set_loc(int, int);
 

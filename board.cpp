@@ -1,41 +1,70 @@
 #include "board.h"
 #include "dxfunc.h"
 #include "square.h"
+#include "rectj.h"
+#include "point.h"
 
-Board::Board()
-	: Size(9), Width(580), Height(580){
-
-}
+Board::Board(){}
 
 Board::Board(IDirect3DTexture9* texture_)
-	: Size(9), Width(580), Height(580), pBoardTexture(texture_)
+	: pBoardTexture(texture_)
 {
 	Init();
 }
 
 Board::~Board(){}
 
-Location Board::loc = {(WindowWidth - Board().Width) / 2, (WindowHeight - Board().Height) / 2};
+Location Board::loc = {(WindowWidth - WIDTH) >> 1, (WindowHeight - HEIGHT) >> 1};
+Location Board::itsloc = {loc.x + Square::SIZE + 2, loc.y + Square::SIZE + 2};
 
 Square*** Board::board = NULL;
+Rectj*** Board::vtc = NULL;
+Rectj*** Board::hrz = NULL;
+Point*** Board::its = NULL;
 
 void Board::Init(){
-	board = new Square**[Size];
+	board = new Square**[SIZE];
 
-	for (int i = 0; i < Size; ++i){
-		board[i] = new Square*[Size];
+	for (int i = 0; i < SIZE; ++i){
+		board[i] = new Square*[SIZE];
 
-		for (int j = 0; j <Size; ++j){
+		for (int j = 0; j < SIZE; ++j)
 			board[i][j] = new Square(j, i);
-		}
+	}
+
+	vtc = new Rectj**[SIZE];
+
+	for (int i = 0; i < SIZE; ++i){
+		vtc[i] = new Rectj*[SIZE - 1];
+
+		for (int j = 0; j < SIZE - 1; ++j)
+			vtc[i][j] = new Rectj();
+	}
+
+	hrz = new Rectj**[SIZE - 1];
+
+	for (int i = 0; i < SIZE - 1; ++i){
+		hrz[i] = new Rectj*[SIZE];
+
+		for (int j = 0; j < SIZE; ++j)
+			hrz[i][j] = new Rectj();
+	}
+
+	its = new Point**[SIZE - 1];
+
+	for (int i = 0; i < SIZE - 1; ++i){
+		its[i] = new Point*[SIZE - 1];
+
+		for (int j = 0; j < SIZE - 1; ++j)
+			its[i][j] = new Point();
 	}
 
 	return;
 }
 
 void Board::Draw() const{
-	for (int i = 0; i < Size; ++i){
-		for (int j = 0; j < Size; ++j)
+	for (int i = 0; i < SIZE; ++i){
+		for (int j = 0; j < SIZE; ++j)
 			board[i][j]->Draw();
 	}
 
@@ -52,8 +81,8 @@ void Board::Draw(){
 Location Board::__get_centerLoc() const{
 	Location temp;
 
-	temp.x = loc.x + (Width>>1);
-	temp.y = loc.y + (Height>>1);
+	temp.x = loc.x + (WIDTH >> 1);
+	temp.y = loc.y + (HEIGHT >> 1);
 
 	return temp;
 }

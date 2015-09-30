@@ -22,41 +22,50 @@ Location CooToPxl(Location coo){
 	return tmp;
 }
 
-Location PxlToCoo(Location pxl){
-	Location tmp;
-	Location r;
+Location PxlToCoo(Location pxl, int s){
+	Location q, r;
 
-	tmp.x = (pxl.x - Board::loc.x) / 65;
-	tmp.y = (pxl.y - Board::loc.y) / 65;
+	Location stdd = (s == Board::SIZE)? Board::loc: Board::itsloc;
 
-	r.x = (pxl.x - Board::loc.x) % 65;
-	r.y = (pxl.y - Board::loc.y) % 65;
+	q.x = (pxl.x - stdd.x) / 65;
+	q.y = (pxl.y - stdd.y) / 65;
+	//tmp.x = (pxl.x - Board::loc.x) / 65;
+	//tmp.y = (pxl.y - Board::loc.y) / 65;
 
-	if (!CheckCooRange(tmp))
-		tmp.x = tmp.y = -1;
+	r.x = (pxl.x - stdd.x) % 65;
+	r.y = (pxl.y - stdd.y) % 65;
+
+	//r.x = (pxl.x - Board::loc.x) % 65;
+	//r.y = (pxl.y - Board::loc.y) % 65;
+
+	if (!CheckCooRange(q, s))
+	//if (!CheckCooRange(q))
+		q.x = q.y = -1;
 
 	if (!CheckCooRangeAdditional(r))
-		tmp.x = tmp.y = -1;
-
+		q.x = q.y = -1;
 	/*
-	if (tmp.x < 0 || tmp.x > 8)
-		tmp.x = -1;
-	if (tmp.y < 0 || tmp.y > 8)
-		tmp.y = -1;
+	if (q.x < 0 || q.x > 8)
+		q.x = -1;
+	if (q.y < 0 || q.y > 8)
+		q.y = -1;
 	*/
 	if (60 <= r.x && r.x <= 64)
-		tmp.x = -1;
+		q.x = -1;
 	if (60 <= r.y && r.y <= 64)
-		tmp.y = -1;
+		q.y = -1;
 
-	return tmp;
+	return q;
 }
 
-bool CheckCooRange(Location coo){
-	if (coo.x < 0 || coo.x > 8)
+bool CheckCooRange(Location coo, int s){
+//bool CheckCooRange(Location coo){
+	if (coo.x < 0 || coo.x > s - 1)
+	//if (coo.x < 0 || coo.x > Board::SIZE - 1)
 		return false;
 
-	if (coo.y < 0 || coo.y > 8)
+	if (coo.y < 0 || coo.y > s - 1)
+	//if (coo.y < 0 || coo.y > Board::SIZE - 1)
 		return false;
 
 	return true;
@@ -69,8 +78,17 @@ bool CheckCooRangeAdditional(Location coo){
 	return true;
 }
 
-int __get_IntSquare(int n){
-	return n * n;
+Location PxlToCooIts(Location pxl){
+	Location tmp;
+	Location r;
+
+	tmp.x = (pxl.x - Board::itsloc.x) / 65;
+	tmp.y = (pxl.y - Board::itsloc.y) / 65;
+
+	r.x = (pxl.x - Board::itsloc.x) % 65;
+	r.y = (pxl.y - Board::itsloc.y) % 65;
+
+	return tmp;	/////
 }
 
 /*

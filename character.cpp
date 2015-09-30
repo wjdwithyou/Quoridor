@@ -52,7 +52,7 @@ void Character::SearchMoveable(){
 		tmp[i].x += loc.x;
 		tmp[i].y += loc.y;
 
-		if (CheckCooRange(tmp[i])){
+		if (CheckCooRange(tmp[i], Board::SIZE)){
 			// TODO: add condition about bar
 			// TODO: add condition about continuous character in asle
 
@@ -67,7 +67,7 @@ void Character::SearchMoveable(){
 				else
 					tmp[i].y += (loc.y < tmp[i].y)? 1: -1;
 
-				if (CheckCooRange(tmp[i])){
+				if (CheckCooRange(tmp[i], Board::SIZE)){
 					if (Mouse(tmp[i]).CheckOnCharacter() == NULL){
 						moveableList.push_back(tmp[i]);
 						++numMoveable;

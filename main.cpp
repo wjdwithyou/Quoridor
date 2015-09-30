@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	WndClass.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
 	WndClass.hInstance = hInstance;
 	WndClass.lpfnWndProc = WndProc;
-	WndClass.lpszClassName = "Quoridor";
+	WndClass.lpszClassName = "Quoridor+";
 	WndClass.lpszMenuName = NULL;
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 
@@ -177,7 +177,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch (iMessage){
 	case WM_LBUTTONDOWN:
-		mouse->Click(&turn);
+		mouse->Click();
 		break;
 
 	case WM_LBUTTONUP:

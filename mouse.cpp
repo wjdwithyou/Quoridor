@@ -13,19 +13,21 @@ Mouse::Mouse()
 {
 	pxloc.x = pxloc.y = 0;
 	locoo.x = locoo.y = -1;
+	locooits.x = locooits.y = -1;
 }
 
 Mouse::Mouse(Location loc)
 	: status(m_clk_chara), locoo(loc), effect_square(image->Effect_Texture), pick(NULL)
 {
 	pxloc.x = pxloc.y = 0;	/////
+	locooits.x = locooits.y = -1;	/////
 }
 
 Mouse::~Mouse(){}
 
-void Mouse::Click(Player** turn){
-	Character* cmp = (*turn)->get_character();
-	Bar* bmp = (*turn)->__get_lastBar();
+void Mouse::Click(){
+	Character* cmp = turn->get_character();
+	Bar* bmp = turn->__get_lastBar();
 
 	switch (status){
 	case m_ready:
@@ -80,7 +82,7 @@ void Mouse::Click(Player** turn){
 					status = m_etc;
 				}
 				else{
-					*turn = (*turn)->get_next();
+					turn = turn->get_next();
 					status = m_ready;
 				}
 
@@ -93,7 +95,10 @@ void Mouse::Click(Player** turn){
 		break;
 
 	case m_clk_bar:
-		// impl.
+		if (CheckAroundPoint() != NULL){
+			// impl.
+		}
+
 		break;
 
 	case m_etc:
@@ -137,7 +142,7 @@ void Mouse::R_Click(){
 }
 
 void Mouse::Wheel(bool b) const{
-	float delta = (b)? -90.0f: 90.0f;
+	float delta = (b)? -45.0f: 45.0f;
 
 	pick->__set_angle(delta);
 
@@ -192,11 +197,19 @@ bool Mouse::CheckRoundRange(Bar* b) const{
 	return false;
 }
 
+Point* Mouse::CheckAroundPoint() const{
+	if (locooits.x == -1 || locooits.y == -1)
+		return NULL;
+
+	return Board::its[locooits.y][locooits.x];
+}
+
 void Mouse::__set_loc(int x, int y){
 	pxloc.x = x;
 	pxloc.y = y;
 
-	locoo = PxlToCoo(pxloc);
+	locoo = PxlToCoo(pxloc, Board::SIZE);
+	locooits = PxlToCoo(pxloc, Board::SIZE - 1);
 
 	return;
 }

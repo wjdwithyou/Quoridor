@@ -34,7 +34,8 @@ int Player::numPlayer = 4;	// only '2' and '4' players are allowed.
 
 void Player::InitPlayer(Player*** playerList, Board* _board, Player** turn){
 	// TODO: REARRANGE
-	int b = _board->get_Size() - 1;
+	int b = Board::SIZE - 1;
+	//int b = _board->get_Size() - 1;
 
 	Location* demp;	// dest
 	Location p2dst[2] = {{b, -1}, {0, -1}};
@@ -79,8 +80,8 @@ void Player::InitPlayer(Player*** playerList, Board* _board, Player** turn){
 
 Location Player::__get_barInitLoc(Board* _board, int pn) const{
 	Location* iemp;
-	Location p2bil[2] = {{-Bar::_BOARD, 0}, {Bar::_BOARD + Square::SQUARE_SIZE, 0}};
-	Location p4bil[4] = {{0, Bar::_BOARD + Square::SQUARE_SIZE}, {Bar::_BOARD + Square::SQUARE_SIZE, 0}, {0, -Bar::_BOARD}, {-Bar::_BOARD, 0}};
+	Location p2bil[2] = {{-Bar::_BOARD, 0}, {Bar::_BOARD + Square::SIZE, 0}};
+	Location p4bil[4] = {{0, Bar::_BOARD + Square::SIZE}, {Bar::_BOARD + Square::SIZE, 0}, {0, -Bar::_BOARD}, {-Bar::_BOARD, 0}};
 
 	iemp = (numPlayer == 2)? p2bil: p4bil;
 

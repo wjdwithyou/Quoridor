@@ -16,7 +16,7 @@ private:
 	IDirect3DTexture9** texture_pack;
 
 public:
-	const static int SQUARE_SIZE = 60;
+	const static int SIZE = 60;
 	const static int MAX_QSTAT = 4;
 
 public:

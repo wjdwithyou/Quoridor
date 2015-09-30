@@ -17,8 +17,8 @@ extern Debug* debug;
 
 extern Player* turn;
 
-const int WindowWidth = 1024;
-const int WindowHeight = 768;
+const int WindowWidth = 1024;	// even only
+const int WindowHeight = 768;	// even only
 
 const float PI = 3.141592f;
 
@@ -28,11 +28,13 @@ typedef struct Location{
 }Location;
 
 Location CooToPxl(Location);
-Location PxlToCoo(Location);
-bool CheckCooRange(Location);
+Location PxlToCoo(Location, int);
+//Location PxlToCoo(Location);
+bool CheckCooRange(Location, int);
+//bool CheckCooRange(Location);
 bool CheckCooRangeAdditional(Location);
 
-int __get_IntSquare(int);
+Location PxlToCooIts(Location);
 
 //bool operator==(Location&, Location&);
 

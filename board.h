@@ -5,18 +5,25 @@
 #include "common.h"
 
 class Square;
+class Rectj;
+class Point;
 
 class Board {
 private:
-	const int Size;
-	const int Width;
-	const int Height;
-
 	IDirect3DTexture9* pBoardTexture;
 
 public:
-	static Location loc;
+	const static int SIZE = 9;
+	const static int WIDTH = 580;	// even only
+	const static int HEIGHT = 580;	// even only
+
+	static Location loc;	// 해상도에 따라 변경될 수 있으니 const X
+	static Location itsloc;	// 해상도에 따라 변경될 수 있으니 const X
+
 	static Square*** board;
+	static Rectj*** vtc;
+	static Rectj*** hrz;
+	static Point*** its;
 
 public:
 	Board();
@@ -27,10 +34,6 @@ public:
 	void Draw() const;
 
 	Location __get_centerLoc() const;
-
-	int get_Size() const{ return Size; }
-	int get_Width() const{ return Width; }
-	int get_Height() const{ return Height; }
 };
 
 #endif // __BOARD_H
