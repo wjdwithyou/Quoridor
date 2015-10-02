@@ -17,6 +17,8 @@ extern Debug* debug;
 
 extern Player* turn;
 
+extern int ending;	/////
+
 const int WindowWidth = 1024;	// even only
 const int WindowHeight = 768;	// even only
 

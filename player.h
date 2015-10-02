@@ -10,14 +10,15 @@ class Bar;
 
 class Player{
 private:
-	static int numPlayer;
-
 	int num;
 	Character* character;
 	Bar** barList;
 	int numBar;
 	int maxBar;
 	Player* next;
+
+public:
+	static int numPlayer;
 
 public:
 	Player();

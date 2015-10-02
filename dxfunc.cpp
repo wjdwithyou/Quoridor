@@ -129,7 +129,6 @@ void DrawTexture(IDirect3DTexture9* texture_, Location loc, float size, float an
 	return;
 }
 
-/*
 void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float angle){
 	// for overlap
 	D3DXMatrixIdentity(&World);	
@@ -147,7 +146,6 @@ void DrawEnding(IDirect3DTexture9* texture_, float x, float y, float size, float
 
 	return;
 }
-*/
 
 void ReleaseDevice(){
 	if (Sprite != NULL){

@@ -2,6 +2,9 @@
 #include <math.h>
 #include "dxfunc.h"
 #include "image.h"
+#include "process.h"
+#include "menu.h"
+#include "button.h"	/////
 #include "board.h"
 #include "square.h"
 #include "point.h"
@@ -10,7 +13,7 @@
 #include "bar.h"
 
 Mouse::Mouse()
-	: status(m_ready), effect_square(image->Effect_Texture), pick(NULL)
+	: status(m_menu), effect_square(image->Effect_Texture), pick(NULL)
 {
 	pxloc.x = pxloc.y = 0;
 	locoo.x = locoo.y = -1;
@@ -27,11 +30,35 @@ Mouse::Mouse(Location loc)
 Mouse::~Mouse(){}
 
 void Mouse::Click(){
+	Button* btnp;
+	
 	Character* cmp = turn->get_character();
 	Bar* bmp = turn->__get_lastBar();
 	Point* pmp;
 
 	switch (status){
+	case m_menu:
+		if ((btnp = CheckOnButton()) != NULL){
+			switch(btnp->get_num()){
+			case 2:	// 4player
+				//Player::numPlayer = n;
+				Process::status = p_game;
+				status = m_ready;
+				break;
+			case 4:	// exit
+				exit(0);
+				break;
+
+			case 0:
+			case 1:
+			case 3:
+			default:
+				break;
+			}
+		}
+
+		break;
+
 	case m_ready:
 		if (CheckOnCharacter() == cmp){
 			status = m_clk_chara;
@@ -98,7 +125,7 @@ void Mouse::Click(){
 
 	case m_clk_bar:
 		if (CheckAroundUsedBar())
-			// bepp sound?
+			// beep sound?
 			break;
 		
 		pmp = CheckAroundPoint();
@@ -112,24 +139,6 @@ void Mouse::Click(){
 		
 		turn = turn->get_next();
 		status = m_ready;
-
-
-		/*
-		if ((pmp = CheckAroundPoint()) != NULL){
-			if (pmp->get_onBarStatus() == d_none){
-				pmp->set_onBarStatus(pick->CheckOrthogonal());
-
-				pick->__set_usedBar(pmp->get_pxloc());
-				pick = NULL;
-
-				turn->__set_numBar(-1);
-
-				turn = turn->get_next();
-				status = m_ready;
-			}
-			else; // beep sound?
-		}
-		*/
 
 		break;
 
@@ -198,6 +207,22 @@ void Mouse::DrawEffect() const{
 	return;
 }
 
+Button* Mouse::CheckOnButton() const{
+	// TODO: REARRANGE
+	if (pxloc.y < Menu::loc.y || pxloc.y >= Menu::loc.y + (Button::HEIGHT * Button::NUM))
+		return NULL;
+
+	if (pxloc.x < Menu::loc.x || pxloc.x >= Menu::loc.x + Button::WIDTH)
+		return NULL;
+
+	for (int i = 0; i < Button::NUM; ++i)
+		Menu::btnList[i]->set_status(btn_down);
+
+	Menu::btnList[(pxloc.y - Menu::loc.y) / Button::HEIGHT]->set_status(btn_up);
+
+	return Menu::btnList[(pxloc.y - Menu::loc.y) / Button::HEIGHT];
+}
+
 Square* Mouse::CheckOnSquare() const{
 	if (locoo.x == -1 || locoo.y == -1)
 		return NULL;
@@ -213,6 +238,9 @@ Character* Mouse::CheckOnCharacter() const{
 }
 
 Bar* Mouse::CheckOnBar() const{
+	if (Process::status != p_game)
+		return NULL;
+
 	Bar* b = turn->__get_lastBar();
 
 	if (b == NULL)
@@ -307,7 +335,7 @@ bool Mouse::CheckAroundUsedBar() const{
 void Mouse::__set_loc(int x, int y){
 	pxloc.x = x;
 	pxloc.y = y;
-
+	
 	locoo = PxlToCoo(pxloc, Board::SIZE);
 	locooits = PxlToCoo(pxloc, Board::SIZE - 1);
 

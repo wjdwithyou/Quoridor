@@ -23,6 +23,7 @@ void DrawTexture(IDirect3DTexture9*, float, float, float, float);
 void DrawTexture(IDirect3DTexture9*, Location, float, float, float, float);
 void DrawTexture(IDirect3DTexture9*, Location, float, float, float);
 void DrawTexture(IDirect3DTexture9*, Location, float, float);
+void DrawEnding(IDirect3DTexture9*, float, float, float, float);
 void ReleaseDevice();
 
 #endif // __DXFUNC_H

@@ -4,13 +4,14 @@
 #include <d3d9.h>
 #include "common.h"
 
+class Button;
 class Square;
 class Point;
 class Player;
 class Character;
 class Bar;
 
-enum Mstat{ m_ready, m_clk_chara, m_clk_bar, m_etc };
+enum Mstat{ m_menu, m_ready, m_clk_chara, m_clk_bar, m_etc };
 
 class Mouse{
 private:
@@ -31,6 +32,7 @@ public:
 	void Wheel(bool) const;
 	void DrawEffect() const;
 
+	Button* CheckOnButton() const;
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
 	Bar* CheckOnBar() const;

@@ -31,7 +31,6 @@ int Player::numPlayer = 4;	// only '2' and '4' players are allowed.
 void Player::InitPlayer(Player*** playerList){
 	// TODO: REARRANGE
 	int b = Board::SIZE - 1;
-	//int b = _board->get_Size() - 1;
 
 	Location* demp;	// dest
 	Location p2dst[2] = {{b, -1}, {0, -1}};

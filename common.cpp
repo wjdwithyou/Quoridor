@@ -14,6 +14,8 @@ Debug* debug = new Debug();
 
 Player* turn;
 
+int ending = 0;	/////
+
 Location CooToPxl(int x, int y, int s){
 	Location tmp, stdd;
 
