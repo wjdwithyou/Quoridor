@@ -6,6 +6,7 @@
 #include "image.h"
 #include "board.h"
 #include "square.h"
+#include "point.h"	/////
 #include "player.h"
 #include "character.h"
 #include "debug.h"
@@ -62,7 +63,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 	Player** playerList;
 
-	Player().InitPlayer(&playerList, &turn);
+	Player().InitPlayer(&playerList);
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -81,9 +82,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		sprintf_s(debug->sz_pxl_y, "pxl.y: %4d", mouse->get_pxloc().y);
 		sprintf_s(debug->sz_loc_x, "loc.x: %4d", mouse->get_locoo().x);
 		sprintf_s(debug->sz_loc_y, "loc.y: %4d", mouse->get_locoo().y);
+		sprintf_s(debug->sz_locits_x, "its.x: %4d", mouse->get_locooits().x);
+		sprintf_s(debug->sz_locits_y, "its.y: %4d", mouse->get_locooits().y);
 		sprintf_s(debug->sz_mstat, "mstat: %4d", mouse->get_status());
 
-		sprintf_s(debug->sz_temp1, "%x", mouse->get_pick());
+		if (mouse->get_locooits().x != -1 && mouse->get_locooits().y != -1){
+			if (mouse->get_pick() != NULL)
+				sprintf_s(debug->sz_temp1, "%d", mouse->CheckAroundUsedBar());
+			else
+				sprintf_s(debug->sz_temp1, "%s", "FREE");
+		}
+		sprintf_s(debug->sz_temp2, "%d", _board->its[3][3]->get_onBarStatus());
 		//sprintf_s(debug->sz_temp2, "%d", turn->get_barList()[0]->get_loc().y);
 
 		// convert end
@@ -255,3 +264,9 @@ void KeyInput() {
 void GameLoop() {
 	// impl.
 }
+
+// 벽 파괴
+// bar 생성
+// 이동 + 1
+// 벽 2개 설치
+// ...

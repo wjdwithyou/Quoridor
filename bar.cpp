@@ -20,10 +20,7 @@ Location Bar::size = {60, 125};
 
 Location Bar::size_used = {5, 125};
 
-void Bar::Draw() const{
-
-	// enum Bstat{ b_over, b_on, b_clicked, b_can, b_cannot, b_used };
-
+void Bar::Draw() const{		// simplify test
 	switch (status){
 	case b_over:
 		DrawTexture(texture_pack[status], loc, mag, angle / 180 * PI, static_cast<float>(size.x >> 1), static_cast<float>(size.y >> 1));
@@ -38,11 +35,11 @@ void Bar::Draw() const{
 		break;
 
 	case b_can:
-		DrawTexture(texture_pack[status], CooToPxl(mouse->get_locooits(), Board::SIZE - 1), mag, angle / 180 * PI, static_cast<float>(size_used.x >> 1), static_cast<float>(size_used.y >> 1));
+		DrawTexture(texture_pack[status], CooToPxl(mouse->get_locooits(), Board::SIZE - 1), mag, angle / 180 * PI, static_cast<float>(size_used.x >> 1) + EFFECT_THICK, static_cast<float>(size_used.y >> 1) + EFFECT_THICK);
 		break;
 
 	case b_cannot:
-		DrawTexture(texture_pack[status], CooToPxl(mouse->get_locooits(), Board::SIZE - 1), mag, angle / 180 * PI, static_cast<float>(size_used.x >> 1), static_cast<float>(size_used.y >> 1));
+		DrawTexture(texture_pack[status], CooToPxl(mouse->get_locooits(), Board::SIZE - 1), mag, angle / 180 * PI, static_cast<float>(size_used.x >> 1) + EFFECT_THICK, static_cast<float>(size_used.y >> 1) + EFFECT_THICK);
 		break;
 
 	case b_used:

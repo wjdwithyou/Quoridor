@@ -97,8 +97,28 @@ void Mouse::Click(){
 		break;
 
 	case m_clk_bar:
+		if (CheckAroundUsedBar())
+			// bepp sound?
+			break;
+		
+		pmp = CheckAroundPoint();
+
+		pmp->set_onBarStatus(pick->CheckOrthogonal());
+
+		pick->__set_usedBar(pmp->get_pxloc());
+		pick = NULL;
+		
+		turn->__set_numBar(-1);
+		
+		turn = turn->get_next();
+		status = m_ready;
+
+
+		/*
 		if ((pmp = CheckAroundPoint()) != NULL){
 			if (pmp->get_onBarStatus() == d_none){
+				pmp->set_onBarStatus(pick->CheckOrthogonal());
+
 				pick->__set_usedBar(pmp->get_pxloc());
 				pick = NULL;
 
@@ -109,6 +129,7 @@ void Mouse::Click(){
 			}
 			else; // beep sound?
 		}
+		*/
 
 		break;
 
@@ -127,7 +148,6 @@ void Mouse::Click(){
 void Mouse::R_Click(){
 	switch (status){
 	case m_ready:
-		// impl.
 		break;
 
 	case m_clk_chara:
@@ -195,6 +215,9 @@ Character* Mouse::CheckOnCharacter() const{
 Bar* Mouse::CheckOnBar() const{
 	Bar* b = turn->__get_lastBar();
 
+	if (b == NULL)
+		return NULL;
+
 	if (status != m_ready)	// test
 		return NULL;
 
@@ -228,11 +251,57 @@ Point* Mouse::CheckAroundPoint() const{
 	if (pick->CheckOrthogonal() == d_none)
 		return NULL;
 
-	Point* temp = Board::its[locooits.y][locooits.x];
+	pick->set_status(CheckAroundUsedBar()? b_cannot: b_can);
 
-	pick->set_status((temp->get_onBarStatus() == d_none)? b_can: b_cannot);
+	return Board::its[locooits.y][locooits.x];
+}
 
-	return temp;
+bool Mouse::CheckAroundUsedBar() const{
+	// TODO: REARRANGE
+	// Location demp[2][2] = {{{0, -1}, {0, 1}}, {{-1, 0}, {1, 0}}};
+	Bdir pdir = pick->CheckOrthogonal();
+
+	switch (pdir){
+	case d_none:
+		break;
+
+	case d_vtc:
+		if (locooits.y != 0){
+			if (pdir == Board::its[locooits.y - 1][locooits.x]->get_onBarStatus())
+				return true;
+		}
+
+		if (Board::its[locooits.y][locooits.x]->get_onBarStatus() != d_none)
+			return true;
+
+		if (locooits.y != Board::SIZE - 2){
+			if (pdir == Board::its[locooits.y + 1][locooits.x]->get_onBarStatus())
+				return true;
+		}
+
+		break;
+
+	case d_hrz:
+		if (locooits.x != 0){
+			if (pdir == Board::its[locooits.y][locooits.x - 1]->get_onBarStatus())
+				return true;
+		}
+
+		if (Board::its[locooits.y][locooits.x]->get_onBarStatus() != d_none)
+			return true;
+
+		if (locooits.x != Board::SIZE - 2){
+			if (pdir == Board::its[locooits.y][locooits.x + 1]->get_onBarStatus())
+				return true;
+		}
+
+		break;
+
+	default:
+		break;
+	}
+
+	return false;
 }
 
 void Mouse::__set_loc(int x, int y){

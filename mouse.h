@@ -16,8 +16,8 @@ class Mouse{
 private:
 	Mstat status;
 	Location pxloc;	// int로 형 변환된 mxy-pixel이 들어온다 from callback
-	Location locoo;	// (-1, a), (b, -1), ...
-	Location locooits;
+	Location locoo;	// 0 to 8, and -1
+	Location locooits; // 0 to 7, and -1
 	IDirect3DTexture9* effect_square;
 	Bar* pick;
 
@@ -36,6 +36,7 @@ public:
 	Bar* CheckOnBar() const;
 	bool CheckRoundRange(Bar*) const;
 	Point* CheckAroundPoint() const;
+	bool CheckAroundUsedBar() const;
 
 	void __set_loc(int, int);
 

@@ -16,6 +16,8 @@ public:
 
 	Bdir get_onBarStatus() const{ return onBarStatus; }
 	Location get_pxloc() const{ return pxloc; }
+
+	void set_onBarStatus(Bdir s){ onBarStatus = s; return; }
 };
 
 #endif // __POINT_H

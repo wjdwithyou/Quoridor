@@ -24,7 +24,7 @@ public:
 	Player(int, Location, Location, Location, Location, IDirect3DTexture9*);
 	~Player();
 
-	void InitPlayer(Player***, Player**);
+	void InitPlayer(Player***);
 
 	Location __get_barInitLoc(int) const;
 	Bar* __get_lastBar() const;

@@ -55,6 +55,12 @@ void Debug::PrintValue(RECT rc) const{
 	rc.top += 20;
 	Font->DrawTextA(Sprite, sz_loc_y, -1, &rc, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 0, 0));
 
+	rc.top += 20;
+	Font->DrawTextA(Sprite, sz_locits_x, -1, &rc, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 0, 0));
+
+	rc.top += 20;
+	Font->DrawTextA(Sprite, sz_locits_y, -1, &rc, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 0, 0));
+
 	rc.top += 40;
 	Font->DrawTextA(Sprite, sz_mstat, -1, &rc, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 0, 0));
 

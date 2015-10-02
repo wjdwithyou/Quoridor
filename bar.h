@@ -19,7 +19,7 @@ private:
 	IDirect3DTexture9** texture_pack;
 
 public:
-	//const static int ACCESS_EFFECT = 4;
+	const static int EFFECT_THICK = 2;
 	const static int _BOARD = 50;	// board-bar
 	const static int _BAR = 15;		// bar-bar
 

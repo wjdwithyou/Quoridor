@@ -28,7 +28,7 @@ Player::~Player(){}
 
 int Player::numPlayer = 4;	// only '2' and '4' players are allowed.
 
-void Player::InitPlayer(Player*** playerList, Player** turn){
+void Player::InitPlayer(Player*** playerList){
 	// TODO: REARRANGE
 	int b = Board::SIZE - 1;
 	//int b = _board->get_Size() - 1;
@@ -69,7 +69,7 @@ void Player::InitPlayer(Player*** playerList, Player** turn){
 	}
 	*/
 
-	*turn = (*playerList)[0];
+	turn = (*playerList)[0];
 
 	return;
 }
@@ -85,7 +85,7 @@ Location Player::__get_barInitLoc(int pn) const{
 }
 
 Bar* Player::__get_lastBar() const{
-	return barList[numBar - 1];
+	return (numBar != 0)? barList[numBar - 1]: NULL;
 }
 
 void Player::__set_numBar(int delta){

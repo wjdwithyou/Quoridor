@@ -15,6 +15,8 @@ public:
 	char sz_pxl_y[16];
 	char sz_loc_x[16];
 	char sz_loc_y[16];
+	char sz_locits_x[16];
+	char sz_locits_y[16];
 	char sz_mstat[16];
 
 	char sz_temp1[16];
