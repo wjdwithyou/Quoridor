@@ -92,7 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 			else
 				sprintf_s(debug->sz_temp1, "%s", "FREE");
 		}
-		sprintf_s(debug->sz_temp2, "%d", _board->its[3][3]->get_onBarStatus());
+		//sprintf_s(debug->sz_temp2, "%d", _board->its[3][3]->get_onBarStatus());
 		//sprintf_s(debug->sz_temp2, "%d", turn->get_barList()[0]->get_loc().y);
 
 		// convert end
