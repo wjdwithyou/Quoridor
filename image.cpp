@@ -21,12 +21,12 @@ void Image::InitPack(){
 }
 
 void Image::LoadTextures(){
-	LoadTexture("Image/background.png", &Background_Texture);
+	LoadTexture("Image/background3.png", &Background_Texture);
 	LoadTexture("Image/board.png", &Board_Texture);
 	LoadTexture("Image/effect.png", &Effect_Texture);
 
 	// TODO: auto numbering
-	LoadTexture("Image/square_base.png", &Square_Texture_Pack[q_base]);
+	LoadTexture("Image/square_base3.png", &Square_Texture_Pack[q_base]);
 	LoadTexture("Image/square_clicked.png", &Square_Texture_Pack[q_clicked]);
 	LoadTexture("Image/square_moveable.png", &Square_Texture_Pack[q_moveable]);
 	LoadTexture("Image/square_win.png", &Square_Texture_Pack[q_win]);
