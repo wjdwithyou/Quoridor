@@ -9,10 +9,12 @@ HWND hWnd;
 MSG Message;
 
 Image* image = new Image();
-Mouse* mouse = new Mouse();
 Debug* debug = new Debug();
 
-Player* turn;
+Pstat g_process;
+Process** g_process_cur;
+Process** g_process_list0;
+Mouse* g_mouse;
 
 int ending = 0;	/////
 

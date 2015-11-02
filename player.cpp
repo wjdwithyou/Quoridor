@@ -28,7 +28,7 @@ Player::~Player(){}
 
 int Player::numPlayer = 4;	// only '2' and '4' players are allowed.
 
-void Player::InitPlayer(Player*** playerList){
+void Player::InitPlayer(Player*** playerList, Player** turn){
 	// TODO: REARRANGE
 	int b = Board::SIZE - 1;
 
@@ -68,7 +68,7 @@ void Player::InitPlayer(Player*** playerList){
 	}
 	*/
 
-	turn = (*playerList)[0];
+	*turn = (*playerList)[0];
 
 	return;
 }

@@ -38,7 +38,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		return false;
 	}
 
-	Process* process = new Process(WndClass);
+	hWnd = CreateWindow(WndClass.lpszClassName, WndClass.lpszClassName, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, NULL, NULL, WindowWidth + 6, WindowHeight + 32, NULL, NULL, WndClass.hInstance, NULL);
+	
+	if (!hWnd){
+		MessageBox(0, "CreateWindow() - FAILED", 0, 0);
+		return false;
+	}
+	
+	InitializeDevice();
+
+	ShowWindow(hWnd, SW_NORMAL);
+	UpdateWindow(hWnd);
+
+	image->LoadTextures();
+
+
+
+	Process** processList;
+	Process* curProcess;
+
+	Process().InitList(&processList, &curProcess);
+
+	/*
+	g_process = p_menu;
+	g_process_test = &curProcess;
+	curProcess = processList[g_process];
+	*/
 
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
@@ -46,6 +71,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 			DispatchMessage(&Message);
 		}
 
+		curProcess->Loop();
+
+		/*
 		switch (Process::status){
 		case p_menu:
 			process->MenuLoop();
@@ -58,6 +86,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		default:
 			break;
 		}
+		*/
 	}
 
 	// TO DELETE/Free/Release LIST
@@ -77,25 +106,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch (iMessage){
 	case WM_LBUTTONDOWN:
-		mouse->Click();
+		g_mouse->Click();
 		break;
 	/*
 	case WM_LBUTTONUP:
 		break;
 	*/
 	case WM_RBUTTONDOWN:
-		mouse->R_Click();
+		g_mouse->R_Click();
 		break;
 
 	case WM_MOUSEMOVE:
-		mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
-		mouse->CheckOnButton();
-		mouse->CheckOnBar();
-		mouse->CheckAroundPoint();
+		g_mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
+		g_mouse->CheckOnButton();
+		g_mouse->CheckOnBar();
+		g_mouse->CheckAroundPoint();
 		break;
 
 	case WM_MOUSEWHEEL:
-		mouse->Wheel(((SHORT)HIWORD(wParam) > 0)? true: false);	// up(+), down(-)
+		g_mouse->Wheel(((SHORT)HIWORD(wParam) > 0)? true: false);	// up(+), down(-)
 		break;
 		
 	case WM_KEYDOWN:
@@ -163,3 +192,10 @@ void GameLoop() {
 // 이동 + 1
 // 벽 2개 설치
 // ...
+
+/*
+	// 값 확인
+		char testtest[128];
+		sprintf(testtest, "%d", pn);
+		MessageBox(hWnd, testtest, 0, MB_OK);
+*/

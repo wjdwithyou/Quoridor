@@ -1,33 +1,20 @@
 #ifndef __PROCESS_H
 #define __PROCESS_H
 
-#include <Windows.h>
-
-class Menu;
-class Board;
-class Player;
-
 enum Pstat{ p_menu, p_game };
 
 class Process{
-private:
-	Menu* menu;
-
-	Board* _board;
-	Player** playerList;
-
 public:
-	static Pstat status;
+	const static int NUM_STAT = 2;
 
 public:
 	Process();
-	Process(WNDCLASS);
 	~Process();
 
-	void MenuLoop() const;
-	void GameLoop() const;
+	void InitList(Process***, Process**) const;
 
-	Pstat get_status() const{ return status; }
+	virtual void Init(int);
+	virtual void Loop() const;
 };
 
 #endif // __PROCESS_H

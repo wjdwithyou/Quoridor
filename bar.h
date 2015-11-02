@@ -4,6 +4,8 @@
 #include <d3d9.h>
 #include "common.h"
 
+class GamingMouse;	/////
+
 enum Bstat{ b_over, b_on, b_clicked, b_can, b_cannot, b_used };
 enum Bdir{ d_none, d_vtc, d_hrz };
 
@@ -28,7 +30,8 @@ public:
 	Bar(Location);
 	~Bar();
 
-	void Draw() const;
+	void Draw(GamingMouse*) const;
+	//void Draw() const;
 	Bdir CheckOrthogonal() const;
 
 	void __set_pickedBar();

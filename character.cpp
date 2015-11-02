@@ -1,6 +1,6 @@
 #include "character.h"
 #include "dxfunc.h"
-#include "mouse.h"
+#include "gamingMouse.h"
 #include "board.h"
 #include "square.h"
 #include "point.h"
@@ -82,7 +82,7 @@ void Character::SearchMoveable(){
 		if (pass)
 			continue;
 
-		if (Mouse(tmp[i]).CheckOnCharacter() == NULL){
+		if (GamingMouse(tmp[i]).CheckOnCharacter() == NULL){
 			moveableList.push_back(tmp[i]);
 			++numMoveable;
 		}
@@ -116,7 +116,7 @@ void Character::SearchMoveable(){
 					continue;
 				}
 
-				if (Mouse(tmp[i]).CheckOnCharacter() == NULL){
+				if (GamingMouse(tmp[i]).CheckOnCharacter() == NULL){
 					moveableList.push_back(tmp[i]);
 					++numMoveable;
 				}

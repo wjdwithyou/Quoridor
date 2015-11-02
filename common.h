@@ -2,6 +2,7 @@
 #define __COMMON_H
 
 #include <Windows.h>
+#include "process.h"
 
 class Image;
 class Mouse;
@@ -12,10 +13,12 @@ extern HWND hWnd;
 extern MSG Message;
 
 extern Image* image;
-extern Mouse* mouse;
 extern Debug* debug;
 
-extern Player* turn;
+extern Pstat g_process;
+extern Process** g_process_cur;
+extern Process** g_process_list0;
+extern Mouse* g_mouse;
 
 extern int ending;	/////
 
