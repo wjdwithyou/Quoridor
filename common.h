@@ -15,10 +15,13 @@ extern MSG Message;
 extern Image* image;
 extern Debug* debug;
 
+extern Mouse* g_mouse;
+
 extern Pstat g_process;
 extern Process** g_process_cur;
 extern Process** g_process_list0;
-extern Mouse* g_mouse;
+
+extern Player** g_turn;
 
 extern int ending;	/////
 

@@ -11,13 +11,21 @@
 #include "debug.h"
 
 GameProcess::GameProcess()
-	: Process(), mouse(new GamingMouse()), _board(new Board(image->Board_Texture)), playerList(NULL), turn(NULL){
-
+	: Process(new GamingMouse()), /*mouse(new GamingMouse()), */gamingMouse(dynamic_cast<GamingMouse*>(mouse)), _board(new Board(image->Board_Texture)), playerList(NULL), turn(NULL)
+{
+	g_turn = &turn;
 }
 
 GameProcess::~GameProcess(){}
 
+/*
 void GameProcess::Init(int n){
+	Player().InitPlayer(&playerList, &turn);
+	return;
+}
+*/
+
+void GameProcess::Init(){
 	Player().InitPlayer(&playerList, &turn);
 	return;
 }
@@ -28,17 +36,17 @@ void GameProcess::Loop() const{
 	sprintf_s(debug->sz_fps, "%02.2fFPS", debug->CalcFPS()); // 프레임을 문자열로 만들어서 sz_fps에 저장
 
 	sprintf_s(debug->sz_cturn, "%d player", turn->get_character()->get_num() + 1);
-	sprintf_s(debug->sz_pxl_x, "pxl.x: %4d", mouse->get_pxloc().x);
-	sprintf_s(debug->sz_pxl_y, "pxl.y: %4d", mouse->get_pxloc().y);
-	sprintf_s(debug->sz_loc_x, "loc.x: %4d", mouse->get_locoo().x);
-	sprintf_s(debug->sz_loc_y, "loc.y: %4d", mouse->get_locoo().y);
-	sprintf_s(debug->sz_locits_x, "its.x: %4d", mouse->get_locooits().x);
-	sprintf_s(debug->sz_locits_y, "its.y: %4d", mouse->get_locooits().y);
-	sprintf_s(debug->sz_mstat, "mstat: %4d", mouse->get_status());
+	sprintf_s(debug->sz_pxl_x, "pxl.x: %4d", gamingMouse->get_pxloc().x);
+	sprintf_s(debug->sz_pxl_y, "pxl.y: %4d", gamingMouse->get_pxloc().y);
+	sprintf_s(debug->sz_loc_x, "loc.x: %4d", gamingMouse->get_locoo().x);
+	sprintf_s(debug->sz_loc_y, "loc.y: %4d", gamingMouse->get_locoo().y);
+	sprintf_s(debug->sz_locits_x, "its.x: %4d", gamingMouse->get_locooits().x);
+	sprintf_s(debug->sz_locits_y, "its.y: %4d", gamingMouse->get_locooits().y);
+	sprintf_s(debug->sz_mstat, "mstat: %4d", gamingMouse->get_status());
 
-	if (mouse->get_locooits().x != -1 && mouse->get_locooits().y != -1){
-		if (mouse->get_pick() != NULL)
-			sprintf_s(debug->sz_temp1, "%d", mouse->CheckAroundUsedBar());
+	if (gamingMouse->get_locooits().x != -1 && gamingMouse->get_locooits().y != -1){
+		if (gamingMouse->get_pick() != NULL)
+			sprintf_s(debug->sz_temp1, "%d", gamingMouse->CheckAroundUsedBar());
 		else
 			sprintf_s(debug->sz_temp1, "%s", "FREE");
 	}
@@ -85,7 +93,7 @@ void GameProcess::Loop() const{
 				
 			_board->Draw();		// square
 
-			mouse->DrawEffect();	// mouse
+			gamingMouse->DrawEffect();	// mouse
 
 			for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
 				playerList[i]->get_character()->Draw();
@@ -97,17 +105,17 @@ void GameProcess::Loop() const{
 
 			for (int i = 0; i < Player().get_numPlayer(); ++i){		// bar
 				for (int j = 0; j < playerList[i]->get_maxBar(); ++j){		// 전부 그려야하기 때문에 numBar가 아닌 maxBar
-					if (playerList[i]->get_barList()[j] != mouse->get_pick())
-						playerList[i]->get_barList()[j]->Draw(mouse);
+					if (playerList[i]->get_barList()[j] != gamingMouse->get_pick())
+						playerList[i]->get_barList()[j]->Draw(gamingMouse);
 				}
 			}
 
-			if (mouse->get_pick() != NULL)		// bar(picked)
-				mouse->get_pick()->Draw(mouse);
+			if (gamingMouse->get_pick() != NULL)		// bar(picked)
+				gamingMouse->get_pick()->Draw(gamingMouse);
 
 			///// bar draw test end /////
 
-			if (mouse->get_status() == m_etc)
+			if (gamingMouse->get_status() == m_etc)
 				if (ending < 256){
 					DrawEnding(image->Gameover_Texture, 0, 0, 1.0f, 0.0f);
 					++ending;

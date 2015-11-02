@@ -7,13 +7,19 @@
 #include "debug.h"
 
 MenuProcess::MenuProcess()
-	: Process(), mouse(new Mouse()), menu(new Menu()){
-
+	: Process(new Mouse()), /*mouse(new Mouse()), */menu(new Menu())
+{
+	g_mouse = mouse;
 }
 
 MenuProcess::~MenuProcess(){}
-
+/*
 void MenuProcess::Init(int){
+	// impl
+	return;
+}
+*/
+void MenuProcess::Init(){
 	// impl
 	return;
 }

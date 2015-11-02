@@ -2,27 +2,27 @@
 #include "process.h"
 #include "menu.h"
 #include "button.h"
-
-#include "gameProcess.h"	/////
+#include "player.h"
 
 #include <cstdio>
 
 Mouse::Mouse(){
 	pxloc.x = pxloc.y = 0;
-	g_mouse = this;
+	//g_mouse = this;
 }
 
 Mouse::~Mouse(){}
 
-void Mouse::Click(){
+void Mouse::Click(Player* dummy){
 	Button* btnp;
 
 	if ((btnp = CheckOnButton()) != NULL){
 		int pn = btnp->get_num();
 		
 		switch(pn){
+		case 1: // 2player
 		case 2:	// 4player
-			//Player::numPlayer = n;
+			Player::numPlayer = pn << 1;
 			//Process::status = p_game;
 			//status = m_ready;
 			
@@ -30,18 +30,26 @@ void Mouse::Click(){
 			*g_process_cur = *(g_process_list0 + g_process);
 			//++(*g_process_test);
 
-			(*g_process_cur)->Init(pn<<1);
+			//(*g_process_cur)->Init(pn<<1);
+			(*g_process_cur)->Init();
+
 			//(*(g_process_list0 + g_process))->Init(pn<<1);
 
 			//(*g_process_test)->Init(pn<<1);
 
+			g_mouse = (*g_process_cur)->get_mouse();
+
+			char testtest[128];
+			sprintf(testtest, "normal mouse click end");
+			MessageBox(hWnd, testtest, 0, MB_OK);
+			// menuProcess, gamingMouse
+
 			break;
+
 		case 4:	// exit
 			exit(0);
 			break;
 
-		case 1: // 2player
-			// impl.
 		case 0:	// 1player
 			// impl.
 		case 3: // opt.

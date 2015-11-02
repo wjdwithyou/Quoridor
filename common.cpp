@@ -11,10 +11,13 @@ MSG Message;
 Image* image = new Image();
 Debug* debug = new Debug();
 
+Mouse* g_mouse;
+
 Pstat g_process;
 Process** g_process_cur;
 Process** g_process_list0;
-Mouse* g_mouse;
+
+Player** g_turn;
 
 int ending = 0;	/////
 

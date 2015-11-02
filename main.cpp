@@ -59,12 +59,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 
 	Process().InitList(&processList, &curProcess);
 
-	/*
-	g_process = p_menu;
-	g_process_test = &curProcess;
-	curProcess = processList[g_process];
-	*/
-
 	while (Message.message != WM_QUIT){
 		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)){
 			TranslateMessage(&Message);
@@ -106,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch (iMessage){
 	case WM_LBUTTONDOWN:
-		g_mouse->Click();
+		g_mouse->Click(*g_turn);
 		break;
 	/*
 	case WM_LBUTTONUP:

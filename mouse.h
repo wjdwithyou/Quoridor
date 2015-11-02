@@ -6,6 +6,7 @@
 class Button;
 class Bar;
 class Point;
+class Player;
 
 class Mouse{
 protected:
@@ -16,7 +17,7 @@ public:
 	Mouse();
 	~Mouse();
 
-	void Click();	// override
+	virtual void Click(Player*);
 	virtual void R_Click();
 	virtual void Wheel(bool) const;
 

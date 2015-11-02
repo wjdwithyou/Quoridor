@@ -27,7 +27,7 @@ public:
 	GamingMouse(Location);	/////
 	~GamingMouse();
 
-	void Click(Player**);	// override
+	void Click(Player**);
 	void R_Click();
 	void Wheel(bool) const;
 	void DrawEffect() const;

@@ -8,14 +8,15 @@ class Menu;
 
 class MenuProcess : public Process{
 private:
-	Mouse* mouse;
+	//Mouse* mouse;
 	Menu* menu;
 
 public:
 	MenuProcess();
 	~MenuProcess();
 
-	virtual void Init(int);
+	//virtual void Init(int);
+	virtual void Init();
 	virtual void Loop() const;
 };
 

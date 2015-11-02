@@ -26,6 +26,10 @@ GamingMouse::GamingMouse(Location loc)
 GamingMouse::~GamingMouse(){}
 
 void GamingMouse::Click(Player** turn){
+	char testtest[128];
+	//sprintf(testtest, "%d", pn);
+	MessageBox(hWnd, "asdf", 0, MB_OK);
+
 	Character* cmp = (*turn)->get_character();
 	Bar* bmp = (*turn)->__get_lastBar();
 	Point* pmp;
