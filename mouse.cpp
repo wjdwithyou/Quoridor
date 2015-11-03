@@ -4,8 +4,6 @@
 #include "button.h"
 #include "player.h"
 
-#include <cstdio>
-
 Mouse::Mouse(){
 	pxloc.x = pxloc.y = 0;
 	//g_mouse = this;
@@ -13,7 +11,7 @@ Mouse::Mouse(){
 
 Mouse::~Mouse(){}
 
-void Mouse::Click(Player* dummy){
+void Mouse::Click(Player** dummy){
 	Button* btnp;
 
 	if ((btnp = CheckOnButton()) != NULL){
@@ -36,13 +34,7 @@ void Mouse::Click(Player* dummy){
 			//(*(g_process_list0 + g_process))->Init(pn<<1);
 
 			//(*g_process_test)->Init(pn<<1);
-
 			g_mouse = (*g_process_cur)->get_mouse();
-
-			char testtest[128];
-			sprintf(testtest, "normal mouse click end");
-			MessageBox(hWnd, testtest, 0, MB_OK);
-			// menuProcess, gamingMouse
 
 			break;
 

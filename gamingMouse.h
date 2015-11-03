@@ -12,7 +12,7 @@ class Player;
 class Character;
 class Bar;
 
-enum Mstat{ m_menu, m_ready, m_clk_chara, m_clk_bar, m_etc };
+enum Mstat{ /*m_menu, */m_ready, m_clk_chara, m_clk_bar, m_etc };
 
 class GamingMouse : public Mouse{
 private:
@@ -40,7 +40,7 @@ public:
 	Point* CheckAroundPoint() const;
 	bool CheckAroundUsedBar() const;
 
-	void __set_loc(int, int);	// override
+	virtual void __set_loc(int, int);
 
 	Mstat get_status() const{ return status; }
 	Location get_locoo() const{ return locoo; }

@@ -100,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
 	switch (iMessage){
 	case WM_LBUTTONDOWN:
-		g_mouse->Click(*g_turn);
+		g_mouse->Click(g_turn);
 		break;
 	/*
 	case WM_LBUTTONUP:

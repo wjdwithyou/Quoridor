@@ -17,7 +17,7 @@ public:
 	Mouse();
 	~Mouse();
 
-	virtual void Click(Player*);
+	virtual void Click(Player**);
 	virtual void R_Click();
 	virtual void Wheel(bool) const;
 
@@ -25,7 +25,7 @@ public:
 	virtual Bar* CheckOnBar() const;
 	virtual Point* CheckAroundPoint() const;
 
-	void __set_loc(int, int);	// override
+	virtual void __set_loc(int, int);	// override
 
 	Location get_pxloc() const{ return pxloc; }
 };
