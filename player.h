@@ -10,8 +10,6 @@ class Bar;
 
 class Player{
 private:
-	static int numPlayer;
-
 	int num;
 	Character* character;
 	Bar** barList;
@@ -20,11 +18,14 @@ private:
 	Player* next;
 
 public:
+	static int numPlayer;
+
+public:
 	Player();
 	Player(int, Location, Location, Location, Location, IDirect3DTexture9*);
 	~Player();
 
-	void InitPlayer(Player***);
+	void InitPlayer(Player***, Player**);
 
 	Location __get_barInitLoc(int) const;
 	Bar* __get_lastBar() const;

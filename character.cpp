@@ -1,8 +1,9 @@
 #include "character.h"
 #include "dxfunc.h"
-#include "mouse.h"
+#include "gamingMouse.h"
 #include "board.h"
 #include "square.h"
+#include "point.h"
 
 Character::Character()
 	: dest(){
@@ -46,35 +47,78 @@ bool Character::Check() const{
 }
 
 void Character::SearchMoveable(){
-	Location tmp[4] = { {-1, 0}, {0, -1}, {1, 0}, {0, 1} };
-	
+	// REARRNAGE
+	bool pass;
+	Location tmp[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+	Location imp[4] = {{-1, -1}, {-1, 0}, {0, 0}, {0, -1}};
+	Bdir dmp[2] = {d_vtc, d_hrz};
+
 	for (int i = 0; i < 4; ++i){
 		tmp[i].x += loc.x;
 		tmp[i].y += loc.y;
 
-		if (CheckCooRange(tmp[i], Board::SIZE)){
-			// TODO: add condition about bar
-			// TODO: add condition about continuous character in asle
+		imp[i].x += loc.x;
+		imp[i].y += loc.y;
+	}
+	
+	for (int i = 0; i < 4; ++i){
+		pass = false;
 
-			if (Mouse(tmp[i]).CheckOnCharacter() == NULL){
-				moveableList.push_back(tmp[i]);
-				++numMoveable;
-				// impl.
+		if (!CheckCooRange(tmp[i], Board::SIZE))
+			continue;
+
+		// TODO: add condition about < my - enemy - wall > status
+
+		for (int j = 0; j < 2; ++j){
+			if (!CheckCooRange(imp[(i+j)%4], Board::SIZE - 1))
+				continue;
+
+			if (Board::its[imp[(i+j)%4].y][imp[(i+j)%4].x]->get_onBarStatus() == dmp[i%2]){
+				pass = true;
+				break;
+			}
+		}
+
+		if (pass)
+			continue;
+
+		if (GamingMouse(tmp[i]).CheckOnCharacter() == NULL){
+			moveableList.push_back(tmp[i]);
+			++numMoveable;
+		}
+		else{
+			Location iimp[2] = {imp[i], imp[(i+1)%4]};
+
+			if (loc.y == tmp[i].y){
+				tmp[i].x += (loc.x < tmp[i].x)? 1: -1;
+				iimp[0].x += (loc.x < tmp[i].x)? 1: -1;
+				iimp[1].x += (loc.x < tmp[i].x)? 1: -1;
 			}
 			else{
-				if (loc.y == tmp[i].y)
-					tmp[i].x += (loc.x < tmp[i].x)? 1: -1;
-				else
-					tmp[i].y += (loc.y < tmp[i].y)? 1: -1;
+				tmp[i].y += (loc.y < tmp[i].y)? 1: -1;
+				iimp[0].y += (loc.y < tmp[i].y)? 1: -1;
+				iimp[1].y += (loc.y < tmp[i].y)? 1: -1;
+			}
+			
+			if (CheckCooRange(tmp[i], Board::SIZE)){
+				for (int j = 0; j < 2; ++j){
+					if (!CheckCooRange(iimp[j], Board::SIZE - 1))
+						continue;
 
-				if (CheckCooRange(tmp[i], Board::SIZE)){
-					if (Mouse(tmp[i]).CheckOnCharacter() == NULL){
-						moveableList.push_back(tmp[i]);
-						++numMoveable;
+					if (Board::its[iimp[j].y][iimp[j].x]->get_onBarStatus() == dmp[i%2]){
+						pass = true;
+						break;
 					}
-					else{
-						//impl.
-					}
+				}
+
+				if (pass){
+					// impl.
+					continue;
+				}
+
+				if (GamingMouse(tmp[i]).CheckOnCharacter() == NULL){
+					moveableList.push_back(tmp[i]);
+					++numMoveable;
 				}
 			}
 		}

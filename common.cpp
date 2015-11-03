@@ -9,10 +9,17 @@ HWND hWnd;
 MSG Message;
 
 Image* image = new Image();
-Mouse* mouse = new Mouse();
 Debug* debug = new Debug();
 
-Player* turn;
+Mouse* g_mouse;
+
+Pstat g_process;
+Process** g_process_cur;
+Process** g_process_list0;
+
+Player** g_turn;
+
+int ending = 0;	/////
 
 Location CooToPxl(int x, int y, int s){
 	Location tmp, stdd;

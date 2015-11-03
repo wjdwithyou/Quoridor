@@ -1,7 +1,7 @@
 #include "bar.h"
 #include "dxfunc.h"
 #include "image.h"
-#include "mouse.h"
+#include "gamingMouse.h"
 #include "board.h"
 
 Bar::Bar()
@@ -20,7 +20,7 @@ Location Bar::size = {60, 125};
 
 Location Bar::size_used = {5, 125};
 
-void Bar::Draw() const{		// simplify test
+void Bar::Draw(GamingMouse* mouse) const{		// simplify test
 	switch (status){
 	case b_over:
 		DrawTexture(texture_pack[status], loc, mag, angle / 180 * PI, static_cast<float>(size.x >> 1), static_cast<float>(size.y >> 1));
