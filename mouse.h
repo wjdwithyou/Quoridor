@@ -22,7 +22,7 @@ public:
 	virtual void Wheel(bool) const;
 
 	Button* CheckOnButton() const;	// override?
-	virtual Bar* CheckOnBar() const;
+	virtual Bar* CheckOnBar(Player*) const;
 	virtual Point* CheckAroundPoint() const;
 
 	virtual void __set_loc(int, int);	// override

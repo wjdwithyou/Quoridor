@@ -80,8 +80,8 @@ Button* Mouse::CheckOnButton() const{
 	return Menu::btnList[(pxloc.y - Menu::loc.y) / Button::HEIGHT];
 }
 
-Bar* Mouse::CheckOnBar() const{
-	// impl?
+Bar* Mouse::CheckOnBar(Player* dummy) const{
+	// don't need
 	return NULL;
 }
 

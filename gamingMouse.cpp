@@ -201,11 +201,6 @@ Character* GamingMouse::CheckOnCharacter() const{
 }
 
 Bar* GamingMouse::CheckOnBar(Player* turn) const{
-	/*
-	if (Process::status != p_game)
-		return NULL;
-	*/
-
 	Bar* b = turn->__get_lastBar();
 
 	if (b == NULL)

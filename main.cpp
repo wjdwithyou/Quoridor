@@ -113,7 +113,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		g_mouse->__set_loc(LOWORD(lParam), HIWORD(lParam));
 		g_mouse->CheckOnButton();
-		g_mouse->CheckOnBar();
+		g_mouse->CheckOnBar(*g_turn);
 		g_mouse->CheckAroundPoint();
 		break;
 
