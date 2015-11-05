@@ -22,6 +22,7 @@ public:
 
 	static Square*** board;
 	static Point*** its;
+	static bool** check;
 
 public:
 	Board();

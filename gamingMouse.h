@@ -12,7 +12,7 @@ class Player;
 class Character;
 class Bar;
 
-enum Mstat{ /*m_menu, */m_ready, m_clk_chara, m_clk_bar, m_etc };
+enum Mstat{ m_ready, m_clk_chara, m_clk_bar, m_etc };
 
 class GamingMouse : public Mouse{
 private:
@@ -27,7 +27,8 @@ public:
 	GamingMouse(Location);	/////
 	~GamingMouse();
 
-	void Click(Player**);
+	void Click(Player**);	// global variable을 굳이 parameter로 받을 필요가 있는지?
+							// global variable을 통한 접근은 WndProc으로 한정?
 	void R_Click();
 	void Wheel(bool) const;
 	void DrawEffect() const;
@@ -37,7 +38,7 @@ public:
 	Character* CheckOnCharacter() const;
 	Bar* CheckOnBar(Player*) const;
 	bool CheckRoundRange(Bar*) const;
-	Point* CheckAroundPoint() const;
+	Point* CheckAroundPoint(Player*) const;
 	bool CheckAroundUsedBar() const;
 
 	virtual void __set_loc(int, int);

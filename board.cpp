@@ -18,6 +18,7 @@ Location Board::itsloc = {loc.x + Square::SIZE + 2, loc.y + Square::SIZE + 2};
 
 Square*** Board::board = NULL;
 Point*** Board::its = NULL;
+bool** Board::check = NULL;
 
 void Board::Init(){
 	board = new Square**[SIZE];
@@ -38,6 +39,11 @@ void Board::Init(){
 			its[i][j] = new Point(j, i);
 	}
 
+	check = new bool*[SIZE];
+
+	for (int j = 0; j < SIZE; ++j)
+		check[j] = new bool(false);
+	
 	return;
 }
 

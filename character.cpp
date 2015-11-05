@@ -32,7 +32,7 @@ void Character::Move(Square* square){
 
 	return;
 }
-
+/*
 bool Character::Check() const{
 	if (dest.y == -1){
 		if (dest.x != loc.x)
@@ -40,6 +40,24 @@ bool Character::Check() const{
 	}
 	else{
 		if (dest.y != loc.y)
+			return false;
+	}
+
+	return true;
+}
+*/
+
+bool Character::Check() const{
+	return Check(loc);
+}
+
+bool Character::Check(Location _loc) const{
+	if (dest.y == -1){
+		if (dest.x != _loc.x)
+			return false;
+	}
+	else{
+		if (dest.y != _loc.y)
 			return false;
 	}
 
@@ -149,3 +167,70 @@ void Character::ResetMoveable(){
 
 	return;
 }
+
+bool Character::CheckReachable() const{
+	for (int i = 0; i < Board::SIZE; ++i){
+		for (int j = 0; j < Board::SIZE; ++j)
+			Board::check[i][j] = false;
+	}
+
+	return CheckReachable(loc);
+}
+
+bool Character::CheckReachable(Location _loc) const{	// recursive?
+	bool pass;
+	Location tmp[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+	Location imp[4] = {{-1, -1}, {-1, 0}, {0, 0}, {0, -1}};
+	Bdir dmp[2] = {d_vtc, d_hrz};
+
+	if (Check(_loc))
+		return true;
+
+	for (int i = 0; i < 4; ++i){
+		tmp[i].x += _loc.x;
+		tmp[i].y += _loc.y;
+
+		imp[i].x += _loc.x;
+		imp[i].y += _loc.y;
+	}
+
+	for (int i = 0; i < 4; ++i){
+		pass = false;
+
+		if (!CheckCooRange(tmp[i], Board::SIZE))
+			continue;
+
+		if (Board::check[tmp[i].y][tmp[i].x] == true)
+			continue;
+
+		for (int j = 0; j < 2; ++j){
+			if (!CheckCooRange(imp[(i+j)%4], Board::SIZE - 1))
+				continue;
+
+			if (Board::its[imp[(i+j)%4].y][imp[(i+j)%4].x]->get_onBarStatus() == dmp[i%2]){
+				pass = true;
+				break;
+			}
+		}
+
+		if (pass)
+			continue;
+
+		Board::check[_loc.y][_loc.x] = true;
+
+		if (CheckReachable(tmp[i]))
+			return true;
+	}
+
+	return false;
+}
+/*
+bool Character::CheckWall(Location imp1, Location imp2, Bdir d) const{		// 벽 하나에 대해서 check
+	if (Board::its[imp1.y][imp1.x]->get_onBarStatus() == d)
+		return true;
+	else if (Board::its[imp2.y][imp2.x]->get_onBarStatus() == d)
+		return true;
+	else
+		return false;
+}
+*/

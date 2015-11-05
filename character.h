@@ -5,6 +5,7 @@
 #include <d3d9.h>
 #include "common.h"
 #include "image.h"
+#include "bar.h"
 
 class Square;
 
@@ -29,11 +30,16 @@ public:
 	void Draw() const;
 	void Move(Square*);
 	bool Check() const;
+	bool Check(Location) const;
 
 	void SearchMoveable();
 	void RevealMoveable() const;
 	void HideMoveable() const;
 	void ResetMoveable();
+
+	bool CheckReachable() const;
+	bool CheckReachable(Location) const;	// recursive?
+	//bool CheckWall(Location, Location, Bdir) const;
 
 	int get_num() const{ return num; }
 	Location get_loc() const{ return loc; }

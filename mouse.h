@@ -10,7 +10,6 @@ class Player;
 
 class Mouse{
 protected:
-	//Mstat status;
 	Location pxloc;	// int로 형 변환된 mxy-pixel이 들어온다 from callback
 
 public:
@@ -23,9 +22,9 @@ public:
 
 	Button* CheckOnButton() const;	// override?
 	virtual Bar* CheckOnBar(Player*) const;
-	virtual Point* CheckAroundPoint() const;
+	virtual Point* CheckAroundPoint(Player*) const;
 
-	virtual void __set_loc(int, int);	// override
+	virtual void __set_loc(int, int);
 
 	Location get_pxloc() const{ return pxloc; }
 };

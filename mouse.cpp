@@ -85,8 +85,8 @@ Bar* Mouse::CheckOnBar(Player* dummy) const{
 	return NULL;
 }
 
-Point* Mouse::CheckAroundPoint() const{
-	// impl?
+Point* Mouse::CheckAroundPoint(Player* dummy) const{
+	// don't need
 	return NULL;
 }
 
