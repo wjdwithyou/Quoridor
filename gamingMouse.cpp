@@ -2,6 +2,7 @@
 #include <math.h>
 #include "dxfunc.h"
 #include "image.h"
+#include "sound.h"
 #include "process.h"
 #include "board.h"
 #include "square.h"
@@ -63,6 +64,8 @@ void GamingMouse::Click(Player** turn){
 			case q_clicked:
 				Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_base);
 
+				sound->test4->play();	///// sound effect test
+
 				cmp->HideMoveable();
 				cmp->ResetMoveable();
 
@@ -73,6 +76,8 @@ void GamingMouse::Click(Player** turn){
 				Board::board[cmp->get_loc().y][cmp->get_loc().x]->set_status(q_base);
 
 				cmp->Move(CheckOnSquare());
+
+				sound->test4->play();	///// sound effect test
 
 				cmp->HideMoveable();
 				cmp->ResetMoveable();
@@ -108,6 +113,8 @@ void GamingMouse::Click(Player** turn){
 		pmp = CheckAroundPoint(*turn);
 
 		pmp->set_onBarStatus(pick->CheckOrthogonal());
+
+		sound->test3->play();	///// sound effect test
 
 		pick->__set_usedBar(pmp->get_pxloc());
 		pick = NULL;
@@ -184,12 +191,10 @@ void GamingMouse::DrawEffect() const{
 	return;
 }
 
-/*
-Button* GamingMouse::CheckOnButton() const{		// override
-
+Button* GamingMouse::CheckOnButton() const{
+	// don't need
 	return NULL;
 }
-*/
 
 Square* GamingMouse::CheckOnSquare() const{
 	if (locoo.x == -1 || locoo.y == -1)

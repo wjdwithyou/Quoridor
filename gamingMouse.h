@@ -33,7 +33,7 @@ public:
 	void Wheel(bool) const;
 	void DrawEffect() const;
 
-	//Button* CheckOnButton() const;	// override?
+	Button* CheckOnButton() const;
 	Square* CheckOnSquare() const;
 	Character* CheckOnCharacter() const;
 	Bar* CheckOnBar(Player*) const;
@@ -41,7 +41,7 @@ public:
 	Point* CheckAroundPoint(Player*) const;
 	bool CheckAroundUsedBar() const;
 
-	virtual void __set_loc(int, int);
+	void __set_loc(int, int);
 
 	Mstat get_status() const{ return status; }
 	Location get_locoo() const{ return locoo; }

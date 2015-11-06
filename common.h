@@ -5,6 +5,7 @@
 #include "process.h"
 
 class Image;
+class Sound;
 class Mouse;
 class Player;
 class Debug;
@@ -13,6 +14,7 @@ extern HWND hWnd;
 extern MSG Message;
 
 extern Image* image;
+extern Sound* sound;
 extern Debug* debug;
 
 extern Mouse* g_mouse;

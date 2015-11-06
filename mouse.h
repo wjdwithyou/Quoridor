@@ -20,7 +20,7 @@ public:
 	virtual void R_Click();
 	virtual void Wheel(bool) const;
 
-	Button* CheckOnButton() const;	// override?
+	virtual Button* CheckOnButton() const;
 	virtual Bar* CheckOnBar(Player*) const;
 	virtual Point* CheckAroundPoint(Player*) const;
 

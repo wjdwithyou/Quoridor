@@ -5,7 +5,8 @@
 #include "process.h"
 
 #include "dxfunc.h"	/////
-#include "Image.h"	/////
+#include "image.h"	/////
+#include "sound.h"
 
 #pragma comment(lib, "d3d9")
 #pragma comment(lib, "d3dx9")
@@ -47,10 +48,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 	
 	InitializeDevice();
 
+	image->LoadTextures();
+	//sound->InitializeSound();		// Sound() Initializer include initializeSound()
+
 	ShowWindow(hWnd, SW_NORMAL);
 	UpdateWindow(hWnd);
-
-	image->LoadTextures();
 
 
 
@@ -66,21 +68,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine, i
 		}
 
 		curProcess->Loop();
-
-		/*
-		switch (Process::status){
-		case p_menu:
-			process->MenuLoop();
-			break;
-
-		case p_game:
-			process->GameLoop();
-			break;
-
-		default:
-			break;
-		}
-		*/
 	}
 
 	// TO DELETE/Free/Release LIST

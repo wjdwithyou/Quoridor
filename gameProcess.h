@@ -9,7 +9,6 @@ class Player;
 
 class GameProcess : public Process{
 private:
-	//GamingMouse* mouse;
 	GamingMouse* gamingMouse;
 	Board* _board;
 	Player** playerList;
@@ -19,7 +18,6 @@ public:
 	GameProcess();
 	~GameProcess();
 
-	//virtual void Init(int);
 	virtual void Init();
 	virtual void Loop() const;
 };

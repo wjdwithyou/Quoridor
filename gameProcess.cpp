@@ -3,6 +3,7 @@
 #include "dxfunc.h"
 #include "common.h"
 #include "image.h"
+#include "sound.h"
 #include "gamingMouse.h"
 #include "board.h"
 #include "player.h"
@@ -11,22 +12,17 @@
 #include "debug.h"
 
 GameProcess::GameProcess()
-	: Process(new GamingMouse()), /*mouse(new GamingMouse()), */gamingMouse(dynamic_cast<GamingMouse*>(mouse)), _board(new Board(image->Board_Texture)), playerList(NULL), turn(NULL)
+	: Process(new GamingMouse()), gamingMouse(dynamic_cast<GamingMouse*>(mouse)), _board(new Board(image->Board_Texture)), playerList(NULL), turn(NULL)
 {
 	g_turn = &turn;
 }
 
 GameProcess::~GameProcess(){}
 
-/*
-void GameProcess::Init(int n){
-	Player().InitPlayer(&playerList, &turn);
-	return;
-}
-*/
-
 void GameProcess::Init(){
 	Player().InitPlayer(&playerList, &turn);
+	sound->bgm->play();
+
 	return;
 }
 

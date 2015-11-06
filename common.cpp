@@ -1,5 +1,6 @@
 #include "common.h"
 #include "image.h"
+#include "sound.h"
 #include "mouse.h"
 #include "board.h"
 #include "square.h"
@@ -9,6 +10,7 @@ HWND hWnd;
 MSG Message;
 
 Image* image = new Image();
+Sound* sound = new Sound();
 Debug* debug = new Debug();
 
 Mouse* g_mouse;
