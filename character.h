@@ -37,7 +37,8 @@ public:
 	void HideMoveable() const;
 	void ResetMoveable();
 
-	bool CheckReachable() const;
+	//bool CheckReachable() const;
+	bool CheckReachable(Location, Bdir) const;
 	bool CheckReachable(Location) const;	// recursive?
 	//bool CheckWall(Location, Location, Bdir) const;
 

@@ -167,7 +167,7 @@ void Character::ResetMoveable(){
 
 	return;
 }
-
+/*
 bool Character::CheckReachable() const{
 	for (int i = 0; i < Board::SIZE; ++i){
 		for (int j = 0; j < Board::SIZE; ++j)
@@ -176,22 +176,40 @@ bool Character::CheckReachable() const{
 
 	return CheckReachable(loc);
 }
+*/
 
-bool Character::CheckReachable(Location _loc) const{	// recursive?
+bool Character::CheckReachable(Location m_its, Bdir d) const{
+	bool tmp;
+
+	for (int i = 0; i < Board::SIZE; ++i){
+		for (int j = 0; j < Board::SIZE; ++j)
+			Board::check[i][j] = false;
+	}
+
+	Board::its[m_its.y][m_its.x]->set_onBarStatus(d);
+
+	tmp = CheckReachable(loc);
+
+	Board::its[m_its.y][m_its.x]->set_onBarStatus(d_none);
+
+	return tmp;
+}
+
+bool Character::CheckReachable(Location c_loc) const{	// recursive?
 	bool pass;
 	Location tmp[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 	Location imp[4] = {{-1, -1}, {-1, 0}, {0, 0}, {0, -1}};
 	Bdir dmp[2] = {d_vtc, d_hrz};
 
-	if (Check(_loc))
+	if (Check(c_loc))
 		return true;
 
 	for (int i = 0; i < 4; ++i){
-		tmp[i].x += _loc.x;
-		tmp[i].y += _loc.y;
+		tmp[i].x += c_loc.x;
+		tmp[i].y += c_loc.y;
 
-		imp[i].x += _loc.x;
-		imp[i].y += _loc.y;
+		imp[i].x += c_loc.x;
+		imp[i].y += c_loc.y;
 	}
 
 	for (int i = 0; i < 4; ++i){
@@ -216,7 +234,7 @@ bool Character::CheckReachable(Location _loc) const{	// recursive?
 		if (pass)
 			continue;
 
-		Board::check[_loc.y][_loc.x] = true;
+		Board::check[c_loc.y][c_loc.x] = true;
 
 		if (CheckReachable(tmp[i]))
 			return true;

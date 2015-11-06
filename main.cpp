@@ -193,3 +193,5 @@ void GameLoop() {
 		sprintf(testtest, "%d", pn);
 		MessageBox(hWnd, testtest, 0, MB_OK);
 */
+
+// check reachable값을 debug text로 출력, 확인?

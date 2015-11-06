@@ -44,12 +44,15 @@ void GameProcess::Loop() const{
 	sprintf_s(debug->sz_locits_y, "its.y: %4d", gamingMouse->get_locooits().y);
 	sprintf_s(debug->sz_mstat, "mstat: %4d", gamingMouse->get_status());
 
+	/*
 	if (gamingMouse->get_locooits().x != -1 && gamingMouse->get_locooits().y != -1){
 		if (gamingMouse->get_pick() != NULL)
 			sprintf_s(debug->sz_temp1, "%d", gamingMouse->CheckAroundUsedBar());
 		else
 			sprintf_s(debug->sz_temp1, "%s", "FREE");
 	}
+	*/
+
 	//sprintf_s(debug->sz_temp2, "%d", _board->its[3][3]->get_onBarStatus());
 	//sprintf_s(debug->sz_temp2, "%d", turn->get_barList()[0]->get_loc().y);
 

@@ -96,9 +96,14 @@ void GamingMouse::Click(Player** turn){
 		break;
 
 	case m_clk_bar:
+		if (pick->get_status() != b_can)
+			break;
+		/*
 		if (CheckAroundUsedBar())
 			// beep sound?
 			break;
+		*/
+		
 		
 		pmp = CheckAroundPoint(*turn);
 
@@ -228,8 +233,6 @@ bool GamingMouse::CheckRoundRange(Bar* b) const{
 }
 
 Point* GamingMouse::CheckAroundPoint(Player* turn) const{
-	Player* iter;
-
 	if (status != m_clk_bar)
 		return NULL;
 
@@ -241,20 +244,22 @@ Point* GamingMouse::CheckAroundPoint(Player* turn) const{
 	if (pick->CheckOrthogonal() == d_none)
 		return NULL;
 
-	//pick->set_status(CheckAroundUsedBar()? b_cannot: b_can);
-
 	if (CheckAroundUsedBar())
 		pick->set_status(b_cannot);
 	else{
-		for (iter = turn->get_next(); iter != turn; iter = iter->get_next()){
-			if (iter->get_character()->CheckReachable() == false){
-				pick->set_status(b_cannot);
+		Player* iter = turn;
+		Bstat bsmp = b_can;
+
+		do{
+			if (iter->get_character()->CheckReachable(locooits, pick->CheckOrthogonal()) == false){
+				bsmp = b_cannot;
 				break;
 			}
-		}
 
-		if (iter == turn)
-			pick->set_status(b_can);
+			iter = iter->get_next();
+		} while(iter != turn);
+
+		pick->set_status(bsmp);
 	}
 
 	return Board::its[locooits.y][locooits.x];
