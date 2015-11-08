@@ -40,6 +40,9 @@ void Debug::PrintFPS(RECT rc) const{
 }
 
 void Debug::PrintValue(RECT rc) const{
+	if (!DEBUG)
+		return;
+
 	rc.top += 200;
 	Font->DrawTextA(Sprite, sz_cturn, -1, &rc, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, D3DCOLOR_XRGB(255, 0, 0));
 

@@ -52,8 +52,8 @@ void Image::LoadTextures(){
 
 	LoadTexture("Image/character1.png", &Character_Texture_Pack[0]);
 	LoadTexture("Image/character2.png", &Character_Texture_Pack[1]);
-	LoadTexture("Image/character3.png", &Character_Texture_Pack[2]);	// temp
-	LoadTexture("Image/character4.png", &Character_Texture_Pack[3]);	// temp
+	LoadTexture("Image/character3.png", &Character_Texture_Pack[2]);
+	LoadTexture("Image/character4.png", &Character_Texture_Pack[3]);
 
 	LoadTexture("Image/bar.png", &Bar_Texture_Pack[b_over]);
 	LoadTexture("Image/bar_onmouse.png", &Bar_Texture_Pack[b_on]);

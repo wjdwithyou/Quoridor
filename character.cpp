@@ -19,7 +19,10 @@ Character::Character(int n, Location dloc, Location sloc, IDirect3DTexture9* tex
 Character::~Character(){}
 
 void Character::Draw() const{
-	DrawTexture(texture_, CooToPxl(loc, Board::SIZE), 1.0f, 0.0f);
+	Location temp = CooToPxl(loc, Board::SIZE);
+
+	DrawTexture(texture_, static_cast<float>(temp.x), static_cast<float>(temp.y - 35), 1.0f, 0.0f);	
+
 	return;
 }
 
@@ -167,16 +170,6 @@ void Character::ResetMoveable(){
 
 	return;
 }
-/*
-bool Character::CheckReachable() const{
-	for (int i = 0; i < Board::SIZE; ++i){
-		for (int j = 0; j < Board::SIZE; ++j)
-			Board::check[i][j] = false;
-	}
-
-	return CheckReachable(loc);
-}
-*/
 
 bool Character::CheckReachable(Location m_its, Bdir d) const{
 	bool tmp;

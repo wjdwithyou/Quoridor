@@ -1,6 +1,8 @@
 #ifndef __DEBUG_H
 #define __DEBUG_H
 
+#define DEBUG false
+
 #include <Windows.h>
 
 class Debug{

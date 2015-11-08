@@ -94,11 +94,6 @@ void GameProcess::Loop() const{
 
 			gamingMouse->DrawEffect();	// mouse
 
-			for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
-				playerList[i]->get_character()->Draw();
-
-
-
 			///// bar draw test /////
 			// TODO: rearrange dirty codes :(
 
@@ -108,6 +103,9 @@ void GameProcess::Loop() const{
 						playerList[i]->get_barList()[j]->Draw(gamingMouse);
 				}
 			}
+
+			for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
+				playerList[i]->get_character()->Draw();
 
 			if (gamingMouse->get_pick() != NULL)		// bar(picked)
 				gamingMouse->get_pick()->Draw(gamingMouse);
