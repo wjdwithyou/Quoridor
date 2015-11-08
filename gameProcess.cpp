@@ -104,8 +104,17 @@ void GameProcess::Loop() const{
 				}
 			}
 
+			for (int i = 0; i < Board::SIZE; ++i){		// character
+				for (int j = 0; j < Player::numPlayer; ++j){
+					if (playerList[j]->get_character()->get_loc().y == i)
+						playerList[j]->get_character()->Draw();
+				}
+			}
+
+			/*
 			for (int i = 0; i < Player().get_numPlayer(); ++i)		// character
 				playerList[i]->get_character()->Draw();
+			*/
 
 			if (gamingMouse->get_pick() != NULL)		// bar(picked)
 				gamingMouse->get_pick()->Draw(gamingMouse);
