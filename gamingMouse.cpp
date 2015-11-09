@@ -102,19 +102,18 @@ void GamingMouse::Click(Player** turn){
 
 	case m_clk_bar:
 		if (pick->get_status() != b_can)
-			break;
-		/*
-		if (CheckAroundUsedBar())
 			// beep sound?
 			break;
-		*/
-		
 		
 		pmp = CheckAroundPoint(*turn);
 
 		pmp->set_onBarStatus(pick->CheckOrthogonal());
 
-		sound->test3->play();	///// sound effect test
+		//sound->bgm->stop();
+		(CheckBlocking(*turn))? sound->BlockSound->play(): sound->test3->play();	///// sound effect test
+		
+		//while (sound->BlockSound->isPlaying());
+		//sound->bgm->play();
 
 		pick->__set_usedBar(pmp->get_pxloc());
 		pick = NULL;
@@ -313,6 +312,33 @@ bool GamingMouse::CheckAroundUsedBar() const{
 
 	default:
 		break;
+	}
+
+	return false;
+}
+
+bool GamingMouse::CheckBlocking(Player* turn) const{
+	Bdir d1 = pick->CheckOrthogonal();
+	Bdir d2;
+	Character* temp;
+
+	for (int i = 0; i < 2; ++i){
+		for (int j = 0; j < 2; ++j){
+			temp = Board::board[locooits.y + i][locooits.x + j]->get_onthis();
+
+			if (temp == NULL)
+				continue;
+
+			if (temp == turn->get_character())
+				continue;
+
+			d2 = (Player::numPlayer == 2)? d_vtc: ((temp->get_num() % 2)? d_vtc: d_hrz);
+
+			if (d1 == d2){
+				if (temp->CheckWall().x == locooits.x && temp->CheckWall().y == locooits.y)
+					return true;
+			}
+		}
 	}
 
 	return false;

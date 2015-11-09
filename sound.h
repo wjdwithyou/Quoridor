@@ -23,6 +23,8 @@ public:
 	OutputStreamPtr test3;
 	OutputStreamPtr test4;
 
+	OutputStreamPtr BlockSound;
+
 public:
 	Sound();
 	~Sound();

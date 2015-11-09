@@ -40,6 +40,7 @@ public:
 	bool CheckRoundRange(Bar*) const;
 	Point* CheckAroundPoint(Player*) const;
 	bool CheckAroundUsedBar() const;
+	bool CheckBlocking(Player*) const;
 
 	void __set_loc(int, int);
 

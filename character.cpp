@@ -245,3 +245,33 @@ bool Character::CheckWall(Location imp1, Location imp2, Bdir d) const{		// º® ÇÏ
 		return false;
 }
 */
+
+Location Character::CheckWall() const{
+	// Warning
+	// This function will not check about array(board, its, and so on) boundary.
+
+	Location ret = {-1, -1};
+
+	if (dest.y == -1){
+		ret.x = loc.x + ((dest.x == 0)? -1: 0);
+
+		for (int i = 0; i < 2; ++i){
+			ret.y = loc.y - 1 + i;
+
+			if (Board::its[ret.y][ret.x]->get_onBarStatus() != d_none)
+				return ret;
+		}
+	}
+	else{
+		ret.y = loc.y + ((dest.y == 0)? -1: 0);
+
+		for (int j = 0; j < 2; ++j){
+			ret.x = loc.x - 1 + j;
+
+			if (Board::its[ret.y][ret.x]->get_onBarStatus() != d_none)
+				return ret;
+		}
+	}
+
+	return ret;
+}

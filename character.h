@@ -38,8 +38,9 @@ public:
 	void ResetMoveable();
 
 	bool CheckReachable(Location, Bdir) const;
-	bool CheckReachable(Location) const;	// recursive?
+	bool CheckReachable(Location) const;	// recursive
 	//bool CheckWall(Location, Location, Bdir) const;
+	Location CheckWall() const;
 
 	int get_num() const{ return num; }
 	Location get_loc() const{ return loc; }

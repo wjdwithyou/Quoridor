@@ -18,11 +18,14 @@ void Sound::InitializeSound(){
 	}
 
 	bgm = OpenSound(Audio, "Sound/Maid with the Flaxen Hair.mp3", true); // stream on
+	bgm->setRepeat(true);
 
 	test1 = OpenSound(Audio, "Sound/fs1.wav", false);
 	test2 = OpenSound(Audio, "Sound/fs2.wav", false);
 	test3 = OpenSound(Audio, "Sound/fs3.wav", false);
 	test4 = OpenSound(Audio, "Sound/fs4.wav", false);
+
+	BlockSound = OpenSound(Audio, "Sound/Shieldbearer.mp3", false);
 	
 	return;
 }
